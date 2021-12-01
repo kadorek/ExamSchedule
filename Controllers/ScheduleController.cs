@@ -102,7 +102,7 @@ namespace ExamSchedule.Controllers
 		}
 
 
-		public async Task<IActionResult> RestrictionDelete(long? id) 
+		public async Task<IActionResult> RestrictionDelete(long? id)
 		{
 
 			if (id == null)
@@ -147,6 +147,77 @@ namespace ExamSchedule.Controllers
 			return View(sr);
 		}
 
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> RestrictionEdit(long id, ScheduleRestriction sr)
+		{
+			if (id != sr.Id)
+			{
+				return NotFound();
+			}
+
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					_context.Update(sr);
+					await _context.SaveChangesAsync();
+				}
+				catch (DbUpdateConcurrencyException)
+				{
+					if (!RestrictionExist(sr.Id))
+					{
+						return NotFound();
+					}
+					else
+					{
+						throw;
+					}
+				}
+				return RedirectToAction(nameof(Index));
+			}
+			return View(sr);
+		}
+
+
+		public async Task<IActionResult> Delete(long? id)
+		{
+
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var s = await _context.Schedules.FindAsync(id);
+			if (s == null)
+			{
+				return NotFound();
+			}
+
+			return View(s);
+
+		}
+
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> DeleteConfirmed(long? id) {
+			var s = await _context.Schedules.FindAsync(id);
+			_context.Schedules.Remove(s);
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
+
+		}
+
+
+
+
+
+		private bool RestrictionExist(long id)
+		{
+
+			return _context.ScheduleRestrictions.Any(x => x.Id == id);
+		}
 
 
 	}

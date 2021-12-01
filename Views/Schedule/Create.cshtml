@@ -12,7 +12,7 @@
 </div>
 
 <div class="row">
-	<form asp-action="Create">
+	<form asp-action="Create" id="frmCreate">
 
 		<div class="row justify-content-end">
 			<div class="form-group ">
@@ -100,6 +100,29 @@
 			format: "D/M/Y",
 			locale: strLocale,
 		});
+
+		$("#frmCreate").submit(function () {
+
+			var sh = Number($("[name=DayStartHour]").val());
+			var eh = Number($("[name=DayEndHour]").val());
+			var sm = Number($("[name=DayStartMinute]").val());
+			var em = Number($("[name=DayEndMinute]").val());
+
+			var s = sh * 60 + sm;
+			var en = eh * 60 + em;
+
+			if (s > en) {
+				console.log("Bitiş zamanı , başlangıçtan büyük olmalıdır." + s + " " + en);
+				return false;
+			} else {
+				return true;
+			}
+
+
+		});
+
+
+
 
 
 	</script>

@@ -10,45 +10,56 @@
 <h4>ScheduleRestriction</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="RestrictionEdit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-           
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input id="txtDate" asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StartHour" class="control-label"></label>
-                <input asp-for="StartHour" class="form-control" />
-                <span asp-validation-for="StartHour" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StartMinute" class="control-label"></label>
-                <input asp-for="StartMinute" class="form-control" />
-                <span asp-validation-for="StartMinute" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EndHour" class="control-label"></label>
-                <input asp-for="EndHour" class="form-control" />
-                <span asp-validation-for="EndHour" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EndMinute" class="control-label"></label>
-                <input asp-for="EndMinute" class="form-control" />
-                <span asp-validation-for="EndMinute" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="">
+		<form asp-action="RestrictionEdit">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="Id" />
+			<input type="hidden" asp-for="ScheduleId" />
+
+			<div class="row">
+
+				<div class="form-group col-4">
+					<label asp-for="Date" class="control-label"></label>
+					<input id="txtDate" asp-for="Date" class="form-control" />
+					<span asp-validation-for="Date" class="text-danger"></span>
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="form-group">
+					<label asp-for="Description" class="control-label"></label>
+					<input asp-for="Description" class="form-control" />
+					<span asp-validation-for="Description" class="text-danger"></span>
+				</div>
+			</div>
+			<div class="row">
+
+				<div class="form-group col-2">
+					<label asp-for="StartHour" class="control-label"></label>
+					<input asp-for="StartHour" min="0" max="23"  class="form-control" />
+					<span asp-validation-for="StartHour" class="text-danger"></span>
+				</div>
+				<div class="form-group col-2">
+					<label asp-for="StartMinute" class="control-label"></label>
+					<input asp-for="StartMinute" min="0" max="50" step="10" class="form-control" />
+					<span asp-validation-for="StartMinute" class="text-danger"></span>
+				</div>
+				<div class="col-1"> </div>
+				<div class="form-group col-2">
+					<label asp-for="EndHour" class="control-label"></label>
+					<input asp-for="EndHour" min="0" max="23"  class="form-control" />
+					<span asp-validation-for="EndHour" class="text-danger"></span>
+				</div>
+				<div class="form-group col-2">
+					<label asp-for="EndMinute" class="control-label"></label>
+					<input asp-for="EndMinute" min="0" max="50" step="10"  class="form-control" />
+					<span asp-validation-for="EndMinute" class="text-danger"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Save" class="btn btn-primary" />
+			</div>
+		</form>
     </div>
 </div>
 
