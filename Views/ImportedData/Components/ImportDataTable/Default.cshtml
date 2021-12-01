@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model ExamSchedule.Models.ViewModels.DataTableModel
+
+<div>
+
+    <table id="tableData" class="table">
+        <tr >
+            @foreach (var item in Model.TableHeaders)
+			{
+                <th></th>
+			}
+        </tr>
+        <tr>            
+            @foreach (var item1 in Model.TableHeaders)
+			{
+                <th>@item1</th>
+			}
+        </tr>
+        <tbody>
+            @foreach (var item2 in Model.ValuesAsRows)
+			{
+                <tr data-type="data-row">
+                    @foreach (var innerItem in item2)
+					{
+                        <td>@innerItem</td>
+					}
+                </tr>
+			}
+        </tbody>
+    </table>
+
+</div>
+
+
+
+@{
+}

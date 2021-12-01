@@ -1,0 +1,108 @@
+﻿@model ExamSchedule.Models.Schedule
+
+
+@{
+	ViewData["Title"] = "Create";
+}
+
+<h4>Schedule</h4>
+<hr />
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+
+<div class="row">
+	<form asp-action="Create">
+
+		<div class="row justify-content-end">
+			<div class="form-group ">
+				<input type="submit" value="Create" class="btn btn-primary" />
+			</div>
+		</div>
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+		<div class="row">
+			<div class="form-group col-12">
+				<label asp-for="Title" class="control-label"></label>
+				<input asp-for="Title" class="form-control" />
+				<span asp-validation-for="Title" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="row">
+
+			<div class="form-group col-4">
+				<label asp-for="StartDate" class="control-label"></label>
+				<input asp-for="StartDate" class="form-control" id="txtStartDate" />
+				<span asp-validation-for="StartDate" class="text-danger"></span>
+			</div>
+			<div class="form-group col-4">
+				<label asp-for="EndDate" class="control-label"></label>
+				<input asp-for="EndDate" class="form-control" id="txtEndDate" />
+				<span asp-validation-for="EndDate" class="text-danger"></span>
+			</div>
+
+		</div>
+		<div class="row">
+
+			<div class="form-group col-2">
+				<label asp-for="DayStartHour" class="control-label"></label>
+				<input type="number" max="24" min="0" asp-for="DayStartHour" class="form-control" />
+				<span asp-validation-for="DayStartHour" class="text-danger"></span>
+			</div>
+			<div class="form-group col-2">
+				<label asp-for="DayStartMinute" class="control-label"></label>
+				<input type="number" max="50" min="0" step="10" asp-for="DayStartMinute" class="form-control" />
+				<span asp-validation-for="DayStartMinute" class="text-danger"></span>
+			</div>
+			<div class="col-1"></div>
+			<div class="form-group col-2">
+				<label asp-for="DayEndHour" class="control-label"></label>
+				<input type="number" max="24" min="0" asp-for="DayEndHour" class="form-control" />
+				<span asp-validation-for="DayEndHour" class="text-danger"></span>
+			</div>
+			<div class="form-group col-2">
+				<label asp-for="DayEndMinute" class="control-label"></label>
+				<input type="number" max="50" min="0" step="10" asp-for="DayEndMinute" class="form-control" />
+				<span asp-validation-for="DayEndMinute" class="text-danger"></span>
+			</div>
+		</div>
+
+		<div class="row justify-content-end">
+			<div class="form-group ">
+				<input type="submit" value="Create" class="btn btn-primary" />
+			</div>
+		</div>
+	</form>
+</div>
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+
+
+@section Scripts{
+
+
+	<script>
+
+		var strLocale = "tr";
+		var today = new Date();
+		//require("./lib/moment/locale/" + strLocale+".js");
+		$("#txtStartDate").datetimepicker({
+			minDate: today,
+			format: "D/M/Y",
+			locale: strLocale,
+		});
+		$("#txtStartDate").on("dp.change", function (e) {
+			$("#txtEndDate").data("DateTimePicker").minDate(e.date);
+		});
+		$("#txtEndDate").datetimepicker({
+			minDate: today,
+			format: "D/M/Y",
+			locale: strLocale,
+		});
+
+
+	</script>
+
+
+}

@@ -1,0 +1,247 @@
+﻿
+@model ExamSchedule.Models.ViewModels.ImportedDataUseViewModel
+
+@{
+	ViewData["Title"] = "Use";
+}
+
+<h1>Use</h1>
+
+<div class="container">
+	<div class="row">
+
+	</div>
+
+	<div class="row" id="divSandbox">
+
+	</div>
+
+	<div class="row">
+		<div class="container">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" id="home-data-table" data-toggle="tab" href="#data-table" role="tab" aria-controls="data-table" aria-selected="true">Data Table</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link disabled" id="summary-tab" data-toggle="tab" href="#summary" role="tab" aria-controls="summary" aria-selected="false">Summary</a>
+				</li>
+			</ul>
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<div class="tab-pane active" id="data-table" role="tabpanel" aria-labelledby="data-table-tab">
+					<div class="row mt-1 justify-content-end">
+						<button class="btn btn-primary" id="next">Next</button>
+					</div>
+					<div class="row mt-3">
+						<p class="m-3"><b>Settings :</b></p>
+						<div class="m-3">
+							<select id="slcImportType">
+								<option value="0">Aktarılacak veri türünü seçiniz!</option>
+								<option value="1">Teacher</option>
+								<option value="2">Course</option>
+								<option value="3">Programme</option>
+								<option value="4">Student</option>
+								<option value="5">Room</option>
+								<option value="6">Teacher - Course Relation</option>
+								<option value="7">Programme - Course Relation</option>
+								<option value="8">Course - Student Relation</option>
+							</select>
+						</div>
+					</div>
+					@await Component.InvokeAsync("ImportDataTable", Model.ImportedDataId)
+				</div>
+				<div class="tab-pane" id="summary" role="tabpanel" aria-labelledby="summary-tab">
+
+					<div class="row m-2 justify-content-end">						
+						<button class="btn btn-primary" id="import">Import</button>
+					</div>
+
+					<div class="row m-2" id="divResult"></div>
+
+					<div class="m-2"></div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+@section Scripts{
+
+	<script>		
+
+		var willImportData = { ModelName: "", List: [], ImportDataId:@Model.ImportedDataId};
+
+		$("table").css("font-size", "10px");
+
+		$("#slcImportType").on("change", function () {
+			console.log(this.value);
+			var selectedType = $(this);
+			willImportData.ModelName = selectedType.val();
+			$("td,th").css("background-color", "white");
+			$("#tableData tr:first th").each(function (i, e) {
+				//console.log(i);
+				//$(this).text("m");
+				var _current = $(this);
+				_current.html("");
+				$.ajax({
+					type: "GET",
+					url: "@Url.Action("PropertySelect","ImportedData")",
+					data: { type: selectedType.val(), index: i },
+					dataType: "html",
+					cache: false,
+					success: function (data) {
+						if (data != null) {
+							_current.append(data);
+						}
+					},
+					error: function (xhr) {
+						console.log(xhr);
+					}
+				});
+
+			});
+
+		});
+
+		$("#next").on("click", function () {
+			if (debug)
+				console.log("Next clicked");
+			var selections = [];
+			$(".slcPropertySelect").each(function (i) {
+				var slc = $(this);
+				if (slc.val() != -1) {
+					var _o = {
+						slcId: slc.attr("id"), isUnique: $("#chk_" + slc.attr("data-index"))
+							.is(":checked"), propertyName: slc.children(":selected").text(), tdIndex: slc.attr("data-index")
+					};
+					selections.push(_o);
+				}
+			});
+			if (debug)console.log(selections);
+			var datas = [];
+
+			$("#tableData tr[data-type=data-row]").each(function (j) {
+
+				var tr = $(this);
+				var _o = {};
+				for (var i = 0; i < selections.length; i++) {
+
+					_o[selections[i].propertyName] = tr.children("td:nth-child(" + (Number(selections[i].tdIndex) + 1) + ")").text();
+
+				}
+
+				datas.push(_o);
+				_o = {};
+
+			});
+
+			//console.log(datas);
+			var results = [];
+			
+			datas.forEach(function (v, i) {
+				if (results.length==0) {
+					results.push(v);
+					return;
+				}
+
+				var isEqualsJson = (obj1, obj2) => {
+					keys1 = Object.keys(obj1);
+					keys2 = Object.keys(obj2);
+
+					//return true when the two json has same length and all the properties has same value key by key
+					return keys1.length === keys2.length && Object.keys(obj1).every(key => obj1[key] == obj2[key]);
+				}
+
+				if (!results.some(x => isEqualsJson(x, v))) {
+					results.push(v);
+				}
+
+			});
+
+			//console.log("Sonuç liste : ")
+			//console.log(results);
+
+			willImportData.List = results;
+
+			var _htmlTable = "";
+
+			_htmlTable += "<table class=\"table\"> \n ";
+			_htmlTable += "<tr> \n";
+			var _s = results[0];
+
+			_htmlTable += "<th>" + "Order" + "</th> \n";
+
+			for (var prop in _s) {
+				if (typeof _s[prop] == "object") {
+					continue;
+				} else {
+					_htmlTable += "<th>"+prop+"</th> \n";
+				}
+			}
+			_htmlTable += "</tr> \n";
+
+			results.forEach(function (v,i) {
+
+				_htmlTable += "<tr> \n";
+
+				_htmlTable += "<td>" + (i+1)+ "</td> \n";
+
+				for (var prop in v) {
+					if (typeof v[prop] == "object") {
+						continue;
+					} else {
+						_htmlTable += "<td>" + v[prop] + "</td> \n";
+					}
+				}
+
+				_htmlTable += "</tr> \n";
+
+			})
+
+			_htmlTable += "</table> \n";
+
+			$("#divResult").html(_htmlTable);
+
+			//$('.nav-link active').next('li').find("a").removeClass('disabled');
+			//$('.nav li.active').next('li').find('a').attr("data-toggle", "tab")
+
+			$("#summary-tab").removeClass("disabled").tab("show");
+
+		});
+
+		$("#import").on("click", function (e) {
+
+			console.log("import clicked");
+
+			$.ajax({
+				url: '/ImportedData/InsertImportedData',
+				data: JSON.stringify(willImportData ),
+				type: 'POST',
+				contentType: 'application/json',
+				dataType: 'json',
+				success: function (result) {
+					//console.log(result);
+					ShowMessage(result);
+					if (result.type == "Success") {
+						setTimeout(function () {
+							window.location = "@Url.Action("Index")"
+						},3000);
+					}
+				}
+			});
+
+			//var _m = { type: "Success", message: "Hata!!!", statusCode: 400 };
+			//console.log(_m);
+			//ShowMessage(_m);
+
+
+
+		})
+
+	</script>
+
+
+} 

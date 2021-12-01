@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+		<UserSecretsId>28f8c552-b011-48a2-9809-b7782b4963a8</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Data\Yeni klasör\**" />
+	  <Compile Remove="NewModels\**" />
+	  <Content Remove="Data\Yeni klasör\**" />
+	  <Content Remove="NewModels\**" />
+	  <EmbeddedResource Remove="Data\Yeni klasör\**" />
+	  <EmbeddedResource Remove="NewModels\**" />
+	  <None Remove="Data\Yeni klasör\**" />
+	  <None Remove="NewModels\**" />
+	</ItemGroup>
+
+
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.21" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.20" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.10" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.11" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Design" Version="1.1.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.21" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.11">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="NPOI" Version="2.5.5" />
+	</ItemGroup>
+
+
+
+	<ItemGroup>
+		<Content Update="C:\Users\KadoreK\.nuget\packages\bootstrap\5.1.2\contentFiles\any\any\wwwroot\js\bootstrap.js">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+
+
+	<ItemGroup>
+		<None Update="Data\exam-data.db">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+
+</Project>

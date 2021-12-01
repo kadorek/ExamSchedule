@@ -1,0 +1,62 @@
+﻿@model ExamSchedule.Models.Schedule
+
+<h4>Schedule</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ScheduleCreate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" id="txtStartDate" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control"  id="txtEndDate"  />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DayStartHour" class="control-label"></label>
+                <input asp-for="DayStartHour" class="form-control" />
+                <span asp-validation-for="DayStartHour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DayStartMinute" class="control-label"></label>
+                <input asp-for="DayStartMinute" class="form-control" />
+                <span asp-validation-for="DayStartMinute" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DayEndHour" class="control-label"></label>
+                <input asp-for="DayEndHour" class="form-control" />
+                <span asp-validation-for="DayEndHour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DayEndMinute" class="control-label"></label>
+                <input asp-for="DayEndMinute" class="form-control" />
+                <span asp-validation-for="DayEndMinute" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
+<script>
+
+    $("#txtStartDate").datetimepicker({
+        timepicker: false
+    });
+
+
+</script>

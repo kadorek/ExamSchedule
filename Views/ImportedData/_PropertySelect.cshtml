@@ -1,0 +1,51 @@
+﻿@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model ExamSchedule.Models.ViewModels.PropertySelectModel
+@{
+
+}
+
+<div>
+	<div class="row m-1">
+		<select id="slcPropertySelect_@Model.CellIndex" data-index="@Model.CellIndex" class="slcPropertySelect m-1">
+			<option value="-1">Seçiniz</option>
+			@foreach (var item in Model.PropertyNames)
+			{
+				<option value="@item">@item</option>
+			}
+		</select>
+	</div>
+	<div class="row m-1">
+		<input type="checkbox" name="chk_@Model.CellIndex" id="chk_@Model.CellIndex" value="" data-index="@Model.CellIndex" /> <span style="font-size:10px;">Unique</span>
+	</div>
+	<script>
+		$(".slcPropertySelect").on("change", function () {
+			var slc = $(this)
+			var _b = false;
+			$(".slcPropertySelect").each(function (i) {
+				if ($(this).val() == slc.val() && $(this).attr("id") != slc.attr("id")) {
+					_b = true;
+					return;
+				}
+			});
+			if (_b) {
+				//alert("Değer zaten seçili");
+				slc.val(-1);
+			}
+			var tdIndex = $(this).attr("data-index");
+			var table = $(this).closest("table");
+			var color = "";
+
+			if (slc.val() == -1) {
+				color = "white";
+			} else {
+				color = "#afd69b";
+			}
+			var i = Number(tdIndex) + 1;
+			//console.log("i : "+i);
+			$("td, th").filter(":nth-child(" + i + ")")
+				.css("background-color", color);
+		});
+	</script>
+</div>
