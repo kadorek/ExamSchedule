@@ -58,6 +58,7 @@ namespace ExamSchedule.Models
 				entity.Property(e => e.Name).IsRequired();
 
 				entity.Property(e => e.Ukey).HasColumnName("UKey");
+				
 			});
 
 			modelBuilder.Entity<CourseStudent>(entity =>
@@ -100,7 +101,7 @@ namespace ExamSchedule.Models
 				entity.HasOne(d => d.Course)
 					.WithMany(p => p.Exams)
 					.HasForeignKey(d => d.CourseId)
-					.OnDelete(DeleteBehavior.ClientSetNull);
+					.OnDelete(DeleteBehavior.Cascade);
 
 				entity.HasOne(d => d.MergerExam)
 					.WithMany(p => p.InverseMergerExam)
@@ -109,9 +110,8 @@ namespace ExamSchedule.Models
 				entity.HasOne(d => d.Schedule)
 					.WithMany(p => p.Exams)
 					.HasForeignKey(d => d.ScheduleId)
-					.OnDelete(DeleteBehavior.ClientSetNull);
+					.OnDelete(DeleteBehavior.Cascade);
 			});
-
 
 			modelBuilder.Entity<ExamRoom>(entity =>
 			{
@@ -182,7 +182,6 @@ namespace ExamSchedule.Models
 				entity.Property(e => e.Short).IsRequired();
 			});
 
-
 			modelBuilder.Entity<Schedule>(entity =>
 			{
 				entity.ToTable("Schedule");
@@ -197,6 +196,11 @@ namespace ExamSchedule.Models
 				entity.Property(e => e.StartDate).IsRequired();
 
 				entity.Property(e => e.Title).IsRequired();
+
+				//entity.HasMany(d => d.ScheduleRestrictions)
+				//		.WithOne(p => p.Schedule)
+				//		.OnDelete(DeleteBehavior.ClientCascade);
+
 			});
 
 			modelBuilder.Entity<ScheduleRestriction>(entity =>
@@ -213,7 +217,7 @@ namespace ExamSchedule.Models
 				entity.HasOne(d => d.Schedule)
 					.WithMany(p => p.ScheduleRestrictions)
 					.HasForeignKey(d => d.ScheduleId)
-					.OnDelete(DeleteBehavior.ClientSetNull);
+					.OnDelete(DeleteBehavior.Cascade);
 			});
 
 			modelBuilder.Entity<Student>(entity =>

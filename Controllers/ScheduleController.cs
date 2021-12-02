@@ -202,7 +202,8 @@ namespace ExamSchedule.Controllers
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(long? id) {
-			var s = await _context.Schedules.FindAsync(id);
+			var s = await _context.Schedules.FirstOrDefaultAsync(x=>x.Id==id);
+			//Include(x=>x.ScheduleRestrictions).
 			_context.Schedules.Remove(s);
 			await _context.SaveChangesAsync();
 			return RedirectToAction(nameof(Index));

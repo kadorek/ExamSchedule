@@ -8,7 +8,9 @@
 <h1>RestrictionList</h1>
 
 <p>
-    <a asp-action="AddRestriction" asp-route-id="@ViewData["ScheduleId"]">Create New</a>
+	<a asp-action="AddRestriction" asp-route-id="@ViewData["ScheduleId"]">Create New</a>
+	@Html.ActionLink("Back to Schedule List", "Index")
+	@Html.ActionLink("Schedule Detail", "Details", new { id = Model.ToList()[0].ScheduleId })
 </p>
 <table class="table">
     <thead>
