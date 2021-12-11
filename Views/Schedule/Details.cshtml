@@ -45,13 +45,22 @@
 			@Html.DisplayNameFor(model => model.ScheduleRestrictions)
 		</dt>
 		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.ScheduleRestrictions.Count) <a href="@Url.Action("RestrictionList",new { id=Model.Id})">List</a>
+			@Html.DisplayFor(model => model.ScheduleRestrictions.Count)
+			@if (Model.ScheduleRestrictions.Count > 0)
+			{
+				<a href="@Url.Action("RestrictionList",new { id=Model.Id})">List</a>
+			}
 		</dd>
 		<dt class="col-sm-2">
 			@Html.DisplayNameFor(model => model.Exams)
+			
 		</dt>
 		<dd class="col-sm-10">
 			@Html.DisplayFor(model => model.Exams.Count)
+			@if (Model.ExamCount > 0)
+			{
+				<a href="@Url.Action("RestrictionList",new { id=Model.Id})">List</a>
+			}
 		</dd>
 	</dl>
 </div>

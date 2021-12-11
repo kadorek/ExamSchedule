@@ -201,9 +201,10 @@ namespace ExamSchedule.Controllers
 
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> DeleteConfirmed(long? id) {
-			var s = await _context.Schedules.FirstOrDefaultAsync(x=>x.Id==id);
-			//Include(x=>x.ScheduleRestrictions).
+		public async Task<IActionResult> DeleteConfirmed(long? id)
+		{
+			var s = await _context.Schedules.Include(x => x.ScheduleRestrictions).FirstOrDefaultAsync(x => x.Id == id);
+			//
 			_context.Schedules.Remove(s);
 			await _context.SaveChangesAsync();
 			return RedirectToAction(nameof(Index));
@@ -211,6 +212,51 @@ namespace ExamSchedule.Controllers
 		}
 
 
+		public async Task<IActionResult> Edit(long? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var s = await _context.Schedules.FindAsync(id);
+			if (s == null)
+			{
+				return NotFound();
+			}
+			return View(s);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Edit(long id,Schedule s) {
+			if (id != s.Id)
+			{
+				return NotFound();
+			}
+
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					_context.Update(s);
+					await _context.SaveChangesAsync();
+				}
+				catch (DbUpdateConcurrencyException)
+				{
+					if (!ScheduleExist(s.Id))
+					{
+						return NotFound();
+					}
+					else
+					{
+						throw;
+					}
+				}
+				return RedirectToAction(nameof(Index));
+			}
+			return View(s);
+		}
 
 
 
@@ -218,6 +264,11 @@ namespace ExamSchedule.Controllers
 		{
 
 			return _context.ScheduleRestrictions.Any(x => x.Id == id);
+		}
+
+
+		private bool ScheduleExist(long id) { 
+			return _context.Schedules.Any(x => x.Id == id);
 		}
 
 
