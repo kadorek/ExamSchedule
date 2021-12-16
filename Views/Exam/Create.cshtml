@@ -1,0 +1,143 @@
+﻿@model ExamSchedule.Models.Exam
+
+@{
+	ViewData["Title"] = "Create";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Exam</h4>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="ScheduleId" class="control-label"></label>
+				<select asp-for="ScheduleId" class="form-control" asp-items="ViewBag.ScheduleId" id="slcSchedule"></select>
+			</div>
+			<div class="invisible" id="divNewExamDetails">
+				<div class="form-group">
+					<label asp-for="CourseId" class="control-label"></label>
+					<select asp-for="CourseId" class="form-control" asp-items="ViewBag.CourseId"></select>
+				</div>
+				<div class="form-group">
+					<label asp-for="Duration" class="control-label"></label>(Minute)
+					<input asp-for="Duration" class="form-control" type="number" min="10" max="180" step="5" />
+					<span asp-validation-for="Duration" class="text-danger"></span>
+				</div>
+				<div>
+					<label asp-for="IsPined" class="control-label"> </label>
+					<input type="checkbox" class="form-control" @(Model != null && Model.IsPined != null && Model.IsPined == 1 ? "checked" : "") id="chkIsPinned" />
+				</div>
+				<div id="divPinnedDataCreate">
+					<div class="form-group">
+						<label asp-for="Date" class="control-label"></label>
+						<input asp-for="Date" class="form-control" id="txtExamDate" />
+						<span asp-validation-for="Date" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="StartHour" class="control-label"></label>
+						<input asp-for="StartHour" class="form-control" type="number" min="0" max="23" />
+						<span asp-validation-for="StartHour" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="StartMinute" class="control-label"></label>
+						<input asp-for="StartMinute" class="form-control" min="0" max="50" step="10" type="number" />
+						<span asp-validation-for="StartMinute" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="EndHour" class="control-label"></label>
+						<input asp-for="EndHour" class="form-control" type="number" min="0" max="23" />
+						<span asp-validation-for="EndHour" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="EndMinute" class="control-label"></label>
+						<input asp-for="EndMinute" class="form-control" min="0" max="50" step="10" type="number" />
+						<span asp-validation-for="EndMinute" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Create" class="btn btn-primary" />
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts{
+
+	<script>
+
+
+		var strLocale = "tr";
+
+		@if (Model==null || Model.IsPined==0)
+		{
+			@:$("#divPinnedDataCreate").hide();
+		}
+		else
+		{
+			@:$("#divPinnedDataCreate").show();
+		}
+
+        $("#txtExamDate").datetimepicker({
+			format: "D/M/Y",
+            useCurrent: false,
+			locale: strLocale,
+            //minDate: new Date(startDate),
+            //maxDate: new Date(endDate)
+		});
+
+
+		$("#slcSchedule").on("change", function () {
+			var sId = Number($(this).val());
+			if (sId == 0) {
+				if (!$("#divNewExamDetails").hasClass("invisible")) {
+					$("#divNewExamDetails").addClass("invisible");
+				}
+			} else {
+				$.ajax({
+					url: "@Url.Action("GetScheduleDates")",
+					dataType: "json",
+					data: { sId: sId },
+					success: function (data, status, xhr) {
+						console.log(data);
+						if (data.typeAsText == "Success" && data.data != null) {
+							if (sId > 0) {
+								$("#divNewExamDetails").removeClass("invisible");
+							}
+							var startDate = reverseDateString(data.data.start);
+							var endDate = reverseDateString(data.data.end);
+							$("#txtExamDate").data("DateTimePicker")
+								.minDate(new Date(startDate))
+								.maxDate(new Date(endDate))
+								.locale(strLocale);
+						}
+					}
+				});
+			}
+		});
+
+
+		$("#chkIsPinned").on("change", function () {
+			var c = $(this);
+
+			if (c.is(":checked")) {
+				$("#divPinnedDataCreate").show();
+			} else {
+				$("#divPinnedDataCreate").hide();
+			}
+
+		});
+
+
+	</script>
+
+
+}

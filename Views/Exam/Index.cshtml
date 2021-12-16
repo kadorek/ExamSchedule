@@ -1,0 +1,103 @@
+﻿@model IEnumerable<ExamSchedule.Models.Exam>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+		<tr>
+			<th>@Html.DisplayNameFor(model => model.Schedule)</th>
+			<th>
+				@Html.DisplayNameFor(model =>model.Course.Name)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Date)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.IsPined)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.IsMerged)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Start)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.End)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.BeforeSpace)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.AfterSpace)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Course)
+			</th>
+			<th></th>
+		</tr>
+    </thead>
+	<tbody>
+		@if (Model.Count() > 0)
+		{
+
+			@foreach (var item in Model)
+			{
+				<tr >
+					<td>@Html.DisplayFor(modelItem => item.Schedule.Title)</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Course.Name)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Date)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.IsPined)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.IsMerged)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Start)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.End)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Duration)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.BeforeSpace)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.AfterSpace)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Course.Name)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.MergerExam.Id)
+					</td>
+					<td>
+						<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+						<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+						<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+					</td>
+				</tr>
+			}
+		}
+		else
+		{
+			<tr>
+				<td colspan="1000" class="text-center">No record founded</td>
+			</tr>
+		}
+	</tbody>
+</table>

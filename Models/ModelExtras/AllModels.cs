@@ -20,10 +20,24 @@ namespace ExamSchedule.Models
 
 	}
 
-	[HideFromSelect("Id", "CourseStudents", "Exams", "ProgramCourses", "TeacherCourses")]
+	[HideFromSelect("Id", "CourseStudents", "Exams", "ProgramCourses", "TeacherCourses", "CourseFullName", "CourseProgrammeId")]
 	public partial class Course
 	{
+		public string CourseFullName
+		{
+			get
+			{
+				return this.ProgramCourses.ElementAt(0).Program.Name + "- " + this.Short + " - " + this.Name;
+			}
+		}
 
+		public string CourseProgrammeName
+		{
+			get
+			{
+				return this.ProgramCourses.ElementAt(0).Program.Name;
+			}
+		}
 	}
 
 	[HideFromSelect("Id", "CourseStudents")]
@@ -141,6 +155,27 @@ namespace ExamSchedule.Models
 	}
 
 
+	public partial class Exam
+	{
+		public string Start
+		{
+			get
+			{
+				return this.StartHour.ToString() + " : " + this.StartMinute.ToString();
+			}
+		}
+
+		public string End
+		{
+			get
+			{
+				return this.EndHour.ToString() + " : " + this.EndMinute.ToString();
+			}
+		}
+
+
+
+	}
 
 
 }

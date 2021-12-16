@@ -372,7 +372,13 @@ namespace ExamSchedule.Controllers
 
 			if (wim == null)
 			{
-				return Json(new { Type = "Error", Message = "Eklenen öğe listesi boş.", StatusCode = HttpStatusCode.BadRequest, InnerMessage = "" });
+				return Json(new
+				{
+					Type = "Error",
+					Message = "Eklenen öğe listesi boş.",
+					StatusCode = HttpStatusCode.BadRequest,
+					InnerMessage = ""
+				});
 			}
 			else
 			{
