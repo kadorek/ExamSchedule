@@ -1,0 +1,172 @@
+﻿@model ExamSchedule.Models.Exam
+
+@{
+	ViewData["Title"] = "Add Exam";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Add Exam</h1>
+
+<h4>Exam</h4>
+<hr />
+
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+
+<div class="row ">
+	<div  class="display-4">@Html.DisplayNameFor(m=>m.Schedule)</div><div class="display-4"> : </div><div class="align-text-bottom">@Html.DisplayFor(m=>m.Schedule.Title)</div>
+</div>
+<div class="row clearfix"></div>
+
+
+<div class="row">
+
+	<div class="container">
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active" id="tab-single-exam" data-toggle="tab" href="#single-exam" role="tab" aria-controls="single-exam" aria-selected="true">Add Single Exam</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link " id="tab-multi-exam" data-toggle="tab" href="#multi-exam" role="tab" aria-controls="multi-exam" aria-selected="false">Add Multiple Exams</a>
+			</li>
+		</ul>
+
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div class="tab-pane active" id="single-exam" role="tabpanel" aria-labelledby="tab-single-exam">
+				<div class="row">
+					<div class="col-md-6">
+						<form asp-action="AddExam">
+							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+							<div class="form-group">
+								@Html.HiddenFor(m => m.ScheduleId, new { id = "hdnScheduleId" })
+							</div>
+							<div id="divNewExamDetails">
+								<div class="form-group">
+									<label asp-for="CourseId" class="control-label"></label>
+									<select asp-for="CourseId" class="form-control" asp-items="ViewBag.CourseId"></select>
+								</div>
+								<div class="form-group">
+									<label asp-for="Duration" class="control-label"></label>(Minute)
+									<input asp-for="Duration" class="form-control" type="number" min="10" max="180" step="5" />
+									<span asp-validation-for="Duration" class="text-danger"></span>
+								</div>
+								<div>
+									<label asp-for="IsPined" class="control-label"> </label>
+									<input type="checkbox" class="form-control" @(Model != null && Model.IsPined != null && Model.IsPined == 1 ? "checked" : "") id="chkIsPinned" />
+								</div>
+								<div id="divPinnedDataCreate">
+									<div class="form-group">
+										<label asp-for="Date" class="control-label"></label>
+										<input asp-for="Date" class="form-control" id="txtExamDate" />
+										<span asp-validation-for="Date" class="text-danger"></span>
+									</div>
+									<div class="form-group">
+										<label asp-for="StartHour" class="control-label"></label>
+										<input asp-for="StartHour" class="form-control" type="number" min="0" max="23" />
+										<span asp-validation-for="StartHour" class="text-danger"></span>
+									</div>
+									<div class="form-group">
+										<label asp-for="StartMinute" class="control-label"></label>
+										<input asp-for="StartMinute" class="form-control" min="0" max="50" step="10" type="number" />
+										<span asp-validation-for="StartMinute" class="text-danger"></span>
+									</div>
+									<div class="form-group">
+										<label asp-for="EndHour" class="control-label"></label>
+										<input asp-for="EndHour" class="form-control" type="number" min="0" max="23" />
+										<span asp-validation-for="EndHour" class="text-danger"></span>
+									</div>
+									<div class="form-group">
+										<label asp-for="EndMinute" class="control-label"></label>
+										<input asp-for="EndMinute" class="form-control" min="0" max="50" step="10" type="number" />
+										<span asp-validation-for="EndMinute" class="text-danger"></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<input type="submit" value="Create" class="btn btn-primary" />
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane" id="multi-exam" role="tabpanel" aria-labelledby="tab-multi-exam">
+
+				Multiple Exam Form
+
+			</div>
+		</div>
+	</div>
+
+</div>
+
+@section Scripts{
+
+	<script>
+
+
+		var strLocale = "tr";
+		var startDate = reverseDateString("@Model.Schedule.StartDate");
+		var endDate = reverseDateString("@Model.Schedule.EndDate");
+
+		@if (Model==null || Model.IsPined==0)
+		{
+			@:$("#divPinnedDataCreate").hide();
+		}
+		else
+		{
+			@:$("#divPinnedDataCreate").show();
+		}
+
+		$("#txtExamDate").datetimepicker({
+			useCurrent: false,
+			format: "D/M/Y",
+            minDate: new Date(startDate),
+			maxDate: new Date(endDate),
+			locale: strLocale
+		});
+
+
+
+		@*$.ajax({
+			url: "@Url.Action("GetScheduleDates")",
+			dataType: "json",
+			data: { sId: $("#hdnScheduleId").val() },
+			success: function (data, status, xhr) {
+				console.log(data);
+				if (data.typeAsText == "Success" && data.data != null) {
+					if (sId > 0) {
+						$("#divNewExamDetails").removeClass("invisible");
+					}
+					var startDate = reverseDateString(data.data.start);
+					var endDate = reverseDateString(data.data.end);
+					$("#txtExamDate").data("DateTimePicker")
+						.minDate(new Date(startDate))
+						.maxDate(new Date(endDate))
+						.locale(strLocale);
+				}
+			}
+		});*@
+
+		@if (Model.IsPined == 0 || Model.IsPined==null)
+		{			
+			@:$("#divPinnedDataCreate").hide();
+		}
+
+		$("#chkIsPinned").on("change", function () {
+			var c = $(this);
+			if (c.is(":checked")) {
+				$("#divPinnedDataCreate").show();
+			} else {
+				$("#divPinnedDataCreate").hide();
+			}
+
+		});
+
+
+	</script>
+
+
+}

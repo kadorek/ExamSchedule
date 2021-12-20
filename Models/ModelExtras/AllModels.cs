@@ -161,7 +161,15 @@ namespace ExamSchedule.Models
 		{
 			get
 			{
-				return this.StartHour.ToString() + " : " + this.StartMinute.ToString();
+				if (this.StartHour.HasValue && this.StartMinute.HasValue)
+				{
+
+					return this.StartHour.ToString() + " : " + this.StartMinute.ToString();
+				}
+				else
+				{
+					return "";
+				}
 			}
 		}
 
@@ -169,7 +177,12 @@ namespace ExamSchedule.Models
 		{
 			get
 			{
-				return this.EndHour.ToString() + " : " + this.EndMinute.ToString();
+				if (this.EndHour.HasValue && this.EndMinute.HasValue)
+				{
+					return this.EndHour.ToString() + " : " + this.EndMinute.ToString();
+				}
+				else
+					return "";
 			}
 		}
 

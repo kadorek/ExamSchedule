@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ExamSchedule.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ExamSchedule.Controllers
 {
@@ -257,6 +258,37 @@ namespace ExamSchedule.Controllers
 			}
 			return View(s);
 		}
+
+
+
+		public async Task<IActionResult> AddExam(long id) {
+
+			Schedule _s = null;
+			try
+			{
+				_s = await _context.Schedules.FindAsync(id);
+				if (_s == null)
+				{
+					throw new Exception("Schedule not found");
+				}
+			}
+			catch (Exception ex)
+			{
+				ViewData["Message"] = ex;
+				return RedirectToAction("Index");
+			}
+
+			Exam _exam = new Exam();
+			_exam.ScheduleId = _s.Id;
+			_exam.Schedule = _s;
+
+			ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name", null, "CourseProgrammeName");
+			ViewData["CourseId"] = ((SelectList)ViewData["CourseId"]).Prepend(new SelectListItem() { Value = "0", Text = "Lütfen Kurs Seçiniz.", Selected = true });
+
+			return View(_exam);
+
+		}
+
 
 
 
