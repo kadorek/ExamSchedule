@@ -230,7 +230,8 @@ namespace ExamSchedule.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(long id,Schedule s) {
+		public async Task<IActionResult> Edit(long id, Schedule s)
+		{
 			if (id != s.Id)
 			{
 				return NotFound();
@@ -261,7 +262,8 @@ namespace ExamSchedule.Controllers
 
 
 
-		public async Task<IActionResult> AddExam(long id) {
+		public async Task<IActionResult> AddExam(long id)
+		{
 
 			Schedule _s = null;
 			try
@@ -290,6 +292,54 @@ namespace ExamSchedule.Controllers
 		}
 
 
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> AddExam(long id,[FromForm] Exam e)
+		{
+			//Schedule _s = null;
+			//try
+			//{
+			//	_s = await _context.Schedules.FindAsync(id);
+			//	if (_s == null)
+			//	{
+			//		throw new Exception("Schedule not found");
+			//	}
+			//}
+			//catch (Exception ex)
+			//{
+			//	ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name", null, "CourseProgrammeName");
+			//	ViewData["CourseId"] = ((SelectList)ViewData["CourseId"]).Prepend(new SelectListItem() { Value = "0", Text = "Lütfen Kurs Seçiniz.", Selected = true });
+			//	ViewData["Message"] = ex;
+			//	return RedirectToAction("AddExam", new { id = id });
+			//}
+
+			try
+			{
+				if (ModelState.IsValid)
+				{
+					_context.Add(e);
+					await _context.SaveChangesAsync();
+				}
+				else
+				{
+					throw new Exception("ModelState is invalid.");
+				}
+			}
+			catch (Exception ex)
+			{
+				ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name", null, "CourseProgrammeName");
+				ViewData["CourseId"] = ((SelectList)ViewData["CourseId"]).Prepend(new SelectListItem() { Value = "0", Text = "Lütfen Kurs Seçiniz.", Selected = true });
+				ViewData["Message"] = ex.Message;
+				return RedirectToAction("AddExam", new { id = id });
+			}
+
+			return RedirectToAction("Index");
+
+
+
+		}
+
+
 
 
 		private bool RestrictionExist(long id)
@@ -299,7 +349,8 @@ namespace ExamSchedule.Controllers
 		}
 
 
-		private bool ScheduleExist(long id) { 
+		private bool ScheduleExist(long id)
+		{
 			return _context.Schedules.Any(x => x.Id == id);
 		}
 

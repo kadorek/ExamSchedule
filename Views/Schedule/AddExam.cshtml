@@ -16,7 +16,7 @@
 </div>
 
 <div class="row ">
-	<div  class="display-4">@Html.DisplayNameFor(m=>m.Schedule)</div><div class="display-4"> : </div><div class="align-text-bottom">@Html.DisplayFor(m=>m.Schedule.Title)</div>
+	<div class="display-4">@Html.DisplayNameFor(m => m.Schedule)</div><div class="display-4"> : </div><div class="align-text-bottom">@Html.DisplayFor(m => m.Schedule.Title)</div>
 </div>
 <div class="row clearfix"></div>
 
@@ -94,8 +94,26 @@
 			</div>
 			<div class="tab-pane" id="multi-exam" role="tabpanel" aria-labelledby="tab-multi-exam">
 
-				Multiple Exam Form
+				<div class="row">
+					<div class="form-group">
+						<label class="control-label">Duration (Minute):</label>
+						<input class="form-control" type="number" min="10" max="180" step="5" id="txtDuration" />
+					</div>
+				</div>
+				<div class="row">
 
+					<div class="col-5" id="divToAdd">
+						<div class="row" >
+							<span>Eklenecekler</span>
+						</div>
+
+					</div>
+					<div class="col-5" id="divAdded">
+						<div class="row">
+							<span>Eklenenler</span>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -106,7 +124,7 @@
 
 	<script>
 
-
+		var allCourses = null;
 		var strLocale = "tr";
 		var startDate = reverseDateString("@Model.Schedule.StartDate");
 		var endDate = reverseDateString("@Model.Schedule.EndDate");
@@ -151,7 +169,7 @@
 		});*@
 
 		@if (Model.IsPined == 0 || Model.IsPined==null)
-		{			
+		{
 			@:$("#divPinnedDataCreate").hide();
 		}
 
@@ -164,6 +182,38 @@
 			}
 
 		});
+
+		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+			var target = $(e.target).attr("href") // activated tab
+			//console.log(target);
+
+			if (target == "#multi-exam") {
+				$.ajax({
+					url: "@Url.Action("GetAllCourses","Course")",
+					dataType: "json",
+					method:"post",
+					success: function (data, status, xhr) {
+						console.log(data);
+						allCourses = data;
+						for (var i = 0; i < allCourses.length; i++) {
+
+							var _c = allCourses[i];
+							var rowCourse = $("<div class='row' courseId='" + _c.cuourseId + "'>	" + _c.courseName + "	</div > ");
+
+							$("#divToAdd").append(rowCourse);
+
+						}
+					}
+				});
+
+
+				
+
+			}
+
+		});
+
+
 
 
 	</script>
