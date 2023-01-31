@@ -1,0 +1,230 @@
+﻿@model IEnumerable<ExamSchedule.Models.Exam>
+
+@{
+    ViewData["Title"] = "BatchCreate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listCourse = ViewBag.Courses;
+}
+<style>
+
+    .course {
+        border: solid 2px orange;
+    }
+
+    .card-body {
+        max-height: 250px;
+        overflow-y: scroll;
+    }
+
+    .card-header {
+        min-height: 100px;
+    }
+</style>
+<h1>BatchCreate</h1>
+
+<div>
+    <div class="form-group">
+        <label class="control-label">Schedule</label>
+        <select id="slcSchedule" class="form-control" asp-items="ViewBag.ScheduleId"></select>
+    </div>
+</div>
+<div class="invisible" id="divBacthCourseList">
+    <div class="row">
+        <div class="col-12">
+            <h3>Defaults</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3"><b>Duration</b></div>
+        <div class="col-1"><b>:</b></div>
+        <div class="col-7">
+            <input type="number" id="txt-duration" placeholder="Set default duration." value="0" size="3" /> min.
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3"><b>Before Space</b></div>
+        <div class="col-1"><b>:</b></div>
+        <div class="col-7">
+            <input type="number" id="txt-before-space" placeholder="Set default duration." value="0" size="3" /> min.
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3"><b>After Space</b></div>
+        <div class="col-1"><b>:</b></div>
+        <div class="col-7">
+            <input type="number" id="txt-after-space" placeholder="Set default duration." value="0" size="3" /> min.
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button id="btn-all" class="btn btn-primary float-right" data-state="0">Hepsini Seç</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-5">
+            <button id="btn-ekle" class=" btn btn-primary"> Ekle</button>
+        </div>
+    <div class="col-2">
+        <a href="@(Url.Action("Index"))">Back to List</a>
+    </div>
+    </div>
+
+    <div class="row">
+        @foreach (dynamic item in listCourse)
+        {
+            var list = (List<Course>)ExamSchedule.Extensions.ExtensionMethods.ReadDynamicObjectProperty(item, "List");
+
+            <div class="col-7 bg-secondary m-1 p-0">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-11">
+                            <button id="btn-@(list[0].ProgramCourses.ToList()[0].Program.Id)" class="btn btn-primary m-1 float-left" type="button" data-toggle="collapse" data-target="#div-collapse-@(list[0].ProgramCourses.ToList()[0].Program.Id)" aria-expanded="false" aria-controls="div-collapse-@(list[0].ProgramCourses.ToList()[0].Program.Id)">
+                                @(list[0].ProgramCourses.ToList()[0].Program.Name)
+                            </button>
+                        </div>
+                        <div class="float-right col-1 ">
+                            <input type="checkbox" class=" form-control chk-programme" data-programme-id="@(list[0].ProgramCourses.ToList()[0].Program.Id)" id="chk-programme-@(list[0].ProgramCourses.ToList()[0].Program.Id)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="collapse col-11 m-auto" id="div-collapse-@(list[0].ProgramCourses.ToList()[0].Program.Id)">
+
+                        <ul class="list-group list-group-flush">
+                            @foreach (var lc in list)
+                            {
+                                <li class="list-group-item m-0 p-1" id="li-course-@lc.Id">
+                                    @lc.Name
+                                    <div class="float-right">
+                                        <input type="checkbox" class=" form-control chk-course " data-course-id="@(lc.Id)" data-programme-id="@(list[0].ProgramCourses.ToList()[0].Program.Id)" id="chk-course-@(lc.Id)" />
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+
+        }
+
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $("#slcSchedule").on("change", function () {
+            var s = $(this);
+            if (s.val() == 0) {
+                if (!$("#divBacthCourseList").hasClass("invisible")) {
+                    $("#divBacthCourseList").addClass("invisible");
+                }
+            } else {
+                if ($("#divBacthCourseList").hasClass("invisible")) {
+                    $("#divBacthCourseList").removeClass("invisible");
+                }
+            }
+        })
+
+        $(".chk-programme").on("click", function () {
+            var c = $(this);
+            var pid = c.attr("data-programme-id");
+            var flag = false;
+            if (c.is(":checked"))
+                flag = true;
+            else
+                flag = false;
+            $("ul input[data-programme-id=" + pid + "]").each(function () {
+                $(this).prop("checked", flag);
+            });
+        });
+
+        $(".chk-course").on("click", function () {
+            var c = $(this);
+            var pid = c.attr("data-programme-id");
+            var cid = c.attr("data-course-id");
+            var flag = true;
+            if (c.is(":checked")) {
+                $("ul input[data-programme-id=" + pid + "]").each(function () {
+                    if (!$(this).is(":checked")) {
+                        flag = false;
+                        return;
+                    }
+                });
+            } else {
+                flag = false;
+
+            }
+
+            $(".chk-programme[data-programme-id=" + pid + "]").prop("checked", flag)
+        })
+
+        $("#btn-all").on("click", function () {
+            var b = $(this);
+            var s = Number(b.attr("data-state"));
+            if (s == 0) {
+                $(".chk-course").prop("checked", true);
+                $(".chk-programme").prop("checked", true);
+                b.attr("data-state", "1");
+                b.text("Hepsini İptal Et");
+            } else {
+                $(".chk-course").prop("checked", false);
+                $(".chk-programme").prop("checked", false);
+                b.attr("data-state", "0");
+                b.text("Hepsini Seç");
+            }
+        })
+
+
+
+        $("#btn-ekle").on("click", function () {
+            var data = {};
+            data.ScheduleId = $("#slcSchedule").val();
+            data.Duration = $("#txt-duration").val();
+            data.BeforeSpace = $("#txt-before-space").val();
+            data.AfterSpace = $("#txt-after-space").val();
+            var courseIds = "";
+            $(".chk-course").each(function () {
+                var c = $(this);
+                if (c.is(":checked")) {
+                    courseIds += (c.attr("data-course-id") + "-");
+                }
+            });
+            courseIds = courseIds.substring(0, courseIds.length - 1);
+            LogYazdir(courseIds);
+            data.CourseIds = courseIds
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("BatchCreate")",
+                data: data,
+                dataType: "json",
+                statusCode: {
+                    200: function (data) {
+                        console.log("asda");
+                        //LogYazdir(data);
+                        //LogYazdir("access");
+                        window.location.href="@(Url.Action("Index"))";
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    LogYazdir(errorThrown);
+                }
+            })
+
+        });
+
+
+
+        function LogYazdir(msj) {
+            var flag = true;
+            if (flag) {
+                console.log(msj)
+            }
+        }
+
+
+    </script>
+}
+

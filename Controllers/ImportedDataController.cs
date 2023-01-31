@@ -15,6 +15,7 @@ using ExamSchedule.Models.ViewModels;
 using ExamSchedule.Extensions;
 using Newtonsoft.Json;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace ExamSchedule.Controllers
 {
@@ -204,6 +205,23 @@ namespace ExamSchedule.Controllers
 
 		}
 
+		[HttpGet]
+		public FileResult Download(long? id)
+		{
+			if (id == null)
+			{
+				RedirectToAction("Error");
+			}
+			var obj=_context.ImportedDatas.FirstOrDefault(e => e.Id == id);
+
+			return File(obj.Data,obj.MIMEType,$"imported-data-{obj.Date.Replace('.','-').Replace(' ','-').Replace(':','-')}");
+
+		}
+
+		public IActionResult Error()
+		{
+			return BadRequest();
+		}
 
 
 		public string ReadExcelData(byte[] _data)

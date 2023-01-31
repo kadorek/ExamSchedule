@@ -1,0 +1,136 @@
+﻿@model ExamSchedule.Models.Exam
+
+@{
+
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+
+    <h4>Exam</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="ScheduleId" class="control-label"></label>
+                    <select asp-for="ScheduleId" class="form-control" asp-items="ViewBag.ScheduleId"></select>
+                    <span asp-validation-for="ScheduleId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CourseId" class="control-label"></label>
+                    <select asp-for="CourseId" class="form-control" asp-items="ViewBag.CourseId"></select>
+                    <span asp-validation-for="CourseId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Date" class="control-label"></label>
+                    <input asp-for="Date" class="form-control" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IsPined" class="control-label"></label>
+                    <input asp-for="IsPinnedParsed" type="checkbox" class="form-control" />
+                    <span asp-validation-for="IsPinnedParsed" class="text-danger"></span>
+                </div>
+                <div id="divPinnedDataEdit">
+                    <div class="form-group">
+                        <label asp-for="IsMerged" class="control-label"></label>
+                        <input asp-for="IsMerged" class="form-control" />
+                        <span asp-validation-for="IsMerged" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MergerExamId" class="control-label"></label>
+                        <select asp-for="MergerExamId" class="form-control" asp-items="ViewBag.MergerExamId"></select>
+                        <span asp-validation-for="MergerExamId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="StartHour" class="control-label"></label>
+                        <input asp-for="StartHour" class="form-control" />
+                        <span asp-validation-for="StartHour" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="StartMinute" class="control-label"></label>
+                        <input asp-for="StartMinute" class="form-control" />
+                        <span asp-validation-for="StartMinute" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EndHour" class="control-label"></label>
+                        <input asp-for="EndHour" class="form-control" />
+                        <span asp-validation-for="EndHour" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EndMinute" class="control-label"></label>
+                        <input asp-for="EndMinute" class="form-control" />
+                        <span asp-validation-for="EndMinute" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Duration" class="control-label"></label>
+                        <input asp-for="Duration" class="form-control" />
+                        <span asp-validation-for="Duration" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="BeforeSpace" class="control-label"></label>
+                        <input asp-for="BeforeSpace" class="form-control" />
+                        <span asp-validation-for="BeforeSpace" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AfterSpace" class="control-label"></label>
+                        <input asp-for="AfterSpace" class="form-control" />
+                        <span asp-validation-for="AfterSpace" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+
+        <script>
+
+            @if (Model == null || Model.IsPined == false)
+            {
+                @:$("#divPinnedDataEdit").hide();
+            }
+            else
+            {
+                @:$("#divPinnedDataEdit").show();
+            }
+
+
+                $("#IsPinnedParsed").on("change", function () {
+                    var c = $(this);
+
+                    if (c.is(":checked")) {
+                        $("#divPinnedDataEdit").show();
+                    } else {
+                        $("#divPinnedDataEdit").hide();
+                    }
+                })
+
+        </script>
+
+
+
+    }
+</body>
+</html>

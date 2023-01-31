@@ -55,7 +55,7 @@
 								</div>
 								<div>
 									<label asp-for="IsPined" class="control-label"> </label>
-									<input type="checkbox" class="form-control" @(Model != null && Model.IsPined != null && Model.IsPined == 1 ? "checked" : "") id="chkIsPinned" />
+									<input type="checkbox" class="form-control" @(Model != null && Model.IsPined != null && Model.IsPined == true ? "checked" : "") id="chkIsPinned" />
 								</div>
 								<div id="divPinnedDataCreate">
 									<div class="form-group">
@@ -129,7 +129,7 @@
 		var startDate = reverseDateString("@Model.Schedule.StartDate");
 		var endDate = reverseDateString("@Model.Schedule.EndDate");
 
-		@if (Model==null || Model.IsPined==0)
+		@if (Model==null || Model.IsPined==false)
 		{
 			@:$("#divPinnedDataCreate").hide();
 		}
@@ -168,7 +168,7 @@
 			}
 		});*@
 
-		@if (Model.IsPined == 0 || Model.IsPined==null)
+		@if ( Model.IsPined==null || Model.IsPined == false)
 		{
 			@:$("#divPinnedDataCreate").hide();
 		}
