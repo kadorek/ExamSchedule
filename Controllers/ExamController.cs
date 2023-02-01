@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ExamSchedule.Models;
 using ExamSchedule.Models.ViewModels;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace ExamSchedule.Controllers
 {
@@ -249,7 +250,30 @@ namespace ExamSchedule.Controllers
         }
 
 
+        public async Task<String> GetExamName(long id)
+        {
+            var exam= await _context.Exams.FirstOrDefaultAsync(x => x.Id == id);
+            if (exam == null) { return ""; }
+            else
+            {
+                return exam.Course.Name;
+            }
+        }
 
+
+        //public async Task<IActionResult> MergeExams(long[] examIds) { 
+        
+        //    var examList=_context.Exams.Where(x=>examIds.Contains(x.Id)).ToList();
+           
+        //    Exam newExam= new Exam();
+
+
+
+
+
+        //    return BadRequest();
+        
+        //}
 
 
     }
