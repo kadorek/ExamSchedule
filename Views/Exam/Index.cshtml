@@ -40,7 +40,8 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        Aşağıdaki sınavlar birleştirilecektir. Onaylıyor musunuz?
+                        <span id="spnAcceptMessage">Aşağıdaki sınavlar birleştirilecektir. Onaylıyor musunuz?</span>
+                        <span id="spnEmptyListMessage" class="bg-danger">Birleştirmek için lütfen birden çok ders seçiniz !</span>
                     </div>
                 </div>
                 <div class="row">
@@ -138,7 +139,9 @@
                         @Html.DisplayFor(modelItem => item.End)
                     </td>
                     <td>
-                        <input class="form-control" type="checkbox" value="@item.Id" name="chkExam" id="chkExam-@item.Id" data-exam-id="@item.Id" data-exam-course-name="@item.Course.Name" data-exam-course-programme-name="@item.Course.CourseProgrammeName">
+                        <div>
+                            <input type="checkbox" class="form-check-input form-control-lg" value="@item.Id" name="chkExam" id="chkExam-@item.Id" data-exam-id="@item.Id" data-exam-course-name="@item.Course.Name" data-exam-course-programme-name="@item.Course.CourseProgrammeName">
+                        </div>
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
@@ -165,6 +168,14 @@
 
 
             $("[name=chkExam]").on("change", function () {
+                var chk = $(this);
+                if (chk.is(":checked")) {
+                    chk.closest("tr").css("background-color", "lime");
+                } else {
+                    chk.closest("tr").css("background-color", "white");
+
+                }
+
                 var id = $(this).attr("id");
                 var examId = $(this).data("exam-id");
                 //console.log(`${id} - ${examId}`);
@@ -173,14 +184,33 @@
             $("#btnMerge").on("click", function () {
 
                 var modalExamList = $("#ulExamList");
+                modalExamList.html("");
                 $("[name=chkExam]").each(function () {
                     var chk = $(this)
                     if (chk.is(":checked")) {
                         var li = $("<li></li>");
                         li.text(chk.data("exam-course-programme-name") + " - " + chk.data("exam-course-name"));
+                        modalExamList.append(li);
                     }
                 });
+                $("#spnAcceptMessage").toggle(modalExamList.children("li").length > 1);
+                $("#spnEmptyListMessage").toggle(modalExamList.children("li").length < 2);
 
+            });
+
+
+            $("#tblExam tr").on("click", function () {
+                var tr = $(this);
+                var chk = tr.find("[name=chkExam]");
+                if (tr.attr("selected")) {
+                    tr.css("background-color", "white");
+                    tr.removeAttr("selected");
+                    chk.attr("checked", false);
+                } else {
+                    tr.css("background-color", "lime");
+                    tr.attr("selected", true);
+                    chk.attr("checked", true);
+                }
             });
 
         })
