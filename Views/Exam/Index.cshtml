@@ -54,7 +54,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Merge</button>
+                <button type="button" class="btn btn-primary" id="btnMergeAccept">Merge</button>
             </div>
         </div>
     </div>
@@ -66,6 +66,7 @@
 <table class="table" id="tblExam">
     <thead>
         <tr>
+            <th>Select</th>
             <th>@Html.DisplayNameFor(model => model.Schedule)</th>
             <th>
                 Programme
@@ -88,7 +89,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.End)
             </th>
-            <th>Select</th>
             <th></th>
         </tr>
     </thead>
@@ -98,6 +98,11 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>
+                        <div>
+                            <input type="checkbox" class="form-check-input form-control-lg" value="@item.Id" name="chkExam" id="chkExam-@item.Id" data-exam-id="@item.Id" data-exam-course-name="@item.Course.Name" data-exam-course-programme-name="@item.Course.CourseProgrammeName">
+                        </div>
+                    </td>
                     <td>@Html.DisplayFor(modelItem => item.Schedule.Title)</td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Course.CourseProgrammeName)
@@ -139,11 +144,6 @@
                         @Html.DisplayFor(modelItem => item.End)
                     </td>
                     <td>
-                        <div>
-                            <input type="checkbox" class="form-check-input form-control-lg" value="@item.Id" name="chkExam" id="chkExam-@item.Id" data-exam-id="@item.Id" data-exam-course-name="@item.Course.Name" data-exam-course-programme-name="@item.Course.CourseProgrammeName">
-                        </div>
-                    </td>
-                    <td>
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                         <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                         <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
@@ -163,38 +163,50 @@
 
 @section Scripts{
     <script>
+        var datatable;
+        var selectedExams = new Array();
         $(document).ready(function () {
-            $("#tblExam").DataTable();
 
-
-            $("[name=chkExam]").on("change", function () {
-                var chk = $(this);
-                if (chk.is(":checked")) {
-                    chk.closest("tr").css("background-color", "lime");
-                } else {
-                    chk.closest("tr").css("background-color", "white");
-
+            datatable = $("#tblExam").DataTable({
+                "drawCallback": function (settings) {
+                    console.log("table drawed");
+                    RowClick();
+                    CheckBoxChange();
                 }
-
-                var id = $(this).attr("id");
-                var examId = $(this).data("exam-id");
-                //console.log(`${id} - ${examId}`);
-            })
+            });
 
             $("#btnMerge").on("click", function () {
 
                 var modalExamList = $("#ulExamList");
                 modalExamList.html("");
-                $("[name=chkExam]").each(function () {
-                    var chk = $(this)
-                    if (chk.is(":checked")) {
+                var tableData = datatable.rows().data();
+                for (var prop in tableData) {
+                    var html = $(tableData[prop][0]);
+                    var chk = html.find("[name=chkExam]");
+                    if (selectedExams.indexOf(Number(chk.data("exam-id"))) != -1) {
                         var li = $("<li></li>");
                         li.text(chk.data("exam-course-programme-name") + " - " + chk.data("exam-course-name"));
                         modalExamList.append(li);
                     }
+                }
+                $("#spnAcceptMessage").toggle(selectedExams.length > 1);
+                $("#spnEmptyListMessage").toggle(selectedExams.length < 2);
+            });
+
+
+            $("#btnMergeAccept").on("click", function () {
+
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("MergeExams")",
+                    data: { "examIds": selectedExams },
+                    success: function (data) {
+                        console.log("tamamdır");
+                    }
                 });
-                $("#spnAcceptMessage").toggle(modalExamList.children("li").length > 1);
-                $("#spnEmptyListMessage").toggle(modalExamList.children("li").length < 2);
+
 
             });
 
@@ -202,18 +214,26 @@
             $("#tblExam tr").on("click", function () {
                 var tr = $(this);
                 var chk = tr.find("[name=chkExam]");
+                var examId = Number(chk.data("exam-id"));
                 if (tr.attr("selected")) {
                     tr.css("background-color", "white");
                     tr.removeAttr("selected");
                     chk.attr("checked", false);
+                    if (selectedExams.indexOf(examId) != -1) {
+                        selectedExams = removeItemAll(selectedExams, examId);
+                    }
                 } else {
                     tr.css("background-color", "lime");
                     tr.attr("selected", true);
                     chk.attr("checked", true);
+                    if (selectedExams.indexOf(examId) == -1) {
+                        selectedExams.push(examId);
+                    }
                 }
             });
+        }
 
-        })
+
     </script>
 
 
