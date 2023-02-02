@@ -252,7 +252,7 @@ namespace ExamSchedule.Controllers
 
         public async Task<String> GetExamName(long id)
         {
-            var exam= await _context.Exams.FirstOrDefaultAsync(x => x.Id == id);
+            var exam = await _context.Exams.FirstOrDefaultAsync(x => x.Id == id);
             if (exam == null) { return ""; }
             else
             {
@@ -260,20 +260,30 @@ namespace ExamSchedule.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult MergeExams(long[] examIds)
+        {
 
-        //public async Task<IActionResult> MergeExams(long[] examIds) { 
-        
-        //    var examList=_context.Exams.Where(x=>examIds.Contains(x.Id)).ToList();
-           
-        //    Exam newExam= new Exam();
+            var examList = _context.Exams.Where(x => examIds.Contains(x.Id)).ToList();
 
+            try
+            {
+                foreach (var item in examList)
+                {
+                    item.MergerExamId = examList[0].Id;
+                    item.IsMerged = 1;
+                }
+                _context.SaveChanges();
+                return Ok();
+            }
+            catch (Exception)
+            {
 
+                return BadRequest();
 
+            }
 
-
-        //    return BadRequest();
-        
-        //}
+        }
 
 
     }
