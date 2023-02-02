@@ -211,28 +211,7 @@
             });
 
 
-            RowClick();
-            CheckBoxChange();
-
-        })
-
-        function CheckBoxChange() {
-            $("[name=chkExam]").off("change");
-            $("[name=chkExam]").on("change", function () {
-                var chk = $(this);
-                var id = $(this).attr("id");
-                var examId = $(this).data("exam-id");
-                if (chk.is(":checked")) {
-                    chk.closest("tr").css("background-color", "lime");
-                } else {
-                    chk.closest("tr").css("background-color", "white");
-                }
-            })
-        }
-
-        function RowClick() {
-            $("#tblExam tbody tr").off("click");
-            $("#tblExam tbody tr").on("click", function () {
+            $("#tblExam tr").on("click", function () {
                 var tr = $(this);
                 var chk = tr.find("[name=chkExam]");
                 var examId = Number(chk.data("exam-id"));
