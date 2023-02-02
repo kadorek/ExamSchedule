@@ -231,8 +231,8 @@
         }
 
         function RowClick() {
-            $("#tblExam tr").off("click");
-            $("#tblExam tr").on("click", function () {
+            $("#tblExam tbody tr").off("click");
+            $("#tblExam tbody tr").on("click", function () {
                 var tr = $(this);
                 var chk = tr.find("[name=chkExam]");
                 var examId = Number(chk.data("exam-id"));
