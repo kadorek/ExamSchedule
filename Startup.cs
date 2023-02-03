@@ -28,7 +28,7 @@ namespace ExamSchedule
 
 			services.AddControllersWithViews();
 			services.AddDbContext<Models.examdataContext>();
-			services.AddMvc().AddNewtonsoftJson();
+			services.AddMvc().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 		}
 

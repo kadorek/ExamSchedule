@@ -11,154 +11,157 @@
     <a asp-action="Create">Create New</a> |
     <a asp-action="BatchCreate">Bacth Create New Exams</a>
 </p>
-<div class="row">
-    <div class="col-3">
-        <button type="button" id="btnMerge" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            Merge Selected Exams
-        </button>
+<div style="display:none;">
+    <div class="row">
+        <div class="col-3">
+            <button type="button" id="btnMerge" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Merge Selected Exams
+            </button>
+        </div>
+        <div class="col-3">z</div>
+        <div class="col-3">z</div>
     </div>
-    <div class="col-3">z</div>
-    <div class="col-3">z</div>
-</div>
 
-
-
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Merge Exams</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-12">
-                        <label for="txtNewExamName" class="control-label fw-bold   ">Exam Name</label>
-                        <input type="text" class="form-control" id="txtNewExamName">
+    <!-- Modal -->
+    <div class="modal fade modal-lg" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Merge Exams</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="txtNewExamName" class="control-label fw-bold   ">Exam Name</label>
+                            <input type="text" class="form-control" id="txtNewExamName">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <span id="spnAcceptMessage">Aşağıdaki sınavlar birleştirilecektir. Onaylıyor musunuz?</span>
+                            <span id="spnEmptyListMessage" class="bg-danger">Birleştirmek için lütfen birden çok ders seçiniz !</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <ul id="ulExamList">
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <span id="spnAcceptMessage">Aşağıdaki sınavlar birleştirilecektir. Onaylıyor musunuz?</span>
-                        <span id="spnEmptyListMessage" class="bg-danger">Birleştirmek için lütfen birden çok ders seçiniz !</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <ul id="ulExamList">
-                        </ul>
-                    </div>
-                </div>
-            </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="btnMergeAccept">Merge</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="btnMergeAccept">Merge</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-
-
-
-<table class="table" id="tblExam">
-    <thead>
-        <tr>
-            <th>Select</th>
-            <th>@Html.DisplayNameFor(model => model.Schedule)</th>
-            <th>
-                Programme
-            </th>
-            <th>
-                @Html.DisplayNameFor(model =>model.Course)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsPined)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsMerged)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Start)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.End)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model.Count() > 0)
-        {
-            @foreach (var item in Model)
+    <table class="table" id="tblExam">
+        <thead>
+            <tr>
+                <th>Select</th>
+                <th>@Html.DisplayNameFor(model => model.Schedule)</th>
+                <th>
+                    Programme
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model =>model.Course)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsPined)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsMerged)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Start)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.End)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count() > 0)
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <div>
+                                <input type="checkbox" class="form-check-input form-control-lg" value="@item.Id" name="chkExam" id="chkExam-@item.Id" data-exam-id="@item.Id" data-exam-course-name="@item.Course.Name" data-exam-course-programme-name="@item.Course.CourseProgrammeName">
+                            </div>
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.Schedule.Title)</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Course.CourseProgrammeName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Course.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @{
+                                if (item.IsPined == true)
+                                {
+                                    <i class="bi bi-check"></i>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-x"></i>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @{
+                                if (item.IsMerged == 1)
+                                {
+                                    <i class="bi bi-check"></i>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-x"></i>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Start)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.End)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td>
-                        <div>
-                            <input type="checkbox" class="form-check-input form-control-lg" value="@item.Id" name="chkExam" id="chkExam-@item.Id" data-exam-id="@item.Id" data-exam-course-name="@item.Course.Name" data-exam-course-programme-name="@item.Course.CourseProgrammeName">
-                        </div>
-                    </td>
-                    <td>@Html.DisplayFor(modelItem => item.Schedule.Title)</td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Course.CourseProgrammeName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Course.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Date)
-                    </td>
-                    <td>
-                        @{
-                            if (item.IsPined == true)
-                            {
-                                <i class="bi bi-check"></i>
-                            }
-                            else
-                            {
-                                <i class="bi bi-x"></i>
-                            }
-                        }
-                    </td>
-                    <td>
-                        @{
-                            if (item.IsMerged == 1)
-                            {
-                                <i class="bi bi-check"></i>
-                            }
-                            else
-                            {
-                                <i class="bi bi-x"></i>
-                            }
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Start)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.End)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
+                    <td colspan="1000" class="text-center">No record founded</td>
                 </tr>
             }
-        }
-        else
-        {
-            <tr>
-                <td colspan="1000" class="text-center">No record founded</td>
-            </tr>
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
+
+<button id="btnX">Yıkla</button>
+
+<div id="dicSecondTableArea">
+    <table id="tblExamSecond"></table>
+</div>
 
 
 @section Scripts{
@@ -166,7 +169,6 @@
         var datatable;
         var selectedExams = new Array();
         $(document).ready(function () {
-
             datatable = $("#tblExam").DataTable({
                 "drawCallback": function (settings) {
                     console.log("table drawed");
@@ -174,7 +176,6 @@
                     CheckBoxChange();
                 }
             });
-
             $("#btnMerge").on("click", function () {
 
                 var modalExamList = $("#ulExamList");
@@ -192,8 +193,6 @@
                 $("#spnAcceptMessage").toggle(selectedExams.length > 1);
                 $("#spnEmptyListMessage").toggle(selectedExams.length < 2);
             });
-
-
             $("#btnMergeAccept").on("click", function () {
 
 
@@ -204,18 +203,38 @@
                     data: { "examIds": selectedExams },
                     success: function (data) {
                         console.log("tamamdır");
+                        $("button[data-bs-dismiss=modal]").trigger({ type: "click" });
                     }
                 });
 
 
             });
-
-
             RowClick();
             CheckBoxChange();
 
-        })
+            //$('#tblExamSecond').DataTable({
+            //    processing: true,
+            //    serverSide: true,
+            //    ajax: {
+            //        "url": '@Url.Action("GetAllExams")',
+            //        "type": "POST"
+            //    }
+            //});
 
+            $("#btnX").on("click", function () {
+
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("GetAllExams")",
+                    success: function (result) {
+                        console.log(result);
+                    }
+                });
+            });
+
+
+
+        });
         function CheckBoxChange() {
             $("[name=chkExam]").off("change");
             $("[name=chkExam]").on("change", function () {
@@ -229,10 +248,9 @@
                 }
             })
         }
-
         function RowClick() {
-            $("#tblExam tr").off("click");
-            $("#tblExam tr").on("click", function () {
+            $("#tblExam tbody tr").off("click");
+            $("#tblExam tbody tr").on("click", function () {
                 var tr = $(this);
                 var chk = tr.find("[name=chkExam]");
                 var examId = Number(chk.data("exam-id"));
@@ -253,6 +271,8 @@
                 }
             });
         }
+
+
 
 
     </script>

@@ -263,7 +263,6 @@ namespace ExamSchedule.Controllers
         [HttpPost]
         public IActionResult MergeExams(long[] examIds)
         {
-
             var examList = _context.Exams.Where(x => examIds.Contains(x.Id)).ToList();
 
             try
@@ -282,6 +281,12 @@ namespace ExamSchedule.Controllers
                 return BadRequest();
 
             }
+
+        }
+
+        public  IActionResult GetAllExams()
+        {
+            return  Ok(_context.Exams.ToList());
 
         }
 
