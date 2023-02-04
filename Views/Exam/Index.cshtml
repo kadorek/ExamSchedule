@@ -11,53 +11,17 @@
     <a asp-action="Create">Create New</a> |
     <a asp-action="BatchCreate">Bacth Create New Exams</a>
 </p>
+<div class="row">
+    <div class="col-3">
+        <button type="button" id="btnMerge" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Merge Selected Exams
+        </button>
+    </div>
+    <div class="col-3">z</div>
+    <div class="col-3">z</div>
+</div>
 <div style="display:none;">
-    <div class="row">
-        <div class="col-3">
-            <button type="button" id="btnMerge" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Merge Selected Exams
-            </button>
-        </div>
-        <div class="col-3">z</div>
-        <div class="col-3">z</div>
-    </div>
 
-    <!-- Modal -->
-    <div class="modal fade modal-lg" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Merge Exams</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <label for="txtNewExamName" class="control-label fw-bold   ">Exam Name</label>
-                            <input type="text" class="form-control" id="txtNewExamName">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <span id="spnAcceptMessage">Aşağıdaki sınavlar birleştirilecektir. Onaylıyor musunuz?</span>
-                            <span id="spnEmptyListMessage" class="bg-danger">Birleştirmek için lütfen birden çok ders seçiniz !</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <ul id="ulExamList">
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="btnMergeAccept">Merge</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <table class="table" id="tblExam">
         <thead>
@@ -157,22 +121,59 @@
     </table>
 </div>
 
-<button id="btnX">Yıkla</button>
+<!-- Modal -->
+<div class="modal fade modal-lg" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Merge Exams</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <span id="spnAcceptMessage">Aşağıdaki sınavlar birleştirilecektir. Onaylıyor musunuz?</span>
+                        <span id="spnEmptyListMessage" class="bg-danger">Birleştirmek için lütfen birden çok ders seçiniz !</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <ul id="ulExamList">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="btnMergeAccept">Merge</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div id="dicSecondTableArea">
-    <table id="tblExamSecond"></table>
+    <table class="table" id="tblExamSecond"></table>
 </div>
 
 
 @section Scripts{
     <script>
         var datatable;
+        var datatable2;
         var selectedExams = new Array();
+        var jsondata = new Array();
         $(document).ready(function () {
+
+            $('[data-toggle="tooltip"]').tooltip({
+                placement: 'top'
+            });
+
             datatable = $("#tblExam").DataTable({
                 "drawCallback": function (settings) {
                     console.log("table drawed");
-                    RowClick();
+                    RowClick("tblExam");
                     CheckBoxChange();
                 }
             });
@@ -180,56 +181,46 @@
 
                 var modalExamList = $("#ulExamList");
                 modalExamList.html("");
-                var tableData = datatable.rows().data();
-                for (var prop in tableData) {
-                    var html = $(tableData[prop][0]);
-                    var chk = html.find("[name=chkExam]");
-                    if (selectedExams.indexOf(Number(chk.data("exam-id"))) != -1) {
+                var tableData = datatable2.rows().data();
+
+                for (var d in jsondata) {
+                    var x = jsondata[d];
+                    if (selectedExams.indexOf(x.id) != -1) {
                         var li = $("<li></li>");
-                        li.text(chk.data("exam-course-programme-name") + " - " + chk.data("exam-course-name"));
+                        li.text(x.programme + " - " + x.course);
                         modalExamList.append(li);
                     }
                 }
+
                 $("#spnAcceptMessage").toggle(selectedExams.length > 1);
                 $("#spnEmptyListMessage").toggle(selectedExams.length < 2);
             });
+
             $("#btnMergeAccept").on("click", function () {
-
-
 
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("MergeExams")",
                     data: { "examIds": selectedExams },
                     success: function (data) {
-                        console.log("tamamdır");
+                        log(data);
                         $("button[data-bs-dismiss=modal]").trigger({ type: "click" });
                     }
                 });
 
-
             });
-            RowClick();
+
+            RowClick("tblExam");
             CheckBoxChange();
 
-            //$('#tblExamSecond').DataTable({
-            //    processing: true,
-            //    serverSide: true,
-            //    ajax: {
-            //        "url": '@Url.Action("GetAllExams")',
-            //        "type": "POST"
-            //    }
-            //});
-
-            $("#btnX").on("click", function () {
-
-                $.ajax({
-                    type: "GET",
-                    url: "@Url.Action("GetAllExams")",
-                    success: function (result) {
-                        console.log(result);
-                    }
-                });
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetAllExams")",
+                dataType: 'json',
+                success: function (result) {
+                    jsondata = result;
+                    datatable2 = CreateDatatable("tblExamSecond", jsondata);
+                }
             });
 
 
@@ -237,42 +228,182 @@
         });
         function CheckBoxChange() {
             $("[name=chkExam]").off("change");
-            $("[name=chkExam]").on("change", function () {
+            $("[name=chkExam]").on("change", function (event2) {
+                log("change");
                 var chk = $(this);
                 var id = $(this).attr("id");
                 var examId = $(this).data("exam-id");
                 if (chk.is(":checked")) {
                     chk.closest("tr").css("background-color", "lime");
+                    if (selectedExams.indexOf(examId) == -1) {
+                        selectedExams.push(examId);
+                    }
                 } else {
                     chk.closest("tr").css("background-color", "white");
+                    if (selectedExams.indexOf(examId) != -1) {
+                        selectedExams = removeItemAll(selectedExams, examId);
+                    }
                 }
+                event2.stopPropagation();
             })
         }
-        function RowClick() {
-            $("#tblExam tbody tr").off("click");
-            $("#tblExam tbody tr").on("click", function () {
+
+        function RowClick(tableId) {
+            $("#" + tableId + " tbody tr").off("click");
+            $("#" + tableId + " tbody tr").on("click", function (event) {
+                log("click");
                 var tr = $(this);
-                var chk = tr.find("[name=chkExam]");
+                var chk = $(tr.find("[name=chkExam]")[0]);
                 var examId = Number(chk.data("exam-id"));
                 if (tr.attr("selected")) {
-                    tr.css("background-color", "white");
+                    tr.css("background-color", "white");[0]
                     tr.removeAttr("selected");
-                    chk.attr("checked", false);
+                    chk.prop("checked", false);
                     if (selectedExams.indexOf(examId) != -1) {
                         selectedExams = removeItemAll(selectedExams, examId);
                     }
                 } else {
                     tr.css("background-color", "lime");
                     tr.attr("selected", true);
-                    chk.attr("checked", true);
+                    chk.prop("checked", true);
                     if (selectedExams.indexOf(examId) == -1) {
                         selectedExams.push(examId);
                     }
                 }
+                event.stopPropagation();
             });
         }
 
+        function CreateDatatable(tableId, datax) {
+            var table = $("#" + tableId).DataTable({
+                orderCellsTop: true,
+                fixedHeader: true,
+                columnDefs: [{
+                    "defaultContent": "",
+                    "targets": "_all"
+                }],
+                data: datax,
+                columns: [
+                    {
+                        data: null,
+                        title: "Select",
+                        render: function (data, type, row, meta) {
+                            var str = '<input type="checkbox" class="form-check-input form-control-lg" value="' + data.id + '" name="chkExam" id="chkExam-' + data.id + '" data-exam-id="' + data.id + '" data-exam-course-name="' + data.course + '" data-exam-course-programme-name="' + data.programme + '">';
+                            return str;
+                        }
+                    },
+                    { data: 'schedule', title: "Schedule" },
+                    { data: 'programme', title: "Programme" }, 
+                    { data: 'ukey', title: "Unique Key" },
+                    { data: 'course', title: "Course" },
+                    { data: 'date', title: "Date" },
+                    {
+                        data: 'start',
+                        title: "Start"
+                    },
+                    {
+                        data: 'end',
+                        title: "End"
+                    },
+                    {
+                        data: 'isPined',
+                        title: "Pinned",
+                        render: function (data, type, row, meta) {
+                            var str = data ? '<i class="bi bi-check"></i>' : '<i class="bi bi-x" > </i>';
+                            return str;
+                        }
+                    },
+                    {
+                        data: 'isMerged',
+                        title: "Merged",
+                        render: function (ddata, type, row, meta) {
+                            var str = ddata ? '<i class="bi bi-check" data-bs-toggle="tooltip" title="' + jsondata.find(x => x.id == row.mergerExamId).ukey + ' - ' + jsondata.find(x => x.id == row.mergerExamId).programme + ' - ' + jsondata.find(x => x.id == row.mergerExamId).course + '"></i>' : '<i class="bi bi-x" > </i>';
+                            return str;
+                        }
+                    },
+                    {
+                        data: null,
+                        title: "operations",
+                        render: function (data, type, row, meta) {
+                            var str = '<a href="/Exam/Edit/' + data.id + '">Edit</a> | <a href="/Exam/Details/' + data.id + '">Details</a> | <a href="/Exam/Delete/' + data.id + '">Delete</a>';
 
+                            return str;
+                        }
+                    }
+                ],
+                "drawCallback": function (settings) {
+                    console.log("table2 drawed");
+                    RowClick(tableId);
+                    CheckBoxChange();
+                },
+                initComplete: function () {
+
+                    $('#' + tableId + ' thead tr')
+                        .clone(true)
+                        .addClass('filters')
+                        .appendTo('#' + tableId + ' thead');
+
+                    var api = this.api();
+                    var cLen = api.columns()[0].length;
+                    // For each column
+                    api
+                        .columns()
+                        .eq(0)
+                        .each(function (colIdx) {
+
+                            // Set the header cell to contain the input element
+                            var cell = $('.filters th').eq(
+                                $(api.column(colIdx).header()).index()
+                            );
+                            cell.text("");
+                            if (colIdx == 0 || colIdx > cLen - 4) {
+                                return;
+                            }
+                            var title = $(cell).text();
+                            $(cell).html('<input type="text" placeholder="' + title + '" />');
+
+                            // On every keypress in this input
+                            $(
+                                'input',
+                                $('.filters th').eq($(api.column(colIdx).header()).index())
+                            )
+                                .off('keyup change')
+                                .on('change', function (e) {
+                                    // Get the search value
+                                    $(this).attr('title', $(this).val());
+                                    var regexr = '({search})'; //$(this).parents('th').find('select').val();
+
+                                    var cursorPosition = this.selectionStart;
+                                    // Search the column for that value
+                                    api
+                                        .column(colIdx)
+                                        .search(
+                                            this.value != ''
+                                                ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                                : '',
+                                            this.value != '',
+                                            this.value == ''
+                                        )
+                                        .draw();
+                                })
+                                .on('keyup', function (e) {
+                                    e.stopPropagation();
+                                    $(this).trigger('change');
+                                    $(this)
+                                        .focus()[0]
+                                        .setSelectionRange(cursorPosition, cursorPosition);
+                                });
+                        });
+
+
+                    $(".filters > th").off("click").removeClass().removeAttr("aria-controls").removeAttr("aria-sort");
+                }
+            });
+
+            return table;
+
+
+        }
 
 
     </script>

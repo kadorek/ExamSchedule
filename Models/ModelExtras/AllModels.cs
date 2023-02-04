@@ -38,6 +38,14 @@ namespace ExamSchedule.Models
                 return this.ProgramCourses.ElementAt(0).Program.Name;
             }
         }
+        [NotMapped]
+        public long CourseProgrammeId
+        {
+            get
+            {
+                return this.ProgramCourses.ElementAt(0).Program.Id;
+            }
+        }
     }
 
     [HideFromSelect("Id", "CourseStudents")]
@@ -187,6 +195,7 @@ namespace ExamSchedule.Models
                     return "";
             }
         }
+        
         [NotMapped]
         public bool IsPinnedParsed
         {
@@ -203,10 +212,10 @@ namespace ExamSchedule.Models
 
                 }
             }
-            set
-            {
-                IsPined = value;
-            }
+            //set
+            //{
+            //    IsPined = value;
+            //}
         }
 
     }

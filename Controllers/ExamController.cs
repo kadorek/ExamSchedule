@@ -264,6 +264,10 @@ namespace ExamSchedule.Controllers
         public IActionResult MergeExams(long[] examIds)
         {
             var examList = _context.Exams.Where(x => examIds.Contains(x.Id)).ToList();
+            if (!examList.All(x => x.ScheduleId == examList[0].ScheduleId))
+            {
+                return BadRequest();
+            }
 
             try
             {
@@ -284,9 +288,25 @@ namespace ExamSchedule.Controllers
 
         }
 
-        public  IActionResult GetAllExams()
+        public JsonResult GetAllExams()
         {
-            return  Ok(_context.Exams.ToList());
+            return Json(_context.Exams.Select(x => new ExamDatatableModel
+            {
+                Id = x.Id,
+                Programme = x.Course.CourseProgrammeName,
+                ProgrammeId = x.Course.CourseProgrammeId,
+                Course = x.Course.Name,
+                CourseId = x.CourseId,
+                Schedule = x.Schedule.Title,
+                ScheduleId = x.ScheduleId,
+                End = x.End,
+                IsMerged = x.IsMerged == 0 ? false : true,
+                IsPined = x.IsPinnedParsed,
+                MergerExamId = x.MergerExamId,
+                Start = x.Start,
+                Date = x.Date,
+                Ukey=x.Course.Ukey
+            }));
 
         }
 
