@@ -17,108 +17,8 @@
             Merge Selected Exams
         </button>
     </div>
-    <div class="col-3">z</div>
-    <div class="col-3">z</div>
-</div>
-<div style="display:none;">
-
-
-    <table class="table" id="tblExam">
-        <thead>
-            <tr>
-                <th>Select</th>
-                <th>@Html.DisplayNameFor(model => model.Schedule)</th>
-                <th>
-                    Programme
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model =>model.Course)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Date)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsPined)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsMerged)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Start)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.End)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.Count() > 0)
-            {
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            <div>
-                                <input type="checkbox" class="form-check-input form-control-lg" value="@item.Id" name="chkExam" id="chkExam-@item.Id" data-exam-id="@item.Id" data-exam-course-name="@item.Course.Name" data-exam-course-programme-name="@item.Course.CourseProgrammeName">
-                            </div>
-                        </td>
-                        <td>@Html.DisplayFor(modelItem => item.Schedule.Title)</td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Course.CourseProgrammeName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Course.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date)
-                        </td>
-                        <td>
-                            @{
-                                if (item.IsPined == true)
-                                {
-                                    <i class="bi bi-check"></i>
-                                }
-                                else
-                                {
-                                    <i class="bi bi-x"></i>
-                                }
-                            }
-                        </td>
-                        <td>
-                            @{
-                                if (item.IsMerged == 1)
-                                {
-                                    <i class="bi bi-check"></i>
-                                }
-                                else
-                                {
-                                    <i class="bi bi-x"></i>
-                                }
-                            }
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Start)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.End)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>
-                    </tr>
-                }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="1000" class="text-center">No record founded</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="col-3"></div>
+    <div class="col-3"></div>
 </div>
 
 <!-- Modal -->
@@ -153,8 +53,10 @@
     </div>
 </div>
 
-<div id="dicSecondTableArea">
-    <table class="table" id="tblExamSecond"></table>
+<div class="row">
+    <div class="col-11">
+        <table class="table" id="tblExamSecond"></table>
+    </div>
 </div>
 
 
@@ -177,6 +79,7 @@
                     CheckBoxChange();
                 }
             });
+
             $("#btnMerge").on("click", function () {
 
                 var modalExamList = $("#ulExamList");
@@ -276,11 +179,12 @@
 
         function CreateDatatable(tableId, datax) {
             var table = $("#" + tableId).DataTable({
+                "autoWidth": false,
                 orderCellsTop: true,
                 fixedHeader: true,
                 columnDefs: [{
                     "defaultContent": "",
-                    "targets": "_all"
+                    "targets": "_all",
                 }],
                 data: datax,
                 columns: [
@@ -293,21 +197,24 @@
                         }
                     },
                     { data: 'schedule', title: "Schedule" },
-                    { data: 'programme', title: "Programme" }, 
+                    { data: 'programme', title: "Programme" },
                     { data: 'ukey', title: "Unique Key" },
                     { data: 'course', title: "Course" },
                     { data: 'date', title: "Date" },
                     {
                         data: 'start',
-                        title: "Start"
+                        title: "Start",
+                        width: "10%"
                     },
                     {
                         data: 'end',
-                        title: "End"
+                        title: "End",
+                        width: "10%"
                     },
                     {
                         data: 'isPined',
                         title: "Pinned",
+                        width: "10%",
                         render: function (data, type, row, meta) {
                             var str = data ? '<i class="bi bi-check"></i>' : '<i class="bi bi-x" > </i>';
                             return str;
@@ -316,6 +223,7 @@
                     {
                         data: 'isMerged',
                         title: "Merged",
+                        width: "10%",
                         render: function (ddata, type, row, meta) {
                             var str = ddata ? '<i class="bi bi-check" data-bs-toggle="tooltip" title="' + jsondata.find(x => x.id == row.mergerExamId).ukey + ' - ' + jsondata.find(x => x.id == row.mergerExamId).programme + ' - ' + jsondata.find(x => x.id == row.mergerExamId).course + '"></i>' : '<i class="bi bi-x" > </i>';
                             return str;
@@ -345,6 +253,7 @@
 
                     var api = this.api();
                     var cLen = api.columns()[0].length;
+
                     // For each column
                     api
                         .columns()
@@ -355,12 +264,47 @@
                             var cell = $('.filters th').eq(
                                 $(api.column(colIdx).header()).index()
                             );
-                            cell.text("");
+                            //
+
                             if (colIdx == 0 || colIdx > cLen - 4) {
+                                cell.text("");
                                 return;
                             }
+
                             var title = $(cell).text();
-                            $(cell).html('<input type="text" placeholder="' + title + '" />');
+
+
+                            switch (colIdx) {
+                                case 1:
+                                    var r = getUniqueValueFromJsonArray(jsondata, "schedule");
+                                    var slc = $('<select id="slc-' + title + '"></select>');
+                                    var opt1 = $('<option value="-1">' + title + ' filter </option>');
+                                    slc.append(opt1);
+                                    r.forEach(function (item, index) {
+                                        var o = $('<option value="' + item + '">' + item + '</option>');
+                                        slc.append(o);
+                                    });
+                                    cell.html("");
+                                    cell.append(slc);
+                                    break;
+                                case 2:
+                                    var r = getUniqueValueFromJsonArray(jsondata, "programme");
+                                    var slc = $('<select id="slc-' + title + '"></select>');
+                                    var opt1 = $('<option value="-1">' + title + ' filter </option>');
+                                    slc.append(opt1);
+                                    r.forEach(function (item, index) {
+                                        var o = $('<option  value="' + item + '">' + item + '</option>');
+                                        slc.append(o);
+                                    });
+                                    cell.html("");
+                                    cell.append(slc);
+                                    break;
+                                default:
+                                    $(cell).html('<input type="text" placeholder="' + title + ' filter " />');
+                                    break;
+
+                            }
+
 
                             // On every keypress in this input
                             $(
@@ -393,12 +337,40 @@
                                         .focus()[0]
                                         .setSelectionRange(cursorPosition, cursorPosition);
                                 });
+
+                            $('select', $('.filters th').eq($(api.column(colIdx).header()).index()))
+                                .off("change")
+                                .on("change", function (e) {
+
+                                    // Get the search value
+                                    $(this).attr('title', $(this).val());
+                                    var regexr = '({search})';
+                                    if ( $(this).val()=="-1" ) {
+                                        api.column(colIdx).search("").draw();
+                                    } else {
+                                        api
+                                            .column(colIdx)
+                                            .search(
+                                                this.value != ''
+                                                    ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                                    : '',
+                                                this.value != '',
+                                                this.value == ''
+                                            )
+                                            .draw();
+                                    }
+
+                                })
+
                         });
 
 
                     $(".filters > th").off("click").removeClass().removeAttr("aria-controls").removeAttr("aria-sort");
                 }
             });
+
+            $("#" + tableId).addClass("table-hover table-sm");
+            $("#" + tableId).css("width", "100%");
 
             return table;
 

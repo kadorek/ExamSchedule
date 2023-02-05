@@ -116,3 +116,15 @@ function removeItemAll(arr, value) {
 function log(msg) {
     console.log(msg);
 }
+
+function getUniqueValueFromJsonArray(arr, fieldName) {
+    var r = new Array();
+    arr.forEach(function (item, index) {
+        if (r.indexOf(item[fieldName]) == -1) {
+            r.push(item[fieldName]);
+        }
+    });
+
+    return r;
+
+}
