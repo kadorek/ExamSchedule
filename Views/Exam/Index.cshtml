@@ -123,6 +123,12 @@
                 success: function (result) {
                     jsondata = result;
                     datatable2 = CreateDatatable("tblExamSecond", jsondata);
+                    var today = new Date();
+                    $(".filters th input[data-date=date]").datetimepicker({
+                        minDate: today,
+                        format: "D/M/Y",
+                        locale: "tr"
+                    });
                 }
             });
 
@@ -179,7 +185,7 @@
 
         function CreateDatatable(tableId, datax) {
             var table = $("#" + tableId).DataTable({
-                "autoWidth": false,
+                autoWidth: false,
                 orderCellsTop: true,
                 fixedHeader: true,
                 columnDefs: [{
@@ -203,18 +209,15 @@
                     { data: 'date', title: "Date" },
                     {
                         data: 'start',
-                        title: "Start",
-                        width: "10%"
+                        title: "Start"
                     },
                     {
                         data: 'end',
-                        title: "End",
-                        width: "10%"
+                        title: "End"
                     },
                     {
                         data: 'isPined',
                         title: "Pinned",
-                        width: "10%",
                         render: function (data, type, row, meta) {
                             var str = data ? '<i class="bi bi-check"></i>' : '<i class="bi bi-x" > </i>';
                             return str;
@@ -223,7 +226,6 @@
                     {
                         data: 'isMerged',
                         title: "Merged",
-                        width: "10%",
                         render: function (ddata, type, row, meta) {
                             var str = ddata ? '<i class="bi bi-check" data-bs-toggle="tooltip" title="' + jsondata.find(x => x.id == row.mergerExamId).ukey + ' - ' + jsondata.find(x => x.id == row.mergerExamId).programme + ' - ' + jsondata.find(x => x.id == row.mergerExamId).course + '"></i>' : '<i class="bi bi-x" > </i>';
                             return str;
@@ -299,6 +301,18 @@
                                     cell.html("");
                                     cell.append(slc);
                                     break;
+                                case 3:
+                                    $(cell).html('<input type="text" placeholder="' + title + ' filter " size="10" />');
+                                    break;
+                                case 5:
+                                    var input = $('<input type="text" data-date="date" placeholder="' + title + ' filter " size="10" />');
+                                    $(cell).html("");
+                                    $(cell).append(input);
+                                    break;
+                                case 6:
+                                case 7:
+                                    $(cell).html('<input type="text" placeholder="' + title + ' filter " size="5" />');
+                                    break;
                                 default:
                                     $(cell).html('<input type="text" placeholder="' + title + ' filter " />');
                                     break;
@@ -345,7 +359,7 @@
                                     // Get the search value
                                     $(this).attr('title', $(this).val());
                                     var regexr = '({search})';
-                                    if ( $(this).val()=="-1" ) {
+                                    if ($(this).val() == "-1") {
                                         api.column(colIdx).search("").draw();
                                     } else {
                                         api

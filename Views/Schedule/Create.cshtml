@@ -90,7 +90,7 @@
 		$("#txtStartDate").datetimepicker({
 			minDate: today,
 			format: "D/M/Y",
-			locale: strLocale,
+			locale: strLocale
 		});
 		$("#txtStartDate").on("dp.change", function (e) {
 			$("#txtEndDate").data("DateTimePicker").minDate(e.date);
