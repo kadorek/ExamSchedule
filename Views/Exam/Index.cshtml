@@ -54,8 +54,8 @@
 </div>
 
 <div class="row">
-    <div class="col-11">
-        <table class="table" id="tblExamSecond"></table>
+    <div class="col-11" id="xyz">
+        <table id="tblExamSecond" style="width:100%;"></table>
     </div>
 </div>
 
@@ -123,15 +123,13 @@
                 success: function (result) {
                     jsondata = result;
                     datatable2 = CreateDatatable("tblExamSecond", jsondata);
-                    var today = new Date();
-                    $(".filters th input[data-date=date]").datetimepicker({
-                        minDate: today,
-                        format: "D/M/Y",
-                        locale: "tr"
+                    $(".filters th input[data-date=date]").datepicker({
+                        dateFormat: "dd/dd/yyyy",
+                        scope: "kh"
+
                     });
                 }
             });
-
 
 
         });
@@ -266,15 +264,18 @@
                             var cell = $('.filters th').eq(
                                 $(api.column(colIdx).header()).index()
                             );
-                            //
 
+                            cell.attr("id", "th-filter-" + colIdx);
+                            //  log(cell);
+
+                            //
                             if (colIdx == 0 || colIdx > cLen - 4) {
                                 cell.text("");
                                 return;
                             }
 
                             var title = $(cell).text();
-
+                            var addedObject = null;
 
                             switch (colIdx) {
                                 case 1:
@@ -286,8 +287,7 @@
                                         var o = $('<option value="' + item + '">' + item + '</option>');
                                         slc.append(o);
                                     });
-                                    cell.html("");
-                                    cell.append(slc);
+                                    addedObject = slc;
                                     break;
                                 case 2:
                                     var r = getUniqueValueFromJsonArray(jsondata, "programme");
@@ -298,26 +298,30 @@
                                         var o = $('<option  value="' + item + '">' + item + '</option>');
                                         slc.append(o);
                                     });
-                                    cell.html("");
-                                    cell.append(slc);
+                                    addedObject = slc;
                                     break;
                                 case 3:
-                                    $(cell).html('<input type="text" placeholder="' + title + ' filter " size="10" />');
+                                    addedObject = $('<input type="text" placeholder="' + title + ' filter" size="10" />');
                                     break;
                                 case 5:
                                     var input = $('<input type="text" data-date="date" placeholder="' + title + ' filter " size="10" />');
-                                    $(cell).html("");
-                                    $(cell).append(input);
+                                    addedObject = input;
                                     break;
                                 case 6:
                                 case 7:
-                                    $(cell).html('<input type="text" placeholder="' + title + ' filter " size="5" />');
+                                    addedObject = $('<input type="text" placeholder="' + title + ' filter " size="5" />');
                                     break;
                                 default:
-                                    $(cell).html('<input type="text" placeholder="' + title + ' filter " />');
+                                    addedObject = $('<input type="text" placeholder="' + title + ' filter " />');
                                     break;
-
                             }
+                            addedObject.css("width", "100%");
+                            cell.html("");
+                            cell.append(addedObject);
+                            log(addedObject.parent().attr("id"));
+
+                            cell.addClass("kh");
+
 
 
                             // On every keypress in this input
@@ -373,12 +377,9 @@
                                             )
                                             .draw();
                                     }
-
                                 })
 
                         });
-
-
                     $(".filters > th").off("click").removeClass().removeAttr("aria-controls").removeAttr("aria-sort");
                 }
             });
