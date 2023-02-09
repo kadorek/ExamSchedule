@@ -195,7 +195,7 @@ namespace ExamSchedule.Models
                     return "";
             }
         }
-        
+
         [NotMapped]
         public bool IsPinnedParsed
         {
@@ -212,10 +212,28 @@ namespace ExamSchedule.Models
 
                 }
             }
-            //set
-            //{
-            //    IsPined = value;
-            //}
+            set
+            {
+                IsPinnedParsed = value;
+            }
+        }
+
+        [NotMapped]
+        public bool IsMergedParsed
+        {
+            get
+            {
+                if (!IsMerged.HasValue || !IsMerged.Value)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+
+                }
+            }
+            set { IsMergedParsed = value; }
         }
 
     }

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ExamSchedule.Models;
 using ExamSchedule.Models.ViewModels;
 using System.Runtime.InteropServices.WindowsRuntime;
+using NPOI.OpenXmlFormats.Dml;
 
 namespace ExamSchedule.Controllers
 {
@@ -40,6 +41,19 @@ namespace ExamSchedule.Controllers
                 .Include(e => e.MergerExam)
                 .Include(e => e.Schedule)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (exam.IsMerged==true) {
+                var examList = _context.Exams.Where(ex => ex.MergerExamId == id).ToList();
+                var total = 0;
+
+                foreach (var item in examList)
+                {
+                    total += item.Course.CourseStudents.Count;
+                }
+                ViewData["TotalStudentCount"] = total;
+            }
+
+
             if (exam == null)
             {
                 return NotFound();
@@ -99,7 +113,7 @@ namespace ExamSchedule.Controllers
             }
             ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name", exam.CourseId);
             ViewData["MergerExamId"] = new SelectList(_context.Exams, "Id", "Id", exam.MergerExamId);
-            ViewData["ScheduleId"] = new SelectList(_context.Schedules, "Id", "EndDate", exam.ScheduleId);
+            ViewData["ScheduleId"] = new SelectList(_context.Schedules, "Id", "Title", exam.ScheduleId);
             return View(exam);
         }
 
@@ -274,7 +288,7 @@ namespace ExamSchedule.Controllers
                 foreach (var item in examList)
                 {
                     item.MergerExamId = examList[0].Id;
-                    item.IsMerged = 1;
+                    item.IsMerged = true;
                 }
                 _context.SaveChanges();
                 return Ok();
@@ -300,16 +314,34 @@ namespace ExamSchedule.Controllers
                 Schedule = x.Schedule.Title,
                 ScheduleId = x.ScheduleId,
                 End = x.End,
-                IsMerged = x.IsMerged == 0 ? false : true,
+                IsMerged = x.IsMerged == false ? false : true,
                 IsPined = x.IsPinnedParsed,
                 MergerExamId = x.MergerExamId,
                 Start = x.Start,
                 Date = x.Date,
-                Ukey=x.Course.Ukey
+                Ukey = x.Course.Ukey
             }));
 
         }
 
+        [HttpPost]
+        public IActionResult BacthDelete(long[] examIds)
+        {
+            var examList = _context.Exams.Where(x => examIds.Contains(x.Id)).ToList();
+            try
+            {
+                _context.Exams.RemoveRange(examList);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok();
+        }
+
+        
 
     }
 }

@@ -18,7 +18,7 @@ namespace ExamSchedule.Models
         public long CourseId { get; set; }
         public string Date { get; set; }
         public bool? IsPined { get; set; }
-        public long? IsMerged { get; set; }
+        public bool? IsMerged { get; set; }
         public long? MergerExamId { get; set; }
         public long? StartHour { get; set; }
         public long? StartMinute { get; set; }

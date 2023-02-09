@@ -1,8 +1,8 @@
-﻿@model ExamSchedule.Models.ScheduleRestriction
+﻿@model ExamSchedule.Models.ViewModels.ScheduleRestrictionAddViewModel
 
 @{
-	ViewData["Title"] = "AddRestriction";
-	Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "AddRestriction";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>AddRestriction</h1>
@@ -10,104 +10,114 @@
 <h4>ScheduleRestriction</h4>
 <hr />
 <div class="row">
-	<div class="col-12">
-		<form asp-action="AddRestriction" id="frmRestriction">
-			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-			<div class="form-group">
-				<input type="hidden" asp-for="ScheduleId" class="form-control" value="@Model.ScheduleId"/>
-			</div>
-			<div class="row">
-				<div class="form-group col-4">
-					<label asp-for="Date" class="control-label"></label>
-					<input asp-for="Date" class="form-control" id="txtDate" />
-					<span asp-validation-for="Date" class="text-danger"></span>
-				</div>
-			</div>
-			<div class="row ">
-				<div class="form-group col-12">
-					<label asp-for="Description" class="control-label"></label>
-					<input asp-for="Description" class="form-control" />
-					<span asp-validation-for="Description" class="text-danger"></span>
-				</div>
-			</div>
-			<div class="row ">
-				<div class="form-group col-2">
-					<label asp-for="StartHour" class="control-label"></label>
-					<input type="number" min="0" max="24" asp-for="StartHour" class="form-control" />
-					<span asp-validation-for="StartHour" class="text-danger"></span>
-				</div>
-				<div class="form-group col-2">
-					<label asp-for="StartMinute" class="control-label"></label>
-					<input type="number" min="0" max="50" step="10" asp-for="StartMinute" class="form-control" />
-					<span asp-validation-for="StartMinute" class="text-danger"></span>
-				</div>
-				<div class="col-1"></div>
-				<div class="form-group col-2">
-					<label asp-for="EndHour" class="control-label"></label>
-					<input type="number" min="0" max="24" asp-for="EndHour" class="form-control" />
-					<span asp-validation-for="EndHour" class="text-danger"></span>
-				</div>
-				<div class="form-group col-2">
-					<label asp-for="EndMinute" class="control-label"></label>
-					<input type="number" min="0" max="50" step="10" asp-for="EndMinute" class="form-control" />
-					<span asp-validation-for="EndMinute" class="text-danger"></span>
-				</div>
-			</div>
-			<div class="row justify-content-end">
-				<div class="form-group ">
-					<input type="submit" value="Create" class="btn btn-primary" />
-				</div>
-			</div>
-		</form>
-	</div>
+    <div class="col-12">
+        <form asp-action="AddRestriction" id="frmRestriction">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="ScheduleRestriction.ScheduleId" class="form-control" value="@Model.ScheduleRestriction.ScheduleId" />
+            </div>
+            <div class="row">
+                <div class="form-group col-2">
+                    <input class="form-check-input form-control-lg" asp-for="ApplyAllDays" type="checkbox" id="chkAllday" />Apply all days
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-4">
+                    <label asp-for="ScheduleRestriction.Date" class="control-label"></label>
+                    <input asp-for="ScheduleRestriction.Date" class="form-control" id="txtDate" />
+                    <span asp-validation-for="ScheduleRestriction.Date" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="form-group col-12">
+                    <label asp-for="ScheduleRestriction.Description" class="control-label"></label>
+                    <input asp-for="ScheduleRestriction.Description" class="form-control" />
+                    <span asp-validation-for="ScheduleRestriction.Description" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="form-group col-2">
+                    <label asp-for="ScheduleRestriction.StartHour" class="control-label"></label>
+                    <input type="number" min="0" max="24" asp-for="ScheduleRestriction.StartHour" class="form-control" />
+                    <span asp-validation-for="ScheduleRestriction.StartHour" class="text-danger"></span>
+                </div>
+                <div class="form-group col-2">
+                    <label asp-for="ScheduleRestriction.StartMinute" class="control-label"></label>
+                    <input type="number" min="0" max="50" step="10" asp-for="ScheduleRestriction.StartMinute" class="form-control" />
+                    <span asp-validation-for="ScheduleRestriction.StartMinute" class="text-danger"></span>
+                </div>
+                <div class="col-1"></div>
+                <div class="form-group col-2">
+                    <label asp-for="ScheduleRestriction.EndHour" class="control-label"></label>
+                    <input type="number" min="0" max="24" asp-for="ScheduleRestriction.EndHour" class="form-control" />
+                    <span asp-validation-for="ScheduleRestriction.EndHour" class="text-danger"></span>
+                </div>
+                <div class="form-group col-2">
+                    <label asp-for="ScheduleRestriction.EndMinute" class="control-label"></label>
+                    <input type="number" min="0" max="50" step="10" asp-for="ScheduleRestriction.EndMinute" class="form-control" />
+                    <span asp-validation-for="ScheduleRestriction.EndMinute" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div class="form-group ">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
 <div>
-	<a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts{
 
-	<script>
+    <script>
 
-		var strLocale = "tr";
-		var startDate = reverseDateString("@Model.Schedule.StartDate");
-		var endDate = reverseDateString("@Model.Schedule.EndDate");
+        var strLocale = "tr";
+        var startDate = reverseDateString("@Model.ScheduleRestriction.Schedule.StartDate");
+        var endDate = reverseDateString("@Model.ScheduleRestriction.Schedule.EndDate");
 
-		//console.log(startDate);
+        $("#chkAllday").on("change", function () {
+            $("#txtDate").prop("disabled", $(this).is(":checked"));
+        })
 
-		//console.log(new Date("@Model.Schedule.StartDate").toLocaleDateString())
 
-		$("#txtDate").datetimepicker({
-			format: "D/M/Y",
-			useCurrent: false,
-			locale: strLocale,
-			minDate: new Date(startDate),
-			maxDate: new Date(endDate)
-		});
+        $("#txtDate").datetimepicker({
+            format: "D/M/Y",
+            useCurrent: false,
+            locale: strLocale,
+            minDate: new Date(startDate),
+            maxDate: new Date(endDate)
+        });
 
-		//.data("DateTimePicker").minDate(new Date(startDate)).maxDate(new Date(endDate));
+        //.data("DateTimePicker").minDate(new Date(startDate)).maxDate(new Date(endDate));
 
-		$("#frmRestriction").submit(function () {
+        $("#frmRestriction").submit(function () {
 
-			var sh =Number( $("[name=StartHour]").val());
-			var eh = Number( $("[name=EndHour]").val());
-			var sm = Number( $("[name=StartMinute]").val());
-			var em = Number( $("[name=EndMinute]").val());
+            var sh = Number($("[name=StartHour]").val());
+            var eh = Number($("[name=EndHour]").val());
+            var sm = Number($("[name=StartMinute]").val());
+            var em = Number($("[name=EndMinute]").val());
 
-			var s = sh * 60 + sm;
-			var en = eh * 60 + em;
+            var s = sh * 60 + sm;
+            var en = eh * 60 + em;
 
-			if (s> en) {
-				console.log("Bitiş zamanı , başlangıçtan büyük olmalıdır." +s+" "+en);
-				return false;
-			} else {
-				return true;
-			}
+            if (s > en) {
+                console.log("Bitiş zamanı , başlangıçtan büyük olmalıdır." + s + " " + en);
+                return false;
+            } else {
+                return true;
+            }
 
-		});
+        });
 
-	</script>
+        $(document).ready(function () {
+            $("#txtDate").prop("disabled", $("#txtDate").is(":checked"));
+        })
+
+    </script>
 
 
 }

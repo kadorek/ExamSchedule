@@ -35,23 +35,21 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-3"><b>Duration</b></div>
+        <div class="col-2"><b>Duration</b></div>
         <div class="col-1"><b>:</b></div>
-        <div class="col-7">
+        <div class="col-2">
             <input type="number" id="txt-duration" placeholder="Set default duration." value="0" size="3" /> min.
         </div>
     </div>
     <div class="row">
-        <div class="col-3"><b>Before Space</b></div>
+        <div class="col-2"><b>Before Space</b></div>
         <div class="col-1"><b>:</b></div>
-        <div class="col-7">
+        <div class="col-2">
             <input type="number" id="txt-before-space" placeholder="Set default duration." value="0" size="3" /> min.
         </div>
-    </div>
-    <div class="row">
-        <div class="col-3"><b>After Space</b></div>
+        <div class="col-2"><b>After Space</b></div>
         <div class="col-1"><b>:</b></div>
-        <div class="col-7">
+        <div class="col-2">
             <input type="number" id="txt-after-space" placeholder="Set default duration." value="0" size="3" /> min.
         </div>
     </div>
@@ -79,12 +77,12 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="col-11">
-                            <button id="btn-@(list[0].ProgramCourses.ToList()[0].Program.Id)" class="btn btn-primary m-1 float-left" type="button" data-toggle="collapse" data-target="#div-collapse-@(list[0].ProgramCourses.ToList()[0].Program.Id)" aria-expanded="false" aria-controls="div-collapse-@(list[0].ProgramCourses.ToList()[0].Program.Id)">
+                            <button id="btn-@(list[0].ProgramCourses.ToList()[0].Program.Id)" class="btn btn-primary m-1 float-left" type="button" data-bs-toggle="collapse" data-bs-target="#div-collapse-@(list[0].ProgramCourses.ToList()[0].Program.Id)" aria-expanded="false" aria-controls="div-collapse-@(list[0].ProgramCourses.ToList()[0].Program.Id)">
                                 @(list[0].ProgramCourses.ToList()[0].Program.Name)
                             </button>
                         </div>
                         <div class="float-right col-1 ">
-                            <input type="checkbox" class=" form-control chk-programme" data-programme-id="@(list[0].ProgramCourses.ToList()[0].Program.Id)" id="chk-programme-@(list[0].ProgramCourses.ToList()[0].Program.Id)" />
+                            <input type="checkbox" class="form-check-input form-control chk-programme" data-programme-id="@(list[0].ProgramCourses.ToList()[0].Program.Id)" id="chk-programme-@(list[0].ProgramCourses.ToList()[0].Program.Id)" />
                         </div>
                     </div>
                 </div>
@@ -97,7 +95,7 @@
                                 <li class="list-group-item m-0 p-1" id="li-course-@lc.Id">
                                     @lc.Name
                                     <div class="float-right">
-                                        <input type="checkbox" class=" form-control chk-course " data-course-id="@(lc.Id)" data-programme-id="@(list[0].ProgramCourses.ToList()[0].Program.Id)" id="chk-course-@(lc.Id)" />
+                                        <input type="checkbox" class="form-check-input  form-control chk-course " data-course-id="@(lc.Id)" data-programme-id="@(list[0].ProgramCourses.ToList()[0].Program.Id)" id="chk-course-@(lc.Id)" />
                                     </div>
                                 </li>
                             }
