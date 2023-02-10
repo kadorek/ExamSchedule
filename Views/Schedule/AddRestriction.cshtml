@@ -10,6 +10,14 @@
 <h4>ScheduleRestriction</h4>
 <hr />
 <div class="row">
+    <div class="col-4">
+        <b>Date Range : </b> @Model.ScheduleRestriction.Schedule.DateRange
+    </div>
+    <div class="col-4">
+        <b>Start - End : </b>@Model.ScheduleRestriction.Schedule.Start - @Model.ScheduleRestriction.Schedule.End
+    </div>
+</div>
+<div class="row">
     <div class="col-12">
         <form asp-action="AddRestriction" id="frmRestriction">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>

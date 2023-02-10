@@ -107,12 +107,13 @@ namespace ExamSchedule.Controllers
             }
 
             var exam = await _context.Exams.FindAsync(id);
+            
             if (exam == null)
             {
                 return NotFound();
             }
             ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name", exam.CourseId);
-            ViewData["MergerExamId"] = new SelectList(_context.Exams, "Id", "Id", exam.MergerExamId);
+            ViewData["MergerExamId"] = new SelectList(_context.Exams, "Id", "Course.CourseFullName", exam.MergerExamId);
             ViewData["ScheduleId"] = new SelectList(_context.Schedules, "Id", "Title", exam.ScheduleId);
             return View(exam);
         }
@@ -151,7 +152,7 @@ namespace ExamSchedule.Controllers
             }
             ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name", exam.CourseId);
             ViewData["MergerExamId"] = new SelectList(_context.Exams, "Id", "Id", exam.MergerExamId);
-            ViewData["ScheduleId"] = new SelectList(_context.Schedules, "Id", "EndDate", exam.ScheduleId);
+            ViewData["ScheduleId"] = new SelectList(_context.Schedules, "Id", "Title", exam.ScheduleId);
             return View(exam);
         }
 
