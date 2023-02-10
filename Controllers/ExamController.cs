@@ -42,7 +42,8 @@ namespace ExamSchedule.Controllers
                 .Include(e => e.Schedule)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (exam.IsMerged==true) {
+            if (exam.IsMergedParsed == true)
+            {
                 var examList = _context.Exams.Where(ex => ex.MergerExamId == id).ToList();
                 var total = 0;
 
@@ -342,7 +343,7 @@ namespace ExamSchedule.Controllers
             return Ok();
         }
 
-        
+
 
     }
 }
