@@ -29,8 +29,9 @@
 
 @section Scripts{
     <script>
-        var model = @Html.Raw(Json.Serialize(Model.Parts) );
-        log(model);
+        var dayparts= @Html.Raw(Json.Serialize(Model.Parts) );
+        var placements = @Html.Raw(Json.Serialize(Model.ExamPlacements) );
+        log(placements);
     </script>
 
 }

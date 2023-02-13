@@ -1,6 +1,8 @@
 ﻿using ExamSchedule.Models;
 using ExamSchedule.Models.ArrangmentModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using NPOI.XWPF.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +41,7 @@ namespace ExamSchedule.Controllers
         {
             DesingModelParts();
             PlaceRestriction();
+            PlacePinnedExams();
 
         }
 
@@ -91,35 +94,68 @@ namespace ExamSchedule.Controllers
 
         private void PlacePinnedExams()
         {
-            var listPinnedExams = _context.Exams.Where(x => x.ScheduleId == _mam.Schedule.Id && x.IsPinnedParsed && (!x.IsMergedParsed || x.MergerExamId == x.Id));
+            var listPinnedExams = _context.Exams.AsEnumerable().Where(x => x.ScheduleId == _mam.Schedule.Id && x.IsPinnedParsed && (!x.IsMergedParsed || x.MergerExamId == x.Id));
 
             foreach (var item in listPinnedExams)
             {
-                //to do
-                //
+                var ep = new ExamPlacement();
+
+                var allRooms = _context.Rooms.ToList();
+                var exam = _context.Exams.FirstOrDefault(x => x.Id == item.Id);
+                if (exam == null)
+                {
+                    //throws error
+                }
+                ep.ExamId = item.Id;
+
+                var examDate = DateTime.Parse(exam.Date);
+                int indexDayPart = (DateTime.Parse(exam.Date) - DateTime.Parse(_mam.Schedule.StartDate)).Days;
+                int countDayPart = (int)Math.Ceiling((decimal)exam.TotalTime.Value / _mam.Settings.DefaultDayPartDuration);
+
+                var startDx = new DateTime(examDate.Year, examDate.Month, examDate.Day, (int)exam.StartHour.Value, (int)exam.StartMinute.Value, 0);
+
+                int indexPart = (int)Math.Floor((startDx - _mam.Schedule.StartDateParsed).TotalMinutes / _mam.Settings.DefaultDayPartDuration);
+
+                for (int i = 0; i < countDayPart; i++)
+                {
+                    var dp = _mam.Parts.FirstOrDefault(x => x.IndexDay == indexDayPart && x.IndexPart == indexPart + i);
+                    if (dp == null)
+                    {
+                        i--;
+                        continue;
+                    }
+                    ep.DayPartUniqueKeys.Add(dp.UniqueKey);
+                }
+
+
+                var placementInstersection = _mam.ExamPlacements.Where(x => x.DayPartUniqueKeys.Intersect(ep.DayPartUniqueKeys).Count() > 0).ToList();
+
+
+                var unproperRooms = _context.Rooms.Where(x => placementInstersection.Any(a => a.Rooms.Select(b => b.Id).Contains(x.Id))).Select(x => x.Id).ToList();
+
+                ep.Rooms = _context.Rooms.Where(x => GetProperRooms(exam.TotalStudentCount, unproperRooms).Contains(x.Id)).ToList();
+                _mam.ExamPlacements.Add(ep);
             }
-
-
         }
 
 
-        private ExamPlacement GetProperRooms(int countStudent, long idExam)
+        private List<long> GetProperRooms(int countStudent, List<long> roomUnproper)
         {
-            var ep = new ExamPlacement();
-
-            var allRooms = _context.Rooms.ToList();
-            var exam = _context.Exams.FirstOrDefault(x => x.Id == idExam);
-            if (exam==null)
+            var result = new List<long>();
+            var allRooms = _context.Rooms.OrderBy(x => x.Capacity).ToList();
+            foreach (var item in allRooms)
             {
-                //throws error
+                if (roomUnproper.Contains(item.Id))
+                {
+                    continue;
+                }
+
+                while (allRooms.Where(x => result.Contains(x.Id)).Sum(x => x.Capacity) < countStudent + 10)
+                {
+                    result.Add(item.Id);
+                }
             }
-
-
-
-
-
-
-            return ep;
+            return result;
         }
 
 
