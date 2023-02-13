@@ -1,0 +1,41 @@
+﻿@model ExamSchedule.Models.ArrangmentModels.MainArrangementModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //var maxDayPartCount = Model.DayParts.Max(x => x.Length);
+
+
+}
+
+
+<table border="1" style="width:100%;">
+    @for (int i = 0; i < Model.Schedule.DaysCount; i++)
+    {
+        <tr>
+            @{
+                var list = Model.Parts.Where(x => x.IndexDay == i).OrderBy(x => x.IndexPart).ToList();
+                foreach (var item in list)
+                {
+                    <td>
+                        @item.ToString()
+                    </td>
+                }
+            }
+
+        </tr>
+    }
+
+</table>
+
+
+@section Scripts{
+    <script>
+        var model = @Html.Raw(Json.Serialize(Model.Parts) );
+        log(model);
+    </script>
+
+}
+
+
+
+
+

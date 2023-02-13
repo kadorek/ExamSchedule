@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ExamSchedule.Models.Exam>
+
+@{
+    ViewData["Title"] = "ExamList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ExamList</h1>
+
+<p>
+    <a asp-action="Details" asp-route-id="@Model.ToList()[0].ScheduleId">Back to Schedule Detail</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPinnedParsed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsMergedParsed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Start)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.End)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalStudentCount)
+            </th>
+            <th>Exam Rooms</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsPinnedParsed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsMergedParsed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Start)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.End)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalStudentCount)
+                </td>
+                <td>
+                    Rooms
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

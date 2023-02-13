@@ -16,7 +16,7 @@ namespace ExamSchedule.Models
         public string Name { get; set; }
         public string Short { get; set; }
         public long Capacity { get; set; }
-
+        public long Floor { get; set; }
         public virtual ICollection<ExamRoom> ExamRooms { get; set; }
     }
 }

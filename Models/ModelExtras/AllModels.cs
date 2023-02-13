@@ -1,4 +1,5 @@
 ﻿using ExamSchedule.Extensions;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -132,6 +133,42 @@ namespace ExamSchedule.Models
             }
         }
 
+        public int DaysCount
+        {
+            get
+            {
+                var days = 0;
+                DateTime s = DateTime.Parse(StartDate);
+                DateTime e = DateTime.Parse(EndDate);
+
+                days = (e - s).Days;
+
+                return days;
+            }
+        }
+
+
+
+        public DateTime StartDateParsed
+        {
+            get
+            {
+                DateTime dx = DateTime.Parse(StartDate);
+                DateTime result = new DateTime(dx.Year, dx.Month, dx.Day, (int)DayStartHour, (int)DayStartMinute, 0);
+                return result;
+            }
+        }
+
+        public DateTime EndDateParsed
+        {
+            get
+            {
+                DateTime dx = DateTime.Parse(End);
+                DateTime result = new DateTime(dx.Year, dx.Month, dx.Day, (int)DayEndHour, (int)DayEndMinute, 0);
+                return result;
+            }
+        }
+
 
 
         public int ExamCount { get { return this.Exams.Count; } }
@@ -162,6 +199,29 @@ namespace ExamSchedule.Models
                 return str;
             }
         }
+
+        public DateTime StartParsed
+        {
+            get
+            {
+                DateTime dx = DateTime.Parse(Date);
+                DateTime result = new DateTime(dx.Year, dx.Month, dx.Day, (int)StartHour, (int)StartMinute, 0);
+                return result;
+            }
+        }
+
+        public DateTime EndParsed
+        {
+            get
+            {
+                DateTime dx = DateTime.Parse(Date);
+                DateTime result = new DateTime(dx.Year, dx.Month, dx.Day, (int)EndHour, (int)EndMinute, 0);
+                return result;
+            }
+        }
+
+
+
     }
 
 
@@ -223,19 +283,42 @@ namespace ExamSchedule.Models
         {
             get
             {
-                if (!IsMerged.HasValue || !IsMerged.Value)
+                if (IsMerged.HasValue || IsMerged.Value == true)
                 {
-                    return false;
+                    return true;
                 }
                 else
                 {
-                    return true;
+                    return false;
 
                 }
             }
             set { IsMergedParsed = value; }
         }
 
+
+        [NotMapped]
+        public long? TotalTime
+        {
+            get
+            {
+                return Duration + BeforeSpace + AfterSpace;
+            }
+        }
+
+        [NotMapped]
+        public int TotalStudentCount
+        {
+            get
+            {
+                var count = Course.CourseStudents.Count;
+                if (IsMergedParsed)
+                {
+                    count = InverseMergerExam.Sum(x => x.Course.CourseStudents.Count);
+                }
+                return count;
+            }
+        }
     }
 
 

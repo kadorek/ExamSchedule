@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ExamSchedule.Models.ViewModels;
 using Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal;
+using Org.BouncyCastle.Math.EC.Rfc7748;
 
 namespace ExamSchedule.Controllers
 {
@@ -384,6 +385,11 @@ namespace ExamSchedule.Controllers
             return _context.Schedules.Any(x => x.Id == id);
         }
 
+        public IActionResult ExamList(long id)
+        {
+            var schedule = _context.Schedules.FirstOrDefault(x => x.Id == id);
+            return View(schedule.Exams.Where(x => x.MergerExamId == null || x.MergerExamId == x.Id).ToList());
 
+        }
     }
 }

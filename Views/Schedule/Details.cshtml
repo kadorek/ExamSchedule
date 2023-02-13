@@ -1,70 +1,66 @@
 ﻿@model ExamSchedule.Models.Schedule
 
 @{
-	ViewData["Title"] = "Details";
-	Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Details</h1>
 
 <div>
-	<h4>Schedule</h4>
-	<hr />
-	<div class="row">
-		<div class="pl-5">
-			<h4>@Html.DisplayNameFor(model => model.Title)</h4>
-			<div class="pl-5" style="font-size:30px !important;">@Html.DisplayFor(model => model.Title)</div>
-		</div>
-	</div>
-	<dl class="row">
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.StartDate)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.StartDate)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.EndDate)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.EndDate)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Start)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Start)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.End)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.End)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.ScheduleRestrictions)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.ScheduleRestrictions.Count)
-			@if (Model.ScheduleRestrictions.Count > 0)
-			{
-				<a href="@Url.Action("RestrictionList",new { id=Model.Id})">List</a>
-			}
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Exams)
-			
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Exams.Count)
-			@if (Model.ExamCount > 0)
-			{
-				<a href="@Url.Action("RestrictionList",new { id=Model.Id})">List</a>
-			}
-		</dd>
-	</dl>
-</div>
-<div>
-	<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-	<a asp-action="Index">Back to List</a>
+    <h4>Schedule</h4>
+    <div class="row">
+        <div class="col-1">
+            <a asp-action="Index">Back to List</a>
+        </div>
+        <div class="col-1">
+            <a asp-controller="Arrange" asp-action="Index" asp-route-id="@Model.Id" id="btnArrange">Arrange</a>
+        </div>
+
+    </div>
+    <hr />
+    <div class="row">
+        <div class="pl-5">
+            <h4>@Html.DisplayNameFor(model => model.Title)</h4>
+            <div class="pl-5" style="font-size:30px !important;">@Html.DisplayFor(model => model.Title)</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 fw-bold">@Html.DisplayNameFor(model => model.StartDate)</div>
+        <div class="col-1">:</div>
+        <div class="col-2"> @Html.DisplayFor(model => model.StartDate)</div>
+        <div class="col-3  fw-bold">@Html.DisplayNameFor(model => model.EndDate)</div>
+        <div class="col-1">:</div>
+        <div class="col-2">@Html.DisplayFor(model => model.EndDate)</div>
+    </div>
+    <div class="row">
+        <div class="col-3  fw-bold"> @Html.DisplayNameFor(model => model.Start)</div>
+        <div class="col-1">:</div>
+        <div class="col-2">@Html.DisplayFor(model => model.Start)</div>
+        <div class="col-3  fw-bold">@Html.DisplayNameFor(model => model.End)</div>
+        <div class="col-1">:</div>
+        <div class="col-2">@Html.DisplayFor(model => model.End)</div>
+    </div>
+    <div class="row">
+        <div class="col-3 fw-bold">@Html.DisplayNameFor(model => model.ScheduleRestrictions)</div>
+        <div class="col-1">:</div>
+        <div class="col-2">
+            @Html.DisplayFor(model => model.ScheduleRestrictions.Count)
+            @if (Model.ScheduleRestrictions.Count > 0)
+            {
+                <a href="@Url.Action("RestrictionList",new { id=Model.Id})">List</a>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 fw-bold"> @Html.DisplayNameFor(model => model.Exams)</div>
+        <div class="col-1">:</div>
+        <div class="col-2">
+            @Html.DisplayFor(model => model.Exams.Count)
+            @if (Model.ExamCount > 0)
+            {
+                <a href="@Url.Action("ExamList",new { id=Model.Id})">List</a>
+            }
+        </div>
+    </div>
 </div>
