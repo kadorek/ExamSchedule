@@ -301,7 +301,7 @@
                     },
                     {
                         data: null,
-                        title: "operations",
+                        title: "Operations",
                         render: function (data, type, row, meta) {
                             var str = '<a href="/Exam/Edit/' + data.id + '">Edit</a> | <a href="/Exam/Details/' + data.id + '">Details</a> | <a href="/Exam/Delete/' + data.id + '">Delete</a>';
 
@@ -378,10 +378,9 @@
                                     addedObject = input;
                                     break;
                                 case 6:
-                                case 7:
                                     addedObject = $('<input type="text" placeholder="' + title + ' filter " size="5" />');
                                     break;
-                                case 8:
+                                case 7:
                                     addedObject = $('<select id="slc - ' + title + '"></select>');
                                     var opt1 = $('<option value="-1">' + title + ' filter </option>');
                                     addedObject.append(opt1);
@@ -390,7 +389,7 @@
                                     addedObject.append(opt2);
                                     addedObject.append(opt3);
                                     break;
-                                case 9:
+                                case 8:
                                     addedObject = $('<select id="slc - ' + title + '"></select>');
                                     var opt1 = $('<option value="-1">' + title + ' filter </option>');
                                     addedObject.append(opt1);

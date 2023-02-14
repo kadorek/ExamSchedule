@@ -2,6 +2,7 @@
 using ExamSchedule.Models.ArrangmentModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 using NPOI.XWPF.UserModel;
 using System;
 using System.Collections.Generic;
@@ -142,6 +143,31 @@ namespace ExamSchedule.Controllers
             }
         }
 
+        private void PlaceOtherExams()
+        {
+            var notPinnedExams = _context.Exams.AsEnumerable().Where(x => !x.IsPinnedParsed).ToList();
+            notPinnedExams = notPinnedExams.Where(x=>!x.IsMergedParsed || (x.IsMergedParsed && x.MergerExamId==x.Id)).ToList();
+            var ids = notPinnedExams.Select(x => x.Id).ToList();
+
+            foreach (var item in ids)
+            {
+                var ep = new ExamPlacement();
+                ep.ExamId = item;
+                var exam = _context.Exams.FirstOrDefault(x=>x.Id==item);
+                if (exam==null)
+                {
+
+                }
+                ep.ExamName = exam.Course.Name;
+                int countDayPart= (int)Math.Ceiling((decimal)exam.TotalTime.Value / _mam.Settings.DefaultDayPartDuration);
+
+
+
+            }
+
+
+        }
+
 
         private List<long> GetProperRooms(int countStudent, List<long> roomUnproper)
         {
@@ -163,6 +189,40 @@ namespace ExamSchedule.Controllers
         }
 
 
+
+
+
+
+
+        [HttpPost]
+        public IActionResult GetExamData(long idExam)
+        {
+
+            var result = new List<string>();
+
+            var exam = _context.Exams.FirstOrDefault(x => x.Id == idExam);
+            if (exam != null)
+            {
+                if (exam.IsMergedParsed)
+                {
+                    exam = exam.MergerExam;
+                    foreach (var item in exam.InverseMergerExam)
+                    {
+                        result.Add(item.Course.CourseFullName);
+                    }
+                }
+                else
+                {
+                    result.Add(exam.Course.CourseFullName);
+                }
+            }
+            else
+            {
+                result.Add("exam is null");
+            }
+
+            return Json(result);
+        }
 
 
 

@@ -6,6 +6,23 @@
 
 }
 
+@section Styles{
+
+    <style>
+
+        .ui-tooltip {
+            font-size: 10px;
+            min-width: 400px !important;
+        }
+
+            .ui-tooltip p {
+                margin: 0;
+                padding: 0;
+                width:100%;
+            }
+    </style>
+}
+
 
 <table border="1" style="width:100%;">
     @for (int i = 0; i < Model.Schedule.DaysCount; i++)
@@ -22,7 +39,7 @@
                         <td>
                             @foreach (var e_items in exams)
                             {
-                               @e_items.ExamName 
+                                <span class="get-tooltip" data-exam-id="@e_items.ExamId"> @e_items.ExamName </span>
                                 @:<br>
                             }
                         </td>
@@ -46,8 +63,39 @@
     <script>
         var dayparts = @Html.Raw(Json.Serialize(Model.Parts) );
         var placements = @Html.Raw(Json.Serialize(Model.ExamPlacements) );
-        log(placements);
-        log(dayparts);
+        //log(placements);
+        //log(dayparts);
+
+
+        $(document).tooltip({
+            items: "span",
+            content: function (tooltipcallback) {
+                var con = "";
+                var e = $(this);
+                var id = Number(e.data("exam-id"));
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("GetExamData")',
+                    dataType: "json",
+                    data: { idExam: id },
+                    success: function (res) {
+                        var str = "";
+                        for (var s in res) {
+                            str += "<p>" + res[s] + "</p>";
+                        }
+                        tooltipcallback(str);
+                    },
+                    error: function (err) {
+                        log(err);
+                    }
+                });
+            }
+        });
+        function tooltipcallback(data) {
+            return data;
+        }
+
+
     </script>
 
 }
