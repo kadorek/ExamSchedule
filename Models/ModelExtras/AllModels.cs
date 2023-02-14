@@ -163,7 +163,7 @@ namespace ExamSchedule.Models
         {
             get
             {
-                DateTime dx = DateTime.Parse(End);
+                DateTime dx = DateTime.Parse(EndDate);
                 DateTime result = new DateTime(dx.Year, dx.Month, dx.Day, (int)DayEndHour, (int)DayEndMinute, 0);
                 return result;
             }
@@ -243,18 +243,7 @@ namespace ExamSchedule.Models
             }
         }
 
-        public string End
-        {
-            get
-            {
-                if (this.EndHour.HasValue && this.EndMinute.HasValue)
-                {
-                    return this.EndHour.ToString() + " : " + this.EndMinute.ToString();
-                }
-                else
-                    return "";
-            }
-        }
+        
 
         [NotMapped]
         public bool IsPinnedParsed

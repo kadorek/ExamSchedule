@@ -47,16 +47,6 @@
 						<input asp-for="StartMinute" class="form-control" min="0" max="50" step="10" type="number" />
 						<span asp-validation-for="StartMinute" class="text-danger"></span>
 					</div>
-					<div class="form-group">
-						<label asp-for="EndHour" class="control-label"></label>
-						<input asp-for="EndHour" class="form-control" type="number" min="0" max="23" />
-						<span asp-validation-for="EndHour" class="text-danger"></span>
-					</div>
-					<div class="form-group">
-						<label asp-for="EndMinute" class="control-label"></label>
-						<input asp-for="EndMinute" class="form-control" min="0" max="50" step="10" type="number" />
-						<span asp-validation-for="EndMinute" class="text-danger"></span>
-					</div>
 				</div>
 				<div class="form-group">
 					<input type="submit" value="Create" class="btn btn-primary" />

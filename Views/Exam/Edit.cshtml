@@ -14,16 +14,22 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CourseId" />
+            <input type="hidden" asp-for="ScheduleId" />
+            <input type="hidden" asp-for="MergerExamId" />
+            <input type="hidden" asp-for="IsMerged" />
+            <input type="hidden" asp-for="IsPined" />
+
             <div class="form-group">
                 <label asp-for="ScheduleId" class="control-label"></label>
-                <input class="form-control" value="@Model.Schedule.Title" disabled />
+                <input class="form-control" type="text" value="@Model.Schedule.Title" disabled />
                 <span asp-validation-for="ScheduleId" class="text-danger"></span>
             </div>
             <div class="form-group ">
                 <label asp-for="CourseId" class="control-label"></label>
                 <div class="row">
                     <div class="col-8">
-                        <input class="form-control" value="@Model.Course.CourseFullName" disabled />
+                        <input class="form-control" type="text" value="@Model.Course.CourseFullName" disabled />
                     </div>
                     <div class="col-4">
                         @if (Model.IsMergedParsed && Model.MergerExamId != Model.Id)
@@ -56,53 +62,59 @@
                 <span asp-validation-for="IsPined" class="text-danger"></span>
             </div>
             <div id="divDataPinned">
-                <div class="form-group">
-                    <label asp-for="Date" class="control-label"></label>
-                    <input asp-for="Date" class="form-control" />
-                    <span asp-validation-for="Date" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MergerExamId" class="control-label"></label>
-                    <select asp-for="MergerExamId" class="form-control" asp-items="ViewBag.MergerExamId"></select>
-                    <span asp-validation-for="MergerExamId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="StartHour" class="control-label"></label>
-                    <input asp-for="StartHour" class="form-control" />
-                    <span asp-validation-for="StartHour" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="StartMinute" class="control-label"></label>
-                    <input asp-for="StartMinute" class="form-control" />
-                    <span asp-validation-for="StartMinute" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="EndHour" class="control-label"></label>
-                    <input asp-for="EndHour" class="form-control" />
-                    <span asp-validation-for="EndHour" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="EndMinute" class="control-label"></label>
-                    <input asp-for="EndMinute" class="form-control" />
-                    <span asp-validation-for="EndMinute" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Duration" class="control-label"></label>
-                    <input asp-for="Duration" class="form-control" />
-                    <span asp-validation-for="Duration" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="BeforeSpace" class="control-label"></label>
-                    <input asp-for="BeforeSpace" class="form-control" />
-                    <span asp-validation-for="BeforeSpace" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AfterSpace" class="control-label"></label>
-                    <input asp-for="AfterSpace" class="form-control" />
-                    <span asp-validation-for="AfterSpace" class="text-danger"></span>
-                </div>
-            </div>
 
+                <div class="row">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label asp-for="Date" class="control-label"></label>
+                            <input asp-for="Date" class="form-control" />
+                            <span asp-validation-for="Date" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label asp-for="StartHour" class="control-label"></label>
+                            <input asp-for="StartHour" class="form-control" />
+                            <span asp-validation-for="StartHour" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label asp-for="StartMinute" class="control-label"></label>
+                            <input asp-for="StartMinute" class="form-control" />
+                            <span asp-validation-for="StartMinute" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label asp-for="Duration" class="control-label"></label>
+                            <input asp-for="Duration" class="form-control" />
+                            <span asp-validation-for="Duration" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label asp-for="BeforeSpace" class="control-label"></label>
+                            <input asp-for="BeforeSpace" class="form-control" />
+                            <span asp-validation-for="BeforeSpace" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label asp-for="AfterSpace" class="control-label"></label>
+                            <input asp-for="AfterSpace" class="form-control" />
+                            <span asp-validation-for="AfterSpace" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="row"></div>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -132,10 +144,27 @@
                     //log($(this).is(":checked"));
                     if ($(this).is(":checked")) {
                         $("#divDataPinned").show();
+                        $("#IsPined").val("True")
                     } else {
                         $("#divDataPinned").hide();
+                        $("#IsPined").val("False");
                     }
                 });
+
+            $("#IsMergedParsed").on("change", function () {
+                //log($(this).is(":checked"));
+                if ($(this).is(":checked")) {
+                    $("#IsMerged").val("True")
+                } else {
+                    $("#IsMerged").val("False");
+                }
+            });
+            log("@Model.Schedule.EndDateParsed.ToLongDateString()");
+            $("#Date").datepicker({
+                minDate: new Date(@Model.Schedule.StartDateParsed.Year, @Model.Schedule.StartDateParsed.Month-1, @Model.Schedule.StartDateParsed.Day),
+                maxDate: new Date(@Model.Schedule.EndDateParsed.Year, @Model.Schedule.EndDateParsed.Month-1, @Model.Schedule.EndDateParsed.Day),
+                dateFormat:"dd/mm/yy"
+            });
 
         });
 

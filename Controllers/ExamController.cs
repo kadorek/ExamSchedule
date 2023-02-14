@@ -124,7 +124,7 @@ namespace ExamSchedule.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,ScheduleId,CourseId,Date,IsPined,IsMerged,MergerExamId,StartHour,StartMinute,EndHour,EndMinute,Duration,BeforeSpace,AfterSpace")] Exam exam)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,ScheduleId,CourseId,Date,IsPined,IsMerged,MergerExamId,StartHour,StartMinute,Duration,BeforeSpace,AfterSpace")] Exam exam)
         {
             if (id != exam.Id)
             {
@@ -138,7 +138,7 @@ namespace ExamSchedule.Controllers
                     _context.Update(exam);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Exception ex)
                 {
                     if (!ExamExists(exam.Id))
                     {
@@ -315,7 +315,6 @@ namespace ExamSchedule.Controllers
                 CourseId = x.CourseId,
                 Schedule = x.Schedule.Title,
                 ScheduleId = x.ScheduleId,
-                End = x.End,
                 IsMerged = x.IsMerged == false ? false : true,
                 IsPined = x.IsPinnedParsed,
                 MergerExamId = x.MergerExamId,

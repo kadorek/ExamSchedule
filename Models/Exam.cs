@@ -22,8 +22,6 @@ namespace ExamSchedule.Models
         public long? MergerExamId { get; set; }
         public long? StartHour { get; set; }
         public long? StartMinute { get; set; }
-        public long? EndHour { get; set; }
-        public long? EndMinute { get; set; }
         public long? Duration { get; set; }
         public long? BeforeSpace { get; set; }
         public long? AfterSpace { get; set; }

@@ -13,7 +13,6 @@
         public bool? IsMerged { get; set; }
         public long? MergerExamId { get; set; }
         public string Start { get; set; }
-        public string End { get; set; }
         public string Date { get; set; }
         public string Ukey { get; set; }
     }

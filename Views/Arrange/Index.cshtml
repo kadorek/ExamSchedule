@@ -15,9 +15,24 @@
                 var list = Model.Parts.Where(x => x.IndexDay == i).OrderBy(x => x.IndexPart).ToList();
                 foreach (var item in list)
                 {
-                    <td>
-                        @item.ToString()
-                    </td>
+                    var key = item.UniqueKey;
+                    var exams = Model.ExamPlacements.Where(x => x.DayPartUniqueKeys.Contains(key));
+                    if (exams.Count() > 0)
+                    {
+                        <td>
+                            @foreach (var e_items in exams)
+                            {
+                               @e_items.ExamName 
+                                @:<br>
+                            }
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @item.ToString()
+                        </td>
+                    }
                 }
             }
 
@@ -29,9 +44,10 @@
 
 @section Scripts{
     <script>
-        var dayparts= @Html.Raw(Json.Serialize(Model.Parts) );
+        var dayparts = @Html.Raw(Json.Serialize(Model.Parts) );
         var placements = @Html.Raw(Json.Serialize(Model.ExamPlacements) );
         log(placements);
+        log(dayparts);
     </script>
 
 }

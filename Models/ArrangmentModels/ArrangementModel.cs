@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using NPOI.OpenXmlFormats.Dml.Chart;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
@@ -9,10 +11,17 @@ namespace ExamSchedule.Models.ArrangmentModels
     [NotMapped]
     public class DayPart
     {
+        private DateTime _date;
         public string UniqueKey { get; set; }
         public int IndexDay { get; set; }
         public int IndexPart { get; set; }
         public bool IsRestricted { get; set; }
+        public DateTime PartDateTime { get { return _date; } }
+
+        public DayPart(DateTime _d)
+        {
+            _date = _d;
+        }
         public override string ToString()
         {
             var str = "";
@@ -38,7 +47,7 @@ namespace ExamSchedule.Models.ArrangmentModels
         public Schedule Schedule { get; set; }
         public ArrangementSettings Settings { get; set; }
         public List<DayPart> Parts { get; set; }
-        public List<ExamPlacement> ExamPlacements { get; set; }
+        public List<ExamPlacement> ExamPlacements { get; set; } = new List<ExamPlacement>();
         public MainArrangementModel()
         {
             Settings = new ArrangementSettings();
@@ -51,7 +60,8 @@ namespace ExamSchedule.Models.ArrangmentModels
     public class ExamPlacement
     {
         public long ExamId { get; set; }
+        public string ExamName { get; set; }
         public List<Room> Rooms { get; set; }
-        public List<string> DayPartUniqueKeys { get; set; }
+        public List<string> DayPartUniqueKeys { get; set; } = new List<string>();
     }
 }

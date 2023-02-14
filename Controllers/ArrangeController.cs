@@ -55,7 +55,8 @@ namespace ExamSchedule.Controllers
             {
                 for (int j = 0; j < countDayPartPerDay; j++)
                 {
-                    DayPart dp = new DayPart();
+                    var dpdate = _mam.Schedule.StartDateParsed.AddDays(i).AddMinutes(j * _mam.Settings.DefaultDayPartDuration);
+                    DayPart dp = new DayPart(dpdate);
                     dp.IndexDay = i;
                     dp.IndexPart = j;
                     dp.IsRestricted = false;
@@ -78,7 +79,8 @@ namespace ExamSchedule.Controllers
                 int indexDay = (DateTime.Parse(item.Date) - DateTime.Parse(_mam.Schedule.StartDate)).Days;
 
                 int countDayPart = (int)Math.Ceiling((item.EndParsed - item.StartParsed).TotalMinutes / _mam.Settings.DefaultDayPartDuration);
-                int indexPart = (int)Math.Floor((item.StartParsed - _mam.Schedule.StartDateParsed).TotalMinutes / _mam.Settings.DefaultDayPartDuration);
+                var targetDayStart = new DateTime(_mam.Schedule.StartDateParsed.AddDays(indexDay).Year, _mam.Schedule.StartDateParsed.AddDays(indexDay).Month, _mam.Schedule.StartDateParsed.AddDays(indexDay).Day, _mam.Schedule.StartDateParsed.Hour, _mam.Schedule.StartDateParsed.Minute, 0);
+                int indexPart = (int)Math.Floor((item.StartParsed - targetDayStart).TotalMinutes / _mam.Settings.DefaultDayPartDuration);
                 for (int i = 0; i < countDayPart; i++)
                 {
                     DayPart dp = _mam.Parts.FirstOrDefault(x => x.IndexDay == indexDay && x.IndexPart == indexPart + i);
@@ -107,14 +109,16 @@ namespace ExamSchedule.Controllers
                     //throws error
                 }
                 ep.ExamId = item.Id;
+                ep.ExamName = item.Course.Name;
 
                 var examDate = DateTime.Parse(exam.Date);
                 int indexDayPart = (DateTime.Parse(exam.Date) - DateTime.Parse(_mam.Schedule.StartDate)).Days;
                 int countDayPart = (int)Math.Ceiling((decimal)exam.TotalTime.Value / _mam.Settings.DefaultDayPartDuration);
 
                 var startDx = new DateTime(examDate.Year, examDate.Month, examDate.Day, (int)exam.StartHour.Value, (int)exam.StartMinute.Value, 0);
+                var targetDayStart = new DateTime(examDate.Year, examDate.Month, examDate.Day, _mam.Schedule.StartDateParsed.Hour, _mam.Schedule.StartDateParsed.Minute, 0);
+                int indexPart = (int)Math.Floor((startDx - targetDayStart).TotalMinutes / _mam.Settings.DefaultDayPartDuration);
 
-                int indexPart = (int)Math.Floor((startDx - _mam.Schedule.StartDateParsed).TotalMinutes / _mam.Settings.DefaultDayPartDuration);
 
                 for (int i = 0; i < countDayPart; i++)
                 {
@@ -130,10 +134,10 @@ namespace ExamSchedule.Controllers
 
                 var placementInstersection = _mam.ExamPlacements.Where(x => x.DayPartUniqueKeys.Intersect(ep.DayPartUniqueKeys).Count() > 0).ToList();
 
+                var unproperRooms = _context.Rooms.AsEnumerable().Where(x => placementInstersection.Any(a => a.Rooms.AsEnumerable().Select(b => b.Id).Contains(x.Id))).Select(x => x.Id).ToList();
 
-                var unproperRooms = _context.Rooms.Where(x => placementInstersection.Any(a => a.Rooms.Select(b => b.Id).Contains(x.Id))).Select(x => x.Id).ToList();
+                ep.Rooms = _context.Rooms.AsEnumerable().Where(x => GetProperRooms(exam.TotalStudentCount, unproperRooms).Contains(x.Id)).ToList();
 
-                ep.Rooms = _context.Rooms.Where(x => GetProperRooms(exam.TotalStudentCount, unproperRooms).Contains(x.Id)).ToList();
                 _mam.ExamPlacements.Add(ep);
             }
         }
@@ -149,8 +153,8 @@ namespace ExamSchedule.Controllers
                 {
                     continue;
                 }
-
-                while (allRooms.Where(x => result.Contains(x.Id)).Sum(x => x.Capacity) < countStudent + 10)
+                var rx = allRooms.Where(x => result.Contains(x.Id)).ToList();
+                if (rx.Sum(x => x.Capacity) < countStudent + 10)
                 {
                     result.Add(item.Id);
                 }
