@@ -48,6 +48,7 @@ namespace ExamSchedule.Models.ArrangmentModels
         public ArrangementSettings Settings { get; set; }
         public List<DayPart> Parts { get; set; }
         public List<ExamPlacement> ExamPlacements { get; set; } = new List<ExamPlacement>();
+        public int MaxDayPartPerDay { get; set; } = 0;
         public MainArrangementModel()
         {
             Settings = new ArrangementSettings();
@@ -61,7 +62,7 @@ namespace ExamSchedule.Models.ArrangmentModels
     {
         public long ExamId { get; set; }
         public string ExamName { get; set; }
-        public List<Room> Rooms { get; set; }
+        public List<long> Rooms { get; set; }
         public List<string> DayPartUniqueKeys { get; set; } = new List<string>();
     }
 }

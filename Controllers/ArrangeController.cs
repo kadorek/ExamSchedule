@@ -1,4 +1,5 @@
-﻿using ExamSchedule.Models;
+﻿using ExamSchedule.Extensions;
+using ExamSchedule.Models;
 using ExamSchedule.Models.ArrangmentModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -51,7 +52,7 @@ namespace ExamSchedule.Controllers
         {
             Random r = new Random();
             int countDayPartPerDay = (int)((_mam.Schedule.DayEndHour - _mam.Schedule.DayStartHour) * (60 / _mam.Settings.DefaultDayPartDuration) + (_mam.Schedule.DayEndMinute - _mam.Schedule.DayStartMinute) / _mam.Settings.DefaultDayPartDuration);
-
+            _mam.MaxDayPartPerDay = countDayPartPerDay;
             for (int i = 0; i < _mam.Schedule.DaysCount; i++)
             {
                 for (int j = 0; j < countDayPartPerDay; j++)
@@ -135,9 +136,9 @@ namespace ExamSchedule.Controllers
 
                 var placementInstersection = _mam.ExamPlacements.Where(x => x.DayPartUniqueKeys.Intersect(ep.DayPartUniqueKeys).Count() > 0).ToList();
 
-                var unproperRooms = _context.Rooms.AsEnumerable().Where(x => placementInstersection.Any(a => a.Rooms.AsEnumerable().Select(b => b.Id).Contains(x.Id))).Select(x => x.Id).ToList();
+                var unproperRooms = _context.Rooms.AsEnumerable().Where(x => placementInstersection.Any(a => a.Rooms.AsEnumerable().Contains(x.Id))).Select(x => x.Id).ToList();
 
-                ep.Rooms = _context.Rooms.AsEnumerable().Where(x => GetProperRooms(exam.TotalStudentCount, unproperRooms).Contains(x.Id)).ToList();
+                ep.Rooms = _context.Rooms.AsEnumerable().Where(x => GetProperRooms(exam.TotalStudentCount, unproperRooms).Contains(x.Id)).Select(x => x.Id).ToList();
 
                 _mam.ExamPlacements.Add(ep);
             }
@@ -146,20 +147,37 @@ namespace ExamSchedule.Controllers
         private void PlaceOtherExams()
         {
             var notPinnedExams = _context.Exams.AsEnumerable().Where(x => !x.IsPinnedParsed).ToList();
-            notPinnedExams = notPinnedExams.Where(x=>!x.IsMergedParsed || (x.IsMergedParsed && x.MergerExamId==x.Id)).ToList();
+            notPinnedExams = notPinnedExams.Where(x => !x.IsMergedParsed || (x.IsMergedParsed && x.MergerExamId == x.Id)).ToList();
             var ids = notPinnedExams.Select(x => x.Id).ToList();
-
+            ids = ids.Shuffle().ToList();
             foreach (var item in ids)
             {
                 var ep = new ExamPlacement();
                 ep.ExamId = item;
-                var exam = _context.Exams.FirstOrDefault(x=>x.Id==item);
-                if (exam==null)
+                var exam = _context.Exams.FirstOrDefault(x => x.Id == item);
+                if (exam == null)
                 {
-
+                    //throd error
                 }
                 ep.ExamName = exam.Course.Name;
-                int countDayPart= (int)Math.Ceiling((decimal)exam.TotalTime.Value / _mam.Settings.DefaultDayPartDuration);
+                int countExamDayPart = (int)Math.Ceiling((decimal)exam.TotalTime.Value / _mam.Settings.DefaultDayPartDuration);
+                foreach (var part in _mam.Parts)
+                {
+                    if (part.IndexPart > _mam.MaxDayPartPerDay - countExamDayPart)
+                    {
+                        continue;
+                    }
+                    var selectedPartsKeys = _mam.Parts.Where(x => x.IndexPart >= part.IndexPart && x.IndexPart < part.IndexPart + countExamDayPart).Select(x => x.UniqueKey).ToList();
+
+                    List<List<long>> inuseRooms = new List<List<long>>();
+                    foreach (var sp in selectedPartsKeys)
+                    {
+                        var list = _mam.ExamPlacements.Where(x => x.DayPartUniqueKeys.Contains(sp)).Select(ep => ep.Rooms).ToList();
+                        inuseRooms.Add(list);
+                    }
+
+                }
+
 
 
 
@@ -168,7 +186,10 @@ namespace ExamSchedule.Controllers
 
         }
 
-
+        private Room GetRoom(long id)
+        {
+            return _context.Rooms.FirstOrDefault(x => x.Id == id);
+        }
         private List<long> GetProperRooms(int countStudent, List<long> roomUnproper)
         {
             var result = new List<long>();
@@ -187,12 +208,6 @@ namespace ExamSchedule.Controllers
             }
             return result;
         }
-
-
-
-
-
-
 
         [HttpPost]
         public IActionResult GetExamData(long idExam)
