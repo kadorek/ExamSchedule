@@ -25,7 +25,7 @@ namespace ExamSchedule.Models.ArrangmentModels
         public override string ToString()
         {
             var str = "";
-            str = IsRestricted ? "R" : "N";
+            str =UniqueKey +" "+( IsRestricted ? "R" : "N");
             return str;
         }
 

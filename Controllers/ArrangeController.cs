@@ -44,6 +44,7 @@ namespace ExamSchedule.Controllers
             DesingModelParts();
             PlaceRestriction();
             PlacePinnedExams();
+            PlaceOtherExams();
 
         }
 
@@ -146,6 +147,7 @@ namespace ExamSchedule.Controllers
 
         private void PlaceOtherExams()
         {
+            var assignedExamIds = new List<long>();
             var notPinnedExams = _context.Exams.AsEnumerable().Where(x => !x.IsPinnedParsed).ToList();
             notPinnedExams = notPinnedExams.Where(x => !x.IsMergedParsed || (x.IsMergedParsed && x.MergerExamId == x.Id)).ToList();
             var ids = notPinnedExams.Select(x => x.Id).ToList();
@@ -161,28 +163,56 @@ namespace ExamSchedule.Controllers
                 }
                 ep.ExamName = exam.Course.Name;
                 int countExamDayPart = (int)Math.Ceiling((decimal)exam.TotalTime.Value / _mam.Settings.DefaultDayPartDuration);
+                var IsPartAssigned = false;
                 foreach (var part in _mam.Parts)
                 {
                     if (part.IndexPart > _mam.MaxDayPartPerDay - countExamDayPart)
                     {
                         continue;
                     }
-                    var selectedPartsKeys = _mam.Parts.Where(x => x.IndexPart >= part.IndexPart && x.IndexPart < part.IndexPart + countExamDayPart).Select(x => x.UniqueKey).ToList();
+                    var selectedPartsKeys = _mam.Parts.Where(x =>x.IndexDay==part.IndexDay && x.IndexPart >= part.IndexPart && x.IndexPart < part.IndexPart + countExamDayPart).Select(x => x.UniqueKey).ToList();
 
-                    List<List<long>> inuseRooms = new List<List<long>>();
+                    List<long> inuseRooms = new List<long>();
                     foreach (var sp in selectedPartsKeys)
                     {
-                        var list = _mam.ExamPlacements.Where(x => x.DayPartUniqueKeys.Contains(sp)).Select(ep => ep.Rooms).ToList();
-                        inuseRooms.Add(list);
+                        var list = new List<long>();
+                        var sequence = _mam.ExamPlacements.Where(x => x.DayPartUniqueKeys.Contains(sp))
+                                                          .Select(x => { list.Concat(x.Rooms); return x; });
+
+                        inuseRooms.AddRange(list.Distinct().ToList());
                     }
 
+
+                    var notInuseRooms = _context.Rooms.Where(x => !inuseRooms.Contains(x.Id)).ToList();
+                    if (notInuseRooms.Sum(x => x.Capacity) < exam.TotalStudentCount)
+                    {
+                        continue;
+                    }
+
+                    var assignedRooms = GetProperRooms(exam.TotalStudentCount, inuseRooms);
+                    if (assignedRooms.Count > 0)
+                    {
+                        ep.Rooms = assignedRooms;
+                        ep.DayPartUniqueKeys = selectedPartsKeys;
+                        exam.Date = part.PartDateTime.ToString("dd/mm/yyyy");
+                        exam.StartHour = part.PartDateTime.Hour;
+                        exam.StartMinute = part.PartDateTime.Minute;
+                        assignedExamIds.Add(exam.Id);
+                        IsPartAssigned = true;
+                        break;
+                    }
                 }
 
-
-
-
+                if (IsPartAssigned)
+                {
+                    _mam.ExamPlacements.Add(ep);
+                    continue;
+                }
             }
-
+            if (ids.Distinct().Count()==assignedExamIds.Distinct().Count())
+            {
+                _context.SaveChanges();
+            }
 
         }
 
