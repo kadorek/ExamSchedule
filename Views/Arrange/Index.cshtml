@@ -133,13 +133,11 @@
         $(document).ready(function () {
             $(".btn-placement").on("click", function () {
                 var key = $(this).data("ep-key");
-                var id = $(this).data("exam-id");
-                var rooms = $(this).data("ep-rooms");
                 $.ajax({
                     type: "post",
                     url: "@Url.Action("GetExamPlacementData")",
                     dataType: "json",
-                    data: { _uniqueKey: key, idExam:id, idRooms: rooms },
+                    data: { _uniqueKey: key },
                     success: function (res) {
                         $("#div-placement-detail").html(res);
                     }

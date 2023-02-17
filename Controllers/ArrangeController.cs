@@ -23,7 +23,7 @@ namespace ExamSchedule.Controllers
         public ArrangeController(examdataContext context)
         {
             _context = context;
-            _mam = new MainArrangementModel();
+            _mam = MainArrangementModel.Object;
         }
 
         public async Task<IActionResult> Index(long? id)
@@ -194,7 +194,6 @@ namespace ExamSchedule.Controllers
                         {
                             list.AddRange(si.Distinct().ToList());
                         }
-
                         inuseRooms.AddRange(list.Distinct().ToList());
                     }
                     inuseRooms = inuseRooms.Distinct().ToList();
@@ -216,6 +215,8 @@ namespace ExamSchedule.Controllers
                         assignedExamIds.Add(exam.Id);
                         IsPartAssigned = true;
                         ep.ExamFullDate = part.PartDateTime;
+
+                        _context.SaveChanges();
                         break;
                     }
                 }
@@ -289,9 +290,10 @@ namespace ExamSchedule.Controllers
 
 
         [HttpPost]
-        public IActionResult GetExamPlacementData(string _uniqueKey, long idExam, List<long> idRooms)
+        public IActionResult GetExamPlacementData(string _uniqueKey)
         {
-            var exam = _context.Exams.FirstOrDefault(x => x.Id == idExam);
+            var ep = _mam.ExamPlacements.FirstOrDefault(x => x.UniqueKey == _uniqueKey);
+            var exam = _context.Exams.FirstOrDefault(x => x.Id ==ep.ExamId );
             var parsedDate = DateTime.Parse(exam.Date);
             var epw = new ExamPlacementViewModel()
             {
@@ -304,8 +306,8 @@ namespace ExamSchedule.Controllers
                     (int)exam.StartMinute.Value,
                     0
                 ),
-                Rooms = _context.Rooms.Where(x => idRooms.Contains(x.Id)).ToList(),
-                UniqueKey =_uniqueKey
+                Rooms = _context.Rooms.Where(x => ep.Rooms.Contains(x.Id)).ToList(),
+                UniqueKey = _uniqueKey
             };
             return PartialView(epw);
         }

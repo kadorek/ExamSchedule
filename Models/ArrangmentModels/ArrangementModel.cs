@@ -44,12 +44,27 @@ namespace ExamSchedule.Models.ArrangmentModels
     [NotMapped]
     public class MainArrangementModel
     {
+
+        private static MainArrangementModel _object;
+
+        public static MainArrangementModel Object
+        {
+            get
+            {
+                if (_object == null)
+                {
+                    _object = new MainArrangementModel();
+                }
+                return _object;
+
+            }
+        }
         public Schedule Schedule { get; set; }
         public ArrangementSettings Settings { get; set; }
         public List<DayPart> Parts { get; set; }
         public List<ExamPlacement> ExamPlacements { get; set; } = new List<ExamPlacement>();
         public int MaxDayPartPerDay { get; set; } = 0;
-        public MainArrangementModel()
+        private MainArrangementModel()
         {
             Settings = new ArrangementSettings();
             Parts = new List<DayPart>();
