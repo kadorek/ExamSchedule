@@ -1,4 +1,5 @@
 ﻿using ExamSchedule.Extensions;
+using ExamSchedule.Models.ModelExtras;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -95,7 +96,7 @@ namespace ExamSchedule.Models
         public string StudentNo { get; set; }
     }
 
-
+    [MetadataType(typeof(ScheduleMetaData))]
     public partial class Schedule
     {
 
@@ -243,7 +244,7 @@ namespace ExamSchedule.Models
             }
         }
 
-        
+
 
         [NotMapped]
         public bool IsPinnedParsed
@@ -272,7 +273,7 @@ namespace ExamSchedule.Models
         {
             get
             {
-                if (IsMerged.HasValue || IsMerged.Value == true)
+                if (IsMerged.HasValue && IsMerged.Value == true)
                 {
                     return true;
                 }

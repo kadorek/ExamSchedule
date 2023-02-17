@@ -20,54 +20,83 @@
                 padding: 0;
                 width: 100%;
             }
+
         .program td {
             width: @(100 / Model.MaxDayPartPerDay)% !important;
             height: 75px;
             border: solid thin red;
         }
+
+        div.detail {
+            max-height: 300px;
+            overflow: scroll;
+        }
     </style>
 }
 
+<div>
 
-<table border="1" style="width:100%;" class="program">
-    @for (int i = 0; i < Model.Schedule.DaysCount; i++)
-    {
-        <tr>
-            @{
-                var list = Model.Parts.Where(x => x.IndexDay == i).OrderBy(x => x.IndexPart).ToList();
-                foreach (var item in list)
-                {
-                    var key = item.UniqueKey;
-                    var exams = Model.ExamPlacements.Where(x => x.DayPartUniqueKeys.Contains(key));
-                    if (exams.Count() > 0)
+    <table border="1" style="width:100%;" class="program">
+        @for (int i = 0; i < Model.Schedule.DaysCount; i++)
+        {
+            <tr>
+                @{
+                    var list = Model.Parts.Where(x => x.IndexDay == i).OrderBy(x => x.IndexPart).ToList();
+                    foreach (var item in list)
                     {
-                        <td>
-                            @foreach (var e_items in exams)
-                            {
-                                <span class="get-tooltip" data-exam-id="@e_items.ExamId"> @e_items.ExamName </span>
-                                @:<br>
-                            }
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            @item.ToString()
-                        </td>
+                        var key = item.UniqueKey;
+                        var exams = Model.ExamPlacements.Where(x => x.DayPartUniqueKeys.Contains(key));
+                        if (exams.Count() > 0)
+                        {
+                            <td>
+                                @foreach (var e_items in exams)
+                                {
+                                    <span class="get-tooltip" data-exam-id="@e_items.ExamId"> @e_items.ExamName </span>
+                                    @:<br>
+                                }
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @item.ToString()
+                            </td>
+                        }
                     }
                 }
+
+            </tr>
+        }
+
+    </table>
+
+</div>
+
+<div class="row detail">
+    <div class="col-5">
+        <ul>
+            @foreach (var item in Model.ExamPlacements)
+            {
+                <li>
+                    <button class="btn-placement" data-ep-key="@item.UniqueKey" data-exam-id="@item.ExamId" data-ep-rooms="@item.Rooms">@item.ExamName</button>
+                </li>
+
             }
 
-        </tr>
-    }
+        </ul>
 
-</table>
+    </div>
+    <div class="col-5">
+        <div id="div-placement-detail">
+        </div>
 
+    </div>
 
+</div>
 @section Scripts{
     <script>
         var dayparts = @Html.Raw(Json.Serialize(Model.Parts) );
-        var placements = @Html.Raw(Json.Serialize(Model.ExamPlacements) );
+        var placements = @Html.Raw(Json.Serialize(Model) );
         //log(placements);
         //log(dayparts);
 
@@ -100,6 +129,28 @@
             return data;
         }
 
+
+        $(document).ready(function () {
+            $(".btn-placement").on("click", function () {
+                var key = $(this).data("ep-key");
+                var id = $(this).data("exam-id");
+                var rooms = $(this).data("ep-rooms");
+                $.ajax({
+                    type: "post",
+                    url: "@Url.Action("GetExamPlacementData")",
+                    dataType: "json",
+                    data: { _uniqueKey: key, idExam:id, idRooms: rooms },
+                    success: function (res) {
+                        $("#div-placement-detail").html(res);
+                    }
+
+                });
+
+
+
+            });
+
+        });
 
     </script>
 

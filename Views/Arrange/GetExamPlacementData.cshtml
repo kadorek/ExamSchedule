@@ -1,0 +1,28 @@
+﻿@using ExamSchedule.Models.ArrangmentModels;
+@model ExamPlacementViewModel;
+
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+
+
+<div class="row">
+    <h3>
+        @Model.Exam.Course.CourseFullName
+    </h3>
+</div>
+<div class="row">
+    <b>Date : </b> @Model.ExamFullDate
+</div>
+<div class="row">
+    Total Student : @Model.Exam.TotalStudentCount
+</div>
+<div class="row">
+    <b>Classrooms : </b>
+    @foreach (var item in Model.Rooms)
+    {
+        @item.Name
+    }
+</div>

@@ -25,7 +25,7 @@ namespace ExamSchedule.Models.ArrangmentModels
         public override string ToString()
         {
             var str = "";
-            str =UniqueKey +" "+( IsRestricted ? "R" : "N");
+            str = UniqueKey + " " + (IsRestricted ? "R" : "N");
             return str;
         }
 
@@ -60,9 +60,43 @@ namespace ExamSchedule.Models.ArrangmentModels
     [NotMapped]
     public class ExamPlacement
     {
+        private readonly string _unique;
+        private bool isDebug = false;
         public long ExamId { get; set; }
         public string ExamName { get; set; }
+        public DateTime? ExamFullDate { get; set; }
         public List<long> Rooms { get; set; }
         public List<string> DayPartUniqueKeys { get; set; } = new List<string>();
+
+        public String UniqueKey { get { return _unique; } }
+        public ExamPlacement()
+        {
+            _unique = Guid.NewGuid().ToString();
+        }
+        public ExamPlacement(bool _isDebug)
+        {
+            isDebug = _isDebug;
+            _unique = Guid.NewGuid().ToString();
+        }
+
+        public override string ToString()
+        {
+            var str = "";
+            str = ExamName;
+            if (isDebug && ExamFullDate.HasValue)
+            {
+                str += " " + ExamFullDate.ToString();
+            }
+            return str;
+        }
+    }
+
+    [NotMapped]
+    public class ExamPlacementViewModel
+    {
+        public string UniqueKey { get; set; }
+        public List<Room> Rooms { get; set; }
+        public DateTime ExamFullDate { get; set; }
+        public Exam Exam { get; set; }
     }
 }

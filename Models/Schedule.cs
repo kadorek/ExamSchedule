@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 #nullable disable
@@ -21,7 +22,6 @@ namespace ExamSchedule.Models
         public long DayStartMinute { get; set; }
         public long DayEndHour { get; set; }
         public long DayEndMinute { get; set; }
-
         public virtual ICollection<Exam> Exams { get; set; }
         public virtual ICollection<ScheduleRestriction> ScheduleRestrictions { get; set; }
     }
