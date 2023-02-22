@@ -1,160 +1,48 @@
-﻿@model ExamSchedule.Models.ArrangmentModels.MainArrangementModel
+﻿@model IEnumerable<ExamSchedule.Models.ViewModels.ArrangementViewModel>
+
 @{
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    //var maxDayPartCount = Model.DayParts.Max(x => x.Length);
-
-
 }
 
-@section Styles{
+<h1>Index</h1>
 
-    <style>
-
-        .ui-tooltip {
-            font-size: 10px;
-            min-width: 400px !important;
-        }
-
-            .ui-tooltip p {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-            }
-
-        .program td {
-            width: @(100 / Model.MaxDayPartPerDay)% !important;
-            height: 75px;
-            border: solid thin red;
-        }
-
-        div.detail {
-            max-height: 300px;
-            overflow: scroll;
-        }
-    </style>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ScheduleName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalExamCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlacedExamCount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScheduleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalExamCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlacedExamCount)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
 }
-
-<div>
-
-    <table border="1" style="width:100%;" class="program">
-        @for (int i = 0; i < Model.Schedule.DaysCount; i++)
-        {
-            <tr>
-                @{
-                    var list = Model.Parts.Where(x => x.IndexDay == i).OrderBy(x => x.IndexPart).ToList();
-                    foreach (var item in list)
-                    {
-                        var key = item.UniqueKey;
-                        var exams = Model.ExamPlacements.Where(x => x.DayPartUniqueKeys.Contains(key));
-                        if (exams.Count() > 0)
-                        {
-                            <td>
-                                @foreach (var e_items in exams)
-                                {
-                                    <span class="get-tooltip" data-exam-id="@e_items.ExamId"> @e_items.ExamName </span>
-                                    @:<br>
-                                }
-                            </td>
-                        }
-                        else
-                        {
-                            <td>
-                                @item.ToString()
-                            </td>
-                        }
-                    }
-                }
-
-            </tr>
-        }
-
-    </table>
-
-</div>
-
-<div class="row detail">
-    <div class="col-5">
-        <ul>
-            @foreach (var item in Model.ExamPlacements)
-            {
-                <li>
-                    <button class="btn-placement" data-ep-key="@item.UniqueKey" data-exam-id="@item.ExamId" data-ep-rooms="@item.Rooms">@item.ExamName</button>
-                </li>
-
-            }
-
-        </ul>
-
-    </div>
-    <div class="col-5">
-        <div id="div-placement-detail">
-        </div>
-
-    </div>
-
-</div>
-@section Scripts{
-    <script>
-        var dayparts = @Html.Raw(Json.Serialize(Model.Parts) );
-        var placements = @Html.Raw(Json.Serialize(Model) );
-        log(placements);
-        //log(dayparts);
-
-
-        $(document).tooltip({
-            items: "span",
-            content: function (tooltipcallback) {
-                var con = "";
-                var e = $(this);
-                var id = Number(e.data("exam-id"));
-                $.ajax({
-                    type: "post",
-                    url: '@Url.Action("GetExamData")',
-                    dataType: "json",
-                    data: { idExam: id },
-                    success: function (res) {
-                        var str = "";
-                        for (var s in res) {
-                            str += "<p>" + res[s] + "</p>";
-                        }
-                        tooltipcallback(str);
-                    },
-                    error: function (err) {
-                        log(err);
-                    }
-                });
-            }
-        });
-        function tooltipcallback(data) {
-            return data;
-        }
-
-
-        $(document).ready(function () {
-            $(".btn-placement").on("click", function () {
-                var key = $(this).data("ep-key");
-                $.ajax({
-                    type: "post",
-                    url: "@Url.Action("GetExamPlacementData")",
-                    dataType: "json",
-                    data: { _uniqueKey: key },
-                    success: function (res) {
-                        $("#div-placement-detail").html(res);
-                    }
-
-                });
-
-
-
-            });
-
-        });
-
-    </script>
-
-}
-
-
-
-
-
+    </tbody>
+</table>

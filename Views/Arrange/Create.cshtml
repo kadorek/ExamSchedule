@@ -1,0 +1,85 @@
+﻿@using ExamSchedule.Models.ArrangmentModels;
+
+@model MainArrangementModel
+
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*
+
+<div class="row">
+</div>
+
+<div class="col-4"></div>
+
+
+ { get; set; } = 4;
+        public int  { get; set; } = 3;
+        public int
+
+
+*@
+
+
+<div class="row">
+    <h3>Settings</h3>
+
+    <div class="row">
+
+        <div class="col-2">MaxExamCountPerDay</div>
+        <div class="col-1">:</div>
+        <div class="col-4">
+
+            <input asp-for="Settings.MaxExamCountPerDay" />
+
+        </div>
+
+    </div>
+    <div class="row">
+
+        <div class="col-2">DefaultExamPartCount</div>
+        <div class="col-1">:</div>
+        <div class="col-4">
+            <input asp-for="Settings.DefaultExamPartCount" />
+        </div>
+
+    </div>
+    <div class="row">
+
+        <div class="col-2">DefaultDayPartDuration</div>
+        <div class="col-1">:</div>
+        <div class="col-4">
+            <input asp-for="Settings.DefaultDayPartDuration" />
+        </div>
+
+    </div>
+
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-2">Schedule</div>
+    <div class="col-1">:</div>
+    <div class="col-4">
+        <select asp-for="ScheduleId" asp-items="ViewBag.ScheduleId"></select>
+    </div>
+</div>
+
+<div class="row">
+</div>
+
+<div class="row">
+</div>
+
+<div class="row">
+</div>
+
+
+<div class="row">
+</div>
+
+

@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title> - ExamSchedule</title>
+	<link rel="stylesheet" href="sample-1_dosyalar/bootstrap.css">
+	<link href="sample-1_dosyalar/bootstrap-icons.css" rel="stylesheet">
+	<link href="sample-1_dosyalar/bootstrap-datetimepicker.min.css" rel="stylesheet">
+	<link href="sample-1_dosyalar/jquery-ui.css" rel="stylesheet">
+	<link href="sample-1_dosyalar/jquery.multiselect.css" rel="stylesheet">
+	<link href="sample-1_dosyalar/jquery.multiselect.filter.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="sample-1_dosyalar/site.css">
+	<link rel="stylesheet" href="sample-1_dosyalar/datatables.css">
+
+	
+
+    <style>
+
+        .ui-tooltip {
+            font-size: 10px;
+            min-width: 400px !important;
+        }
+
+            .ui-tooltip p {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+            }
+
+        .program td {
+            width: 6% !important;
+            height: 75px;
+            border: solid thin red;
+        }
+
+        div.detail {
+            max-height: 300px;
+            overflow: scroll;
+        }
+    </style>
+
+<style id="inert-style">
+[inert] {
+  pointer-events: none;
+  cursor: default;
+}
+
+[inert], [inert] * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+</style></head>
+<body>
+	<div class="container-fluid">
+		<div class=" row fixed-top " id="divMessageArea">
+			
+		</div>
+	</div>
+	<header>
+		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+			<div class="container">
+				<a class="navbar-brand" href="https://localhost:44396/">ExamSchedule</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+					<ul class="navbar-nav flex-grow-1">
+						<li class="nav-item">
+							<a class="nav-link text-dark" href="https://localhost:44396/">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-dark" href="https://localhost:44396/Home/Privacy">Privacy</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Main Elements
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<a class="nav-link text-dark" href="https://localhost:44396/Teacher">Teacher</a>
+								<a class="nav-link text-dark" href="https://localhost:44396/Course">Course</a>
+								<a class="nav-link text-dark" href="https://localhost:44396/Programme">Programme</a>
+								<a class="nav-link text-dark" href="https://localhost:44396/Room">Room</a>
+								<a class="nav-link text-dark" href="https://localhost:44396/Student">Student</a>
+								<div class="dropdown-divider"></div>
+								<a class="nav-link text-dark" href="https://localhost:44396/Schedule">Schedule</a>
+								<a class="nav-link text-dark" href="https://localhost:44396/Exam">Exam</a>
+							</div>
+
+						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link text-dark" href="https://localhost:44396/ImportedData">Import Data</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<div class="container-fluid">
+		<main role="main" class="pb-3">
+			
+
+<div>
+
+    <table style="width:100%;" class="program" border="1">
+            <tbody><tr>
+                            <td>
+                                5ce91561-3.04.2023 10:00:00 N
+                            </td>
+                            <td>
+                                7e419fd0-3.04.2023 10:30:00 N
+                            </td>
+                            <td>
+                                48a2f01d-3.04.2023 11:00:00 R
+                            </td>
+                            <td>
+                                4391bfe5-3.04.2023 11:30:00 R
+                            </td>
+                            <td>
+                                1b83d65f-3.04.2023 12:00:00 R
+                            </td>
+                            <td>
+                                4c91c36f-3.04.2023 12:30:00 R
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1290"> Paket Programları I </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1109"> Grafik ve Animasyon II </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1151"> Mesleki Yabancı Dil </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1285"> Finansal Yönetim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1307"> Meslek Etiği </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1288"> Dönem Sonu Muhasebe İşlemleri </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1290"> Paket Programları I </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1109"> Grafik ve Animasyon II </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1151"> Mesleki Yabancı Dil </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1285"> Finansal Yönetim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1307"> Meslek Etiği </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1288"> Dönem Sonu Muhasebe İşlemleri </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1290"> Paket Programları I </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1109"> Grafik ve Animasyon II </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1151"> Mesleki Yabancı Dil </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1285"> Finansal Yönetim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1307"> Meslek Etiği </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1288"> Dönem Sonu Muhasebe İşlemleri </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1091"> Atatürk İlkeleri ve İnkılap Tarihi I </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1271"> Genel Muhasebe I </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1271"> Genel Muhasebe I </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1269"> Meslek Etiği </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1178"> Reklam Fotografçılığı </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1142"> Elektrik Enerjisi İletim ve Dağıtımı </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1176"> Halkla İlişkiler Yazarlığı </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1137"> Temel Elektronik </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1182"> Bütünleşik Pazarlama İletişimi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1238"> Davranış Bilimleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1233"> Sensörler ve Transdüserler </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1271"> Genel Muhasebe I </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1269"> Meslek Etiği </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1178"> Reklam Fotografçılığı </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1142"> Elektrik Enerjisi İletim ve Dağıtımı </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1176"> Halkla İlişkiler Yazarlığı </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1137"> Temel Elektronik </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1182"> Bütünleşik Pazarlama İletişimi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1238"> Davranış Bilimleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1233"> Sensörler ve Transdüserler </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1269"> Meslek Etiği </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1178"> Reklam Fotografçılığı </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1142"> Elektrik Enerjisi İletim ve Dağıtımı </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1176"> Halkla İlişkiler Yazarlığı </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1137"> Temel Elektronik </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1182"> Bütünleşik Pazarlama İletişimi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1238"> Davranış Bilimleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1233"> Sensörler ve Transdüserler </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1234"> Sayısal Devre Tasarımı </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1234"> Sayısal Devre Tasarımı </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1234"> Sayısal Devre Tasarımı </span>
+                                    <br>
+                            </td>
+
+            </tr>
+            <tr>
+                            <td>
+                                2788f12-4.04.2023 10:00:00 N
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1090"> Türk Dili I </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1090"> Türk Dili I </span>
+                                    <br>
+                            </td>
+                            <td>
+                                25e2eb-4.04.2023 11:30:00 N
+                            </td>
+                            <td>
+                                b7b3bde-4.04.2023 12:00:00 R
+                            </td>
+                            <td>
+                                4fcc63f5-4.04.2023 12:30:00 R
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1138"> Temel Enerji Kaynakları </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1247"> Araştırma Yöntem ve Teknikleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1132"> Temel Enerji Kaynakları </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1188"> Davranış Bilimleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1143"> Güç Elektroniği ve Güç Kaynakları </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1287"> Finansal Ekonomi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1197"> Biyomedikal Enstrumantasyon </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1297"> Dönem Sonu Muhasebe İşlemleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1272"> Genel İşletme </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1138"> Temel Enerji Kaynakları </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1247"> Araştırma Yöntem ve Teknikleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1132"> Temel Enerji Kaynakları </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1188"> Davranış Bilimleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1143"> Güç Elektroniği ve Güç Kaynakları </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1287"> Finansal Ekonomi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1197"> Biyomedikal Enstrumantasyon </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1297"> Dönem Sonu Muhasebe İşlemleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1272"> Genel İşletme </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1138"> Temel Enerji Kaynakları </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1247" aria-describedby="ui-id-41"> Araştırma Yöntem ve Teknikleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1132"> Temel Enerji Kaynakları </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1188"> Davranış Bilimleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1143"> Güç Elektroniği ve Güç Kaynakları </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1287"> Finansal Ekonomi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1197"> Biyomedikal Enstrumantasyon </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1297"> Dönem Sonu Muhasebe İşlemleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1272"> Genel İşletme </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1126"> Grafik Üretim Teknikleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1294"> Dış Ticaret İşlemleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1275"> Muhasebe Meslek Mevzuatı </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1212"> Anatomi ve Fizyoloji </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1094"> Web Tasarımının Temelleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1192"> Temel Hukuk </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1187"> İletişim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1278"> Genel Muhasebe I </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1190"> Genel İşletme </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1126"> Grafik Üretim Teknikleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1294"> Dış Ticaret İşlemleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1275"> Muhasebe Meslek Mevzuatı </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1212"> Anatomi ve Fizyoloji </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1094"> Web Tasarımının Temelleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1192"> Temel Hukuk </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1187"> İletişim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1278"> Genel Muhasebe I </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1190"> Genel İşletme </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1126"> Grafik Üretim Teknikleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1294"> Dış Ticaret İşlemleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1275"> Muhasebe Meslek Mevzuatı </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1212"> Anatomi ve Fizyoloji </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1094"> Web Tasarımının Temelleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1192"> Temel Hukuk </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1187"> İletişim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1278"> Genel Muhasebe I </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1190"> Genel İşletme </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1231"> Otomatik Kontrol </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1127"> Görsel Tasarım II </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1139"> Bilgi ve İletişim Teknolojisi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1223"> Ölçme Tekniği </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1169"> İllüstrasyon </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1283"> Şirketler Muhasebesi </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1231"> Otomatik Kontrol </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1127"> Görsel Tasarım II </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1139"> Bilgi ve İletişim Teknolojisi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1223"> Ölçme Tekniği </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1169"> İllüstrasyon </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1283"> Şirketler Muhasebesi </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1231"> Otomatik Kontrol </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1127"> Görsel Tasarım II </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1139"> Bilgi ve İletişim Teknolojisi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1223"> Ölçme Tekniği </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1169"> İllüstrasyon </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1283"> Şirketler Muhasebesi </span>
+                                    <br>
+                            </td>
+
+            </tr>
+            <tr>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1159"> Çekim Teknikleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1117"> Reklam Analizi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1215"> Doğru Akım Devre Analizi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1167"> İletişim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1104"> Sunucu İşletim Sistemleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1107"> İnternet Programcılığı I </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1159"> Çekim Teknikleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1117"> Reklam Analizi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1215"> Doğru Akım Devre Analizi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1167"> İletişim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1104"> Sunucu İşletim Sistemleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1107"> İnternet Programcılığı I </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1159"> Çekim Teknikleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1117"> Reklam Analizi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1215"> Doğru Akım Devre Analizi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1167"> İletişim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1104"> Sunucu İşletim Sistemleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1107"> İnternet Programcılığı I </span>
+                                    <br>
+                            </td>
+                            <td>
+                                49630be1-5.04.2023 11:30:00 N
+                            </td>
+                            <td>
+                                2dcb6e5d-5.04.2023 12:00:00 R
+                            </td>
+                            <td>
+                                52d30054-5.04.2023 12:30:00 R
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1191"> İktisada Giriş </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1103"> Ağ Temelleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1311"> Temel Hukuk </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1295"> Finansal Yönetim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1181"> Kurum İmajı ve İtibar Yönetimi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1291"> Vergi Hukuku </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1134"> Doğru Akım Devre Analizi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1214"> Matematik </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1191"> İktisada Giriş </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1103"> Ağ Temelleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1311"> Temel Hukuk </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1295"> Finansal Yönetim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1181"> Kurum İmajı ve İtibar Yönetimi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1291"> Vergi Hukuku </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1134"> Doğru Akım Devre Analizi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1214"> Matematik </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1191"> İktisada Giriş </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1103"> Ağ Temelleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1311"> Temel Hukuk </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1295"> Finansal Yönetim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1181"> Kurum İmajı ve İtibar Yönetimi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1291"> Vergi Hukuku </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1134"> Doğru Akım Devre Analizi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1214"> Matematik </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1242"> Yönetici Asistanlığı </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1095"> Bilgisayar Donanımı </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1129"> Baskıya Hazırlık </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1227"> Sayısal Elektronik </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1153"> Özgün Baskı I </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1211"> Elektrik - Elektronik Ölçme </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1147"> Güneş Enerjisi ile Elektrik Üretimi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1108"> Robotik Kodlama </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1242"> Yönetici Asistanlığı </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1095"> Bilgisayar Donanımı </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1129"> Baskıya Hazırlık </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1227"> Sayısal Elektronik </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1153"> Özgün Baskı I </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1211"> Elektrik - Elektronik Ölçme </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1147"> Güneş Enerjisi ile Elektrik Üretimi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1108"> Robotik Kodlama </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1242"> Yönetici Asistanlığı </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1095"> Bilgisayar Donanımı </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1129"> Baskıya Hazırlık </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1227"> Sayısal Elektronik </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1153"> Özgün Baskı I </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1211"> Elektrik - Elektronik Ölçme </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1147"> Güneş Enerjisi ile Elektrik Üretimi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1108"> Robotik Kodlama </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1229"> Elektromekanik Kumanda Sistemleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1096"> Ofis Yazılımları </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1296"> Klavye Teknikleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1194"> İletişim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1112"> Genel İşletme </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1199"> Tıbbi Bilişim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1202"> Mikrodenetleyiciler </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1135"> Matematik </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1229"> Elektromekanik Kumanda Sistemleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1096"> Ofis Yazılımları </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1296"> Klavye Teknikleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1194"> İletişim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1112"> Genel İşletme </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1199"> Tıbbi Bilişim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1202"> Mikrodenetleyiciler </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1135"> Matematik </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1229"> Elektromekanik Kumanda Sistemleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1096"> Ofis Yazılımları </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1296"> Klavye Teknikleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1194"> İletişim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1112"> Genel İşletme </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1199"> Tıbbi Bilişim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1202"> Mikrodenetleyiciler </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1135"> Matematik </span>
+                                    <br>
+                            </td>
+
+            </tr>
+            <tr>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1210"> Bilgi ve İletişim Teknolojisi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1152"> Grafik Üretim Teknikleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1263"> E - Ticaret </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1105"> Görsel Programlama II </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1230"> İşlemsel Yükselteçler ( Elektronik–Iı ) </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1210"> Bilgi ve İletişim Teknolojisi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1152"> Grafik Üretim Teknikleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1263"> E - Ticaret </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1105"> Görsel Programlama II </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1230"> İşlemsel Yükselteçler ( Elektronik–Iı ) </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1210"> Bilgi ve İletişim Teknolojisi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1152"> Grafik Üretim Teknikleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1263"> E - Ticaret </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1105"> Görsel Programlama II </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1230"> İşlemsel Yükselteçler ( Elektronik–Iı ) </span>
+                                    <br>
+                            </td>
+                            <td>
+                                6e6518cd-6.04.2023 11:30:00 N
+                            </td>
+                            <td>
+                                3fdfaaae-6.04.2023 12:00:00 R
+                            </td>
+                            <td>
+                                30e99f0c-6.04.2023 12:30:00 R
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1299"> Genel Muhasebe I </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1092"> Yabancı Dil I </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1299"> Genel Muhasebe I </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1299"> Genel Muhasebe I </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1259"> İletişim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1133"> Elektrik Elektronik Ölçme </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1144"> Elektrik Kumanda Sistemleri ve Programlanabilir Denetleyiciler </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1179"> Meslek Etiği </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1102"> Veri Tabanı I </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1232"> Elektrik Motorları ve Sürücüleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1195"> Halkla İlişkiler Kampanyaları </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1198"> Endüstriyel Elektronik </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1259"> İletişim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1133"> Elektrik Elektronik Ölçme </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1144"> Elektrik Kumanda Sistemleri ve Programlanabilir Denetleyiciler </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1179"> Meslek Etiği </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1102"> Veri Tabanı I </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1232"> Elektrik Motorları ve Sürücüleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1195"> Halkla İlişkiler Kampanyaları </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1198"> Endüstriyel Elektronik </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1216"> Elektrik - Elektronik Ölçme </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1259"> İletişim </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1133"> Elektrik Elektronik Ölçme </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1144"> Elektrik Kumanda Sistemleri ve Programlanabilir Denetleyiciler </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1179"> Meslek Etiği </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1102"> Veri Tabanı I </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1232"> Elektrik Motorları ve Sürücüleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1195"> Halkla İlişkiler Kampanyaları </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1198"> Endüstriyel Elektronik </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1216"> Elektrik - Elektronik Ölçme </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1116"> Temel Tasarım </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1216"> Elektrik - Elektronik Ölçme </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1185"> Temel Hukuk </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1158"> Çevre Koruma </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1292"> Maliyet Muhasebesi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1149"> Hidroelektrik Santralleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1177"> Yeni İletişim Teknolojileri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1204"> Anatomi ve Fizyoloji </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1116"> Temel Tasarım </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1185"> Temel Hukuk </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1158"> Çevre Koruma </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1292"> Maliyet Muhasebesi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1149"> Hidroelektrik Santralleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1177"> Yeni İletişim Teknolojileri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1204"> Anatomi ve Fizyoloji </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1253"> Klavye Teknikleri I </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1116"> Temel Tasarım </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1185"> Temel Hukuk </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1158"> Çevre Koruma </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1292"> Maliyet Muhasebesi </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1149"> Hidroelektrik Santralleri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1177"> Yeni İletişim Teknolojileri </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1204"> Anatomi ve Fizyoloji </span>
+                                    <br>
+                                    <span class="get-tooltip" data-exam-id="1253"> Klavye Teknikleri I </span>
+                                    <br>
+                            </td>
+                            <td>
+                                    <span class="get-tooltip" data-exam-id="1253"> Klavye Teknikleri I </span>
+                                    <br>
+                            </td>
+
+            </tr>
+
+    </tbody></table>
+
+</div>
+
+<div class="row detail">
+    <div class="col-5">
+        <ul>
+                <li>
+                    <button class="btn-placement" data-ep-key="b3aff07f-1af8-4c49-941e-5947e64bcd72" data-exam-id="1090" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Türk Dili I</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="26bf5be5-39dc-4ebb-8148-65e77e106016" data-exam-id="1091" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Atatürk İlkeleri ve İnkılap Tarihi I</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="5e038897-93da-4f76-8429-560e5e566ce8" data-exam-id="1092" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Yabancı Dil I</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="c208ecd0-e21c-4cdf-8212-56d29fc7ebfd" data-exam-id="1290" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Paket Programları I</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="d26ce5cb-530d-40e0-acd6-24feb88d1f7d" data-exam-id="1109" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Grafik ve Animasyon II</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="e585a807-89e5-4ab2-af6e-f1bd4f98292a" data-exam-id="1151" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Mesleki Yabancı Dil</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="e5185704-993f-40d7-a593-8e6a31ec9bb4" data-exam-id="1285" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Finansal Yönetim</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="74bf6475-3c7b-4240-8f11-01bfa85a1056" data-exam-id="1307" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Meslek Etiği</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="2124c63f-0a2d-4ae2-a390-ace80e8bed04" data-exam-id="1288" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Dönem Sonu Muhasebe İşlemleri</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="0a5bc255-9e62-4e09-a587-b0b580250670" data-exam-id="1271" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Genel Muhasebe I</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="dc294c4f-6e44-4901-9917-daa5f5430e21" data-exam-id="1269" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Meslek Etiği</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="39dad701-cb33-401d-91ad-be1e361c61b3" data-exam-id="1178" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Reklam Fotografçılığı</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="9822e987-940c-41da-851f-0a82f4236fbd" data-exam-id="1142" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Elektrik Enerjisi İletim ve Dağıtımı</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="4ed60f34-428c-42ff-8d2a-3896ba5ce8bb" data-exam-id="1176" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Halkla İlişkiler Yazarlığı</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="3645bb89-fe3c-4d74-88e6-04792350c820" data-exam-id="1137" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Temel Elektronik</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="3bdaa2dc-3c57-496d-b0b3-4ba3a1f0688a" data-exam-id="1182" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Bütünleşik Pazarlama İletişimi</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="945df66b-ff3e-4774-a7bc-95dcdb8924ce" data-exam-id="1238" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Davranış Bilimleri</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="854d8fd7-7971-45da-a56e-09ffb1e51a73" data-exam-id="1233" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Sensörler ve Transdüserler</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="d9ed9fbb-4a71-49f3-a05e-05c054fa15fd" data-exam-id="1234" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Sayısal Devre Tasarımı</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="11d64cbc-2ddd-4435-a31a-4b893b68703f" data-exam-id="1138" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Temel Enerji Kaynakları</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="a5e6fb3b-0fce-43e8-9047-a41b6be7bb05" data-exam-id="1247" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Araştırma Yöntem ve Teknikleri</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="9aa13aba-42d1-41b2-9a7b-b1f64411e01d" data-exam-id="1132" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Temel Enerji Kaynakları</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="d410f6e3-8865-4ba0-91b2-6858e28a0254" data-exam-id="1188" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Davranış Bilimleri</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="87309429-2f6e-40ec-a3d3-8070d2044f91" data-exam-id="1143" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Güç Elektroniği ve Güç Kaynakları</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="486b02b3-c3e7-4cd0-8249-b586ada1a35b" data-exam-id="1287" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Finansal Ekonomi</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="16db9536-2928-46ef-8c20-0d275eb3f9aa" data-exam-id="1197" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Biyomedikal Enstrumantasyon</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="61651c1b-160d-4eae-8152-c03bbc5b650d" data-exam-id="1297" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Dönem Sonu Muhasebe İşlemleri</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="0f7a6667-c648-42c1-9f65-07fe50f30d72" data-exam-id="1272" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Genel İşletme</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="c278772b-6032-4b15-a990-84e7c265c81f" data-exam-id="1126" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Grafik Üretim Teknikleri</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="ba106f24-0ee0-443d-9b24-85d38e1ad4f2" data-exam-id="1294" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Dış Ticaret İşlemleri</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="5c650c34-1a21-437d-8ed1-b9a207008c7f" data-exam-id="1275" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Muhasebe Meslek Mevzuatı</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="c6464fa9-12c3-4cff-b508-31a0e19a6bf5" data-exam-id="1212" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Anatomi ve Fizyoloji</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="738bc477-f8a4-406f-94a5-862dffaca9f5" data-exam-id="1094" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Web Tasarımının Temelleri</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="870733e0-20bd-4eab-a978-b9b346c8cf8c" data-exam-id="1192" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Temel Hukuk</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="f75046dd-61a9-488f-8baf-6a2c61349785" data-exam-id="1187" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">İletişim</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="9557e073-4f2f-4fe2-9831-41d2729e3981" data-exam-id="1278" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Genel Muhasebe I</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="c62833d6-a745-480e-bc4a-e6807ef4c661" data-exam-id="1190" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Genel İşletme</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="25792379-4240-4c88-bff0-7c311b30fd63" data-exam-id="1231" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Otomatik Kontrol</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="4d13218f-bb9c-47dc-82c6-8daf96d7b361" data-exam-id="1127" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Görsel Tasarım II</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="080646a5-21aa-4000-900b-d371622dedb6" data-exam-id="1139" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Bilgi ve İletişim Teknolojisi</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="6bb832d3-2778-4287-9651-b8a09395bf8b" data-exam-id="1223" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Ölçme Tekniği</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="79659dcd-49fc-46f4-ab64-484e20aca814" data-exam-id="1169" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">İllüstrasyon</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="f95a8491-5de0-4d74-a500-e886944ba47f" data-exam-id="1283" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Şirketler Muhasebesi</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="7cc84aad-f30d-4927-aba1-67c5847a2bfa" data-exam-id="1159" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Çekim Teknikleri</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="d00b02b6-366c-4b65-8011-3fe135414391" data-exam-id="1117" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Reklam Analizi</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="8a936472-9fc4-49f1-87e6-86e3b1b04fac" data-exam-id="1215" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Doğru Akım Devre Analizi</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="0098cb03-f2da-410b-abc7-e0b89275adfc" data-exam-id="1167" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">İletişim</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="b714d14e-8b57-4ba5-bdf1-51f74cf60549" data-exam-id="1104" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Sunucu İşletim Sistemleri</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="6d2ea1cd-1cd7-42d6-9331-4fbccd625838" data-exam-id="1107" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">İnternet Programcılığı I</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="d92f0e6d-0505-42dd-af10-3720457ce635" data-exam-id="1191" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">İktisada Giriş</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="1e8f3107-480d-432b-ab70-59b301f15080" data-exam-id="1103" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Ağ Temelleri</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="4ca1d81b-fb5a-4ccd-b4e1-581b6be14844" data-exam-id="1311" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Temel Hukuk</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="a81ee65d-39fc-4492-b1fa-cfdf3eb75394" data-exam-id="1295" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Finansal Yönetim</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="e97148f8-1c02-40ac-bd5c-7cb54d5d93a8" data-exam-id="1181" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Kurum İmajı ve İtibar Yönetimi</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="7c7831cf-c087-45ac-96e9-d31db38e3d74" data-exam-id="1291" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Vergi Hukuku</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="700cb3e7-a995-4c5a-a133-0eeda24e9f7f" data-exam-id="1134" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Doğru Akım Devre Analizi</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="1a0f9ce5-3ff0-4483-a195-f8125bb97a45" data-exam-id="1214" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Matematik</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="7a0a16f5-5428-43b1-8b2a-c58ff8b9b58c" data-exam-id="1242" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Yönetici Asistanlığı</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="19911006-a8d2-4575-89ad-500280fef737" data-exam-id="1095" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Bilgisayar Donanımı</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="7e9cb313-e668-48f2-aa23-13cd12f3cee5" data-exam-id="1129" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Baskıya Hazırlık</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="a4bf38d2-7033-4e60-aea1-cf6b04d2234f" data-exam-id="1227" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Sayısal Elektronik</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="ec3b63fd-69f3-4237-9c1f-c0c93a73fa5a" data-exam-id="1153" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Özgün Baskı I</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="7bae3321-7fa9-41f4-a8ce-2576f15b8020" data-exam-id="1211" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Elektrik - Elektronik Ölçme</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="6cde7eeb-2c1c-4539-8c2a-9a6d6ad55284" data-exam-id="1147" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Güneş Enerjisi ile Elektrik Üretimi</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="c2a12397-eb62-4535-a49b-cc8f2559b41b" data-exam-id="1108" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Robotik Kodlama</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="e52d0a13-89dc-4659-9f68-ec651c4d4f6a" data-exam-id="1229" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Elektromekanik Kumanda Sistemleri</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="9142e696-c3e6-4f8d-ad4e-df947e36f2a2" data-exam-id="1096" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Ofis Yazılımları</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="a9076c8a-4fec-46a5-82c6-d48e121e7d7e" data-exam-id="1296" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Klavye Teknikleri</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="fbbb494e-359e-484b-a6ca-01ae056bbf9a" data-exam-id="1194" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">İletişim</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="dc572426-f1ab-4a95-8ac3-e12af479c7b0" data-exam-id="1112" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Genel İşletme</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="e82feb34-6bd4-4b00-8920-4fdb4f8d2df2" data-exam-id="1199" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Tıbbi Bilişim</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="4c23371d-1ee5-4707-8695-6ff9137eb59c" data-exam-id="1202" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Mikrodenetleyiciler</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="fe4052b9-dc59-424e-876a-3df207b75863" data-exam-id="1135" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Matematik</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="914251cc-11c9-41c2-899c-eb7935541be3" data-exam-id="1210" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Bilgi ve İletişim Teknolojisi</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="ad43b92f-1e8a-4ab9-a000-09f6393e6e61" data-exam-id="1152" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Grafik Üretim Teknikleri</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="c8e99524-ff63-4963-b6fe-979618fa0ec2" data-exam-id="1263" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">E - Ticaret</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="a2f065fb-32eb-4859-9b7d-bed5917d5a03" data-exam-id="1105" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Görsel Programlama II</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="d7fc85f5-69d7-43f6-8cba-0481ec928bb0" data-exam-id="1230" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">İşlemsel Yükselteçler ( Elektronik–Iı )</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="b92c9e92-404a-468a-9eec-79b3ac849e65" data-exam-id="1299" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Genel Muhasebe I</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="f83a471b-3825-4c28-b643-2812ba18e675" data-exam-id="1259" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">İletişim</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="3af37843-7db1-4f47-8e2e-7cab79976329" data-exam-id="1133" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Elektrik Elektronik Ölçme</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="a1db4aa2-3baf-4788-8f78-61b06ddff00b" data-exam-id="1144" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Elektrik Kumanda Sistemleri ve Programlanabilir Denetleyiciler</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="23acacbc-7932-413c-bb4c-86dfd45e478b" data-exam-id="1179" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Meslek Etiği</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="183bdadd-0ff1-4885-b0ce-6a7ed778a612" data-exam-id="1102" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Veri Tabanı I</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="26e83046-07e6-40e6-ac3a-d108806cd34a" data-exam-id="1232" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Elektrik Motorları ve Sürücüleri</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="ab931aed-875d-4c9d-a015-5127fb439148" data-exam-id="1195" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Halkla İlişkiler Kampanyaları</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="c04b702b-a7cc-4d26-82dc-3f46951cb82c" data-exam-id="1116" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Temel Tasarım</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="b37b9d51-161a-4ec9-aa33-14b5d85448fa" data-exam-id="1198" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Endüstriyel Elektronik</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="9c73bc3c-59d2-4a6a-92f7-0507816df6b3" data-exam-id="1216" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Elektrik - Elektronik Ölçme</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="dbcb2679-35da-48e0-9128-c6f5d8f1234d" data-exam-id="1185" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Temel Hukuk</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="256bdaf7-b0ae-422b-89c9-c7c0db69e036" data-exam-id="1158" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Çevre Koruma</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="055da6c5-452d-4735-8ada-fcd675388b6a" data-exam-id="1292" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Maliyet Muhasebesi</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="946a18ab-2f37-4fc3-bbd1-e8c83bd0a437" data-exam-id="1149" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Hidroelektrik Santralleri</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="a6395354-c965-4625-bbe8-89595a957676" data-exam-id="1177" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Yeni İletişim Teknolojileri</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="ca1af105-1836-4d02-a653-0a96e717783a" data-exam-id="1204" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Anatomi ve Fizyoloji</button>
+                </li>
+                <li>
+                    <button class="btn-placement" data-ep-key="e1912870-624f-4b73-9b8b-aba6d12be80e" data-exam-id="1253" data-ep-rooms="System.Collections.Generic.List`1[System.Int64]">Klavye Teknikleri I</button>
+                </li>
+
+        </ul>
+
+    </div>
+    <div class="col-5">
+        <div id="div-placement-detail">
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+		</main>
+	</div>
+
+	<footer class="border-top footer text-muted">
+		<div class="container">
+			© 2021 - ExamSchedule - <a href="https://localhost:44396/Home/Privacy">Privacy</a>
+		</div>
+	</footer>
+	<script src="sample-1_dosyalar/jquery.min.js"></script>
+	<script src="sample-1_dosyalar/bootstrap.bundle.js"></script>
+	<script src="sample-1_dosyalar/moment-with-locales.min.js"></script>
+	<script src="sample-1_dosyalar/bootstrap-datetimepicker.js"></script>
+	<script src="sample-1_dosyalar/datatables.min.js"></script>
+	<script src="sample-1_dosyalar/jquery-ui.js"></script>
+	<script src="sample-1_dosyalar/jquery.multiselect.js"></script>
+	<script src="sample-1_dosyalar/jquery.multiselect.filter.js"></script>
+	<script src="sample-1_dosyalar/site.js"></script>
+	
+    <script>
+        var dayparts = [{"uniqueKey":"5ce91561","indexDay":0,"indexPart":0,"isRestricted":false,"partDateTime":"2023-04-03T10:00:00"},{"uniqueKey":"7e419fd0","indexDay":0,"indexPart":1,"isRestricted":false,"partDateTime":"2023-04-03T10:30:00"},{"uniqueKey":"48a2f01d","indexDay":0,"indexPart":2,"isRestricted":true,"partDateTime":"2023-04-03T11:00:00"},{"uniqueKey":"4391bfe5","indexDay":0,"indexPart":3,"isRestricted":true,"partDateTime":"2023-04-03T11:30:00"},{"uniqueKey":"1b83d65f","indexDay":0,"indexPart":4,"isRestricted":true,"partDateTime":"2023-04-03T12:00:00"},{"uniqueKey":"4c91c36f","indexDay":0,"indexPart":5,"isRestricted":true,"partDateTime":"2023-04-03T12:30:00"},{"uniqueKey":"7413e7a2","indexDay":0,"indexPart":6,"isRestricted":false,"partDateTime":"2023-04-03T13:00:00"},{"uniqueKey":"297c3630","indexDay":0,"indexPart":7,"isRestricted":false,"partDateTime":"2023-04-03T13:30:00"},{"uniqueKey":"69943627","indexDay":0,"indexPart":8,"isRestricted":false,"partDateTime":"2023-04-03T14:00:00"},{"uniqueKey":"26bdfe96","indexDay":0,"indexPart":9,"isRestricted":false,"partDateTime":"2023-04-03T14:30:00"},{"uniqueKey":"9729d5e","indexDay":0,"indexPart":10,"isRestricted":false,"partDateTime":"2023-04-03T15:00:00"},{"uniqueKey":"6261c9b7","indexDay":0,"indexPart":11,"isRestricted":false,"partDateTime":"2023-04-03T15:30:00"},{"uniqueKey":"5fd48c41","indexDay":0,"indexPart":12,"isRestricted":false,"partDateTime":"2023-04-03T16:00:00"},{"uniqueKey":"3d2dc9e","indexDay":0,"indexPart":13,"isRestricted":false,"partDateTime":"2023-04-03T16:30:00"},{"uniqueKey":"7741ada1","indexDay":0,"indexPart":14,"isRestricted":false,"partDateTime":"2023-04-03T17:00:00"},{"uniqueKey":"2788f12","indexDay":1,"indexPart":0,"isRestricted":false,"partDateTime":"2023-04-04T10:00:00"},{"uniqueKey":"2954d888","indexDay":1,"indexPart":1,"isRestricted":false,"partDateTime":"2023-04-04T10:30:00"},{"uniqueKey":"2c42ae41","indexDay":1,"indexPart":2,"isRestricted":false,"partDateTime":"2023-04-04T11:00:00"},{"uniqueKey":"25e2eb","indexDay":1,"indexPart":3,"isRestricted":false,"partDateTime":"2023-04-04T11:30:00"},{"uniqueKey":"b7b3bde","indexDay":1,"indexPart":4,"isRestricted":true,"partDateTime":"2023-04-04T12:00:00"},{"uniqueKey":"4fcc63f5","indexDay":1,"indexPart":5,"isRestricted":true,"partDateTime":"2023-04-04T12:30:00"},{"uniqueKey":"5721cb42","indexDay":1,"indexPart":6,"isRestricted":false,"partDateTime":"2023-04-04T13:00:00"},{"uniqueKey":"119f65b7","indexDay":1,"indexPart":7,"isRestricted":false,"partDateTime":"2023-04-04T13:30:00"},{"uniqueKey":"66397fc3","indexDay":1,"indexPart":8,"isRestricted":false,"partDateTime":"2023-04-04T14:00:00"},{"uniqueKey":"744882ae","indexDay":1,"indexPart":9,"isRestricted":false,"partDateTime":"2023-04-04T14:30:00"},{"uniqueKey":"5c4c99b3","indexDay":1,"indexPart":10,"isRestricted":false,"partDateTime":"2023-04-04T15:00:00"},{"uniqueKey":"3464d1b2","indexDay":1,"indexPart":11,"isRestricted":false,"partDateTime":"2023-04-04T15:30:00"},{"uniqueKey":"2ef7fd43","indexDay":1,"indexPart":12,"isRestricted":false,"partDateTime":"2023-04-04T16:00:00"},{"uniqueKey":"3f257daa","indexDay":1,"indexPart":13,"isRestricted":false,"partDateTime":"2023-04-04T16:30:00"},{"uniqueKey":"b3a7ffd","indexDay":1,"indexPart":14,"isRestricted":false,"partDateTime":"2023-04-04T17:00:00"},{"uniqueKey":"5d17430b","indexDay":2,"indexPart":0,"isRestricted":false,"partDateTime":"2023-04-05T10:00:00"},{"uniqueKey":"48c25cf1","indexDay":2,"indexPart":1,"isRestricted":false,"partDateTime":"2023-04-05T10:30:00"},{"uniqueKey":"31d663f3","indexDay":2,"indexPart":2,"isRestricted":false,"partDateTime":"2023-04-05T11:00:00"},{"uniqueKey":"49630be1","indexDay":2,"indexPart":3,"isRestricted":false,"partDateTime":"2023-04-05T11:30:00"},{"uniqueKey":"2dcb6e5d","indexDay":2,"indexPart":4,"isRestricted":true,"partDateTime":"2023-04-05T12:00:00"},{"uniqueKey":"52d30054","indexDay":2,"indexPart":5,"isRestricted":true,"partDateTime":"2023-04-05T12:30:00"},{"uniqueKey":"156139df","indexDay":2,"indexPart":6,"isRestricted":false,"partDateTime":"2023-04-05T13:00:00"},{"uniqueKey":"445aa22","indexDay":2,"indexPart":7,"isRestricted":false,"partDateTime":"2023-04-05T13:30:00"},{"uniqueKey":"4bf87a3c","indexDay":2,"indexPart":8,"isRestricted":false,"partDateTime":"2023-04-05T14:00:00"},{"uniqueKey":"72177c04","indexDay":2,"indexPart":9,"isRestricted":false,"partDateTime":"2023-04-05T14:30:00"},{"uniqueKey":"3430a93c","indexDay":2,"indexPart":10,"isRestricted":false,"partDateTime":"2023-04-05T15:00:00"},{"uniqueKey":"73829874","indexDay":2,"indexPart":11,"isRestricted":false,"partDateTime":"2023-04-05T15:30:00"},{"uniqueKey":"3c2bc824","indexDay":2,"indexPart":12,"isRestricted":false,"partDateTime":"2023-04-05T16:00:00"},{"uniqueKey":"7d46c159","indexDay":2,"indexPart":13,"isRestricted":false,"partDateTime":"2023-04-05T16:30:00"},{"uniqueKey":"19c4dba7","indexDay":2,"indexPart":14,"isRestricted":false,"partDateTime":"2023-04-05T17:00:00"},{"uniqueKey":"67a250de","indexDay":3,"indexPart":0,"isRestricted":false,"partDateTime":"2023-04-06T10:00:00"},{"uniqueKey":"5a18a377","indexDay":3,"indexPart":1,"isRestricted":false,"partDateTime":"2023-04-06T10:30:00"},{"uniqueKey":"56319537","indexDay":3,"indexPart":2,"isRestricted":false,"partDateTime":"2023-04-06T11:00:00"},{"uniqueKey":"6e6518cd","indexDay":3,"indexPart":3,"isRestricted":false,"partDateTime":"2023-04-06T11:30:00"},{"uniqueKey":"3fdfaaae","indexDay":3,"indexPart":4,"isRestricted":true,"partDateTime":"2023-04-06T12:00:00"},{"uniqueKey":"30e99f0c","indexDay":3,"indexPart":5,"isRestricted":true,"partDateTime":"2023-04-06T12:30:00"},{"uniqueKey":"622db293","indexDay":3,"indexPart":6,"isRestricted":false,"partDateTime":"2023-04-06T13:00:00"},{"uniqueKey":"5b5c684b","indexDay":3,"indexPart":7,"isRestricted":false,"partDateTime":"2023-04-06T13:30:00"},{"uniqueKey":"299b0467","indexDay":3,"indexPart":8,"isRestricted":false,"partDateTime":"2023-04-06T14:00:00"},{"uniqueKey":"22f658da","indexDay":3,"indexPart":9,"isRestricted":false,"partDateTime":"2023-04-06T14:30:00"},{"uniqueKey":"5c74a1f","indexDay":3,"indexPart":10,"isRestricted":false,"partDateTime":"2023-04-06T15:00:00"},{"uniqueKey":"6ca23a19","indexDay":3,"indexPart":11,"isRestricted":false,"partDateTime":"2023-04-06T15:30:00"},{"uniqueKey":"62697059","indexDay":3,"indexPart":12,"isRestricted":false,"partDateTime":"2023-04-06T16:00:00"},{"uniqueKey":"4f493d36","indexDay":3,"indexPart":13,"isRestricted":false,"partDateTime":"2023-04-06T16:30:00"},{"uniqueKey":"3f373cab","indexDay":3,"indexPart":14,"isRestricted":false,"partDateTime":"2023-04-06T17:00:00"}];
+        var placements = {"schedule":{"dateRange":"3/4/2023 - 7/4/2023","start":"10 : 00","end":"17 : 30","daysCount":4,"startDateParsed":"2023-04-03T10:00:00","endDateParsed":"2023-04-07T17:30:00","examCount":212,"restrictionCount":6,"id":11,"title":"Real Example Schedule","startDate":"3/4/2023","endDate":"7/4/2023","dayStartHour":10,"dayStartMinute":0,"dayEndHour":17,"dayEndMinute":30},"settings":{"maxExamCountPerDay":4,"defaultExamPartCount":3,"defaultDayPartDuration":30},"parts":[{"uniqueKey":"5ce91561","indexDay":0,"indexPart":0,"isRestricted":false,"partDateTime":"2023-04-03T10:00:00"},{"uniqueKey":"7e419fd0","indexDay":0,"indexPart":1,"isRestricted":false,"partDateTime":"2023-04-03T10:30:00"},{"uniqueKey":"48a2f01d","indexDay":0,"indexPart":2,"isRestricted":true,"partDateTime":"2023-04-03T11:00:00"},{"uniqueKey":"4391bfe5","indexDay":0,"indexPart":3,"isRestricted":true,"partDateTime":"2023-04-03T11:30:00"},{"uniqueKey":"1b83d65f","indexDay":0,"indexPart":4,"isRestricted":true,"partDateTime":"2023-04-03T12:00:00"},{"uniqueKey":"4c91c36f","indexDay":0,"indexPart":5,"isRestricted":true,"partDateTime":"2023-04-03T12:30:00"},{"uniqueKey":"7413e7a2","indexDay":0,"indexPart":6,"isRestricted":false,"partDateTime":"2023-04-03T13:00:00"},{"uniqueKey":"297c3630","indexDay":0,"indexPart":7,"isRestricted":false,"partDateTime":"2023-04-03T13:30:00"},{"uniqueKey":"69943627","indexDay":0,"indexPart":8,"isRestricted":false,"partDateTime":"2023-04-03T14:00:00"},{"uniqueKey":"26bdfe96","indexDay":0,"indexPart":9,"isRestricted":false,"partDateTime":"2023-04-03T14:30:00"},{"uniqueKey":"9729d5e","indexDay":0,"indexPart":10,"isRestricted":false,"partDateTime":"2023-04-03T15:00:00"},{"uniqueKey":"6261c9b7","indexDay":0,"indexPart":11,"isRestricted":false,"partDateTime":"2023-04-03T15:30:00"},{"uniqueKey":"5fd48c41","indexDay":0,"indexPart":12,"isRestricted":false,"partDateTime":"2023-04-03T16:00:00"},{"uniqueKey":"3d2dc9e","indexDay":0,"indexPart":13,"isRestricted":false,"partDateTime":"2023-04-03T16:30:00"},{"uniqueKey":"7741ada1","indexDay":0,"indexPart":14,"isRestricted":false,"partDateTime":"2023-04-03T17:00:00"},{"uniqueKey":"2788f12","indexDay":1,"indexPart":0,"isRestricted":false,"partDateTime":"2023-04-04T10:00:00"},{"uniqueKey":"2954d888","indexDay":1,"indexPart":1,"isRestricted":false,"partDateTime":"2023-04-04T10:30:00"},{"uniqueKey":"2c42ae41","indexDay":1,"indexPart":2,"isRestricted":false,"partDateTime":"2023-04-04T11:00:00"},{"uniqueKey":"25e2eb","indexDay":1,"indexPart":3,"isRestricted":false,"partDateTime":"2023-04-04T11:30:00"},{"uniqueKey":"b7b3bde","indexDay":1,"indexPart":4,"isRestricted":true,"partDateTime":"2023-04-04T12:00:00"},{"uniqueKey":"4fcc63f5","indexDay":1,"indexPart":5,"isRestricted":true,"partDateTime":"2023-04-04T12:30:00"},{"uniqueKey":"5721cb42","indexDay":1,"indexPart":6,"isRestricted":false,"partDateTime":"2023-04-04T13:00:00"},{"uniqueKey":"119f65b7","indexDay":1,"indexPart":7,"isRestricted":false,"partDateTime":"2023-04-04T13:30:00"},{"uniqueKey":"66397fc3","indexDay":1,"indexPart":8,"isRestricted":false,"partDateTime":"2023-04-04T14:00:00"},{"uniqueKey":"744882ae","indexDay":1,"indexPart":9,"isRestricted":false,"partDateTime":"2023-04-04T14:30:00"},{"uniqueKey":"5c4c99b3","indexDay":1,"indexPart":10,"isRestricted":false,"partDateTime":"2023-04-04T15:00:00"},{"uniqueKey":"3464d1b2","indexDay":1,"indexPart":11,"isRestricted":false,"partDateTime":"2023-04-04T15:30:00"},{"uniqueKey":"2ef7fd43","indexDay":1,"indexPart":12,"isRestricted":false,"partDateTime":"2023-04-04T16:00:00"},{"uniqueKey":"3f257daa","indexDay":1,"indexPart":13,"isRestricted":false,"partDateTime":"2023-04-04T16:30:00"},{"uniqueKey":"b3a7ffd","indexDay":1,"indexPart":14,"isRestricted":false,"partDateTime":"2023-04-04T17:00:00"},{"uniqueKey":"5d17430b","indexDay":2,"indexPart":0,"isRestricted":false,"partDateTime":"2023-04-05T10:00:00"},{"uniqueKey":"48c25cf1","indexDay":2,"indexPart":1,"isRestricted":false,"partDateTime":"2023-04-05T10:30:00"},{"uniqueKey":"31d663f3","indexDay":2,"indexPart":2,"isRestricted":false,"partDateTime":"2023-04-05T11:00:00"},{"uniqueKey":"49630be1","indexDay":2,"indexPart":3,"isRestricted":false,"partDateTime":"2023-04-05T11:30:00"},{"uniqueKey":"2dcb6e5d","indexDay":2,"indexPart":4,"isRestricted":true,"partDateTime":"2023-04-05T12:00:00"},{"uniqueKey":"52d30054","indexDay":2,"indexPart":5,"isRestricted":true,"partDateTime":"2023-04-05T12:30:00"},{"uniqueKey":"156139df","indexDay":2,"indexPart":6,"isRestricted":false,"partDateTime":"2023-04-05T13:00:00"},{"uniqueKey":"445aa22","indexDay":2,"indexPart":7,"isRestricted":false,"partDateTime":"2023-04-05T13:30:00"},{"uniqueKey":"4bf87a3c","indexDay":2,"indexPart":8,"isRestricted":false,"partDateTime":"2023-04-05T14:00:00"},{"uniqueKey":"72177c04","indexDay":2,"indexPart":9,"isRestricted":false,"partDateTime":"2023-04-05T14:30:00"},{"uniqueKey":"3430a93c","indexDay":2,"indexPart":10,"isRestricted":false,"partDateTime":"2023-04-05T15:00:00"},{"uniqueKey":"73829874","indexDay":2,"indexPart":11,"isRestricted":false,"partDateTime":"2023-04-05T15:30:00"},{"uniqueKey":"3c2bc824","indexDay":2,"indexPart":12,"isRestricted":false,"partDateTime":"2023-04-05T16:00:00"},{"uniqueKey":"7d46c159","indexDay":2,"indexPart":13,"isRestricted":false,"partDateTime":"2023-04-05T16:30:00"},{"uniqueKey":"19c4dba7","indexDay":2,"indexPart":14,"isRestricted":false,"partDateTime":"2023-04-05T17:00:00"},{"uniqueKey":"67a250de","indexDay":3,"indexPart":0,"isRestricted":false,"partDateTime":"2023-04-06T10:00:00"},{"uniqueKey":"5a18a377","indexDay":3,"indexPart":1,"isRestricted":false,"partDateTime":"2023-04-06T10:30:00"},{"uniqueKey":"56319537","indexDay":3,"indexPart":2,"isRestricted":false,"partDateTime":"2023-04-06T11:00:00"},{"uniqueKey":"6e6518cd","indexDay":3,"indexPart":3,"isRestricted":false,"partDateTime":"2023-04-06T11:30:00"},{"uniqueKey":"3fdfaaae","indexDay":3,"indexPart":4,"isRestricted":true,"partDateTime":"2023-04-06T12:00:00"},{"uniqueKey":"30e99f0c","indexDay":3,"indexPart":5,"isRestricted":true,"partDateTime":"2023-04-06T12:30:00"},{"uniqueKey":"622db293","indexDay":3,"indexPart":6,"isRestricted":false,"partDateTime":"2023-04-06T13:00:00"},{"uniqueKey":"5b5c684b","indexDay":3,"indexPart":7,"isRestricted":false,"partDateTime":"2023-04-06T13:30:00"},{"uniqueKey":"299b0467","indexDay":3,"indexPart":8,"isRestricted":false,"partDateTime":"2023-04-06T14:00:00"},{"uniqueKey":"22f658da","indexDay":3,"indexPart":9,"isRestricted":false,"partDateTime":"2023-04-06T14:30:00"},{"uniqueKey":"5c74a1f","indexDay":3,"indexPart":10,"isRestricted":false,"partDateTime":"2023-04-06T15:00:00"},{"uniqueKey":"6ca23a19","indexDay":3,"indexPart":11,"isRestricted":false,"partDateTime":"2023-04-06T15:30:00"},{"uniqueKey":"62697059","indexDay":3,"indexPart":12,"isRestricted":false,"partDateTime":"2023-04-06T16:00:00"},{"uniqueKey":"4f493d36","indexDay":3,"indexPart":13,"isRestricted":false,"partDateTime":"2023-04-06T16:30:00"},{"uniqueKey":"3f373cab","indexDay":3,"indexPart":14,"isRestricted":false,"partDateTime":"2023-04-06T17:00:00"}],"examPlacements":[{"examId":1090,"examName":"Türk Dili I","examFullDate":"2023-04-04T10:30:00","rooms":[1,2,3,4,5,6,7,8,9,10,11,15,16,17,18,19],"dayPartUniqueKeys":["2954d888","2c42ae41"],"uniqueKey":"b3aff07f-1af8-4c49-941e-5947e64bcd72"},{"examId":1091,"examName":"Atatürk İlkeleri ve İnkılap Tarihi I","examFullDate":"2023-04-03T14:30:00","rooms":[1,2,3,4,5,6,7,8,9,10,11,15,17,18,19],"dayPartUniqueKeys":["26bdfe96"],"uniqueKey":"26bf5be5-39dc-4ebb-8148-65e77e106016"},{"examId":1092,"examName":"Yabancı Dil I","examFullDate":"2023-04-06T13:30:00","rooms":[1,2,3,4,5,6,7,8,9,10,11,15,17,18,19],"dayPartUniqueKeys":["5b5c684b"],"uniqueKey":"5e038897-93da-4f76-8429-560e5e566ce8"},{"examId":1290,"examName":"Paket Programları I","examFullDate":"2023-04-03T13:00:00","rooms":[17,18],"dayPartUniqueKeys":["7413e7a2","297c3630","69943627"],"uniqueKey":"c208ecd0-e21c-4cdf-8212-56d29fc7ebfd"},{"examId":1109,"examName":"Grafik ve Animasyon II","examFullDate":"2023-04-03T13:00:00","rooms":[19,1,2],"dayPartUniqueKeys":["7413e7a2","297c3630","69943627"],"uniqueKey":"d26ce5cb-530d-40e0-acd6-24feb88d1f7d"},{"examId":1151,"examName":"Mesleki Yabancı Dil","examFullDate":"2023-04-03T13:00:00","rooms":[3,4,7,8,10],"dayPartUniqueKeys":["7413e7a2","297c3630","69943627"],"uniqueKey":"e585a807-89e5-4ab2-af6e-f1bd4f98292a"},{"examId":1285,"examName":"Finansal Yönetim","examFullDate":"2023-04-03T13:00:00","rooms":[11,5,6],"dayPartUniqueKeys":["7413e7a2","297c3630","69943627"],"uniqueKey":"e5185704-993f-40d7-a593-8e6a31ec9bb4"},{"examId":1307,"examName":"Meslek Etiği","examFullDate":"2023-04-03T13:00:00","rooms":[9],"dayPartUniqueKeys":["7413e7a2","297c3630","69943627"],"uniqueKey":"74bf6475-3c7b-4240-8f11-01bfa85a1056"},{"examId":1288,"examName":"Dönem Sonu Muhasebe İşlemleri","examFullDate":"2023-04-03T13:00:00","rooms":[15,16],"dayPartUniqueKeys":["7413e7a2","297c3630","69943627"],"uniqueKey":"2124c63f-0a2d-4ae2-a390-ace80e8bed04"},{"examId":1271,"examName":"Genel Muhasebe I","examFullDate":"2023-04-03T14:30:00","rooms":[16],"dayPartUniqueKeys":["26bdfe96","9729d5e","6261c9b7"],"uniqueKey":"0a5bc255-9e62-4e09-a587-b0b580250670"},{"examId":1269,"examName":"Meslek Etiği","examFullDate":"2023-04-03T15:00:00","rooms":[17,18,19],"dayPartUniqueKeys":["9729d5e","6261c9b7","5fd48c41"],"uniqueKey":"dc294c4f-6e44-4901-9917-daa5f5430e21"},{"examId":1178,"examName":"Reklam Fotografçılığı","examFullDate":"2023-04-03T15:00:00","rooms":[1],"dayPartUniqueKeys":["9729d5e","6261c9b7","5fd48c41"],"uniqueKey":"39dad701-cb33-401d-91ad-be1e361c61b3"},{"examId":1142,"examName":"Elektrik Enerjisi İletim ve Dağıtımı","examFullDate":"2023-04-03T15:00:00","rooms":[2,3],"dayPartUniqueKeys":["9729d5e","6261c9b7","5fd48c41"],"uniqueKey":"9822e987-940c-41da-851f-0a82f4236fbd"},{"examId":1176,"examName":"Halkla İlişkiler Yazarlığı","examFullDate":"2023-04-03T15:00:00","rooms":[4,7],"dayPartUniqueKeys":["9729d5e","6261c9b7","5fd48c41"],"uniqueKey":"4ed60f34-428c-42ff-8d2a-3896ba5ce8bb"},{"examId":1137,"examName":"Temel Elektronik","examFullDate":"2023-04-03T15:00:00","rooms":[8,10,11],"dayPartUniqueKeys":["9729d5e","6261c9b7","5fd48c41"],"uniqueKey":"3645bb89-fe3c-4d74-88e6-04792350c820"},{"examId":1182,"examName":"Bütünleşik Pazarlama İletişimi","examFullDate":"2023-04-03T15:00:00","rooms":[5],"dayPartUniqueKeys":["9729d5e","6261c9b7","5fd48c41"],"uniqueKey":"3bdaa2dc-3c57-496d-b0b3-4ba3a1f0688a"},{"examId":1238,"examName":"Davranış Bilimleri","examFullDate":"2023-04-03T15:00:00","rooms":[6,9],"dayPartUniqueKeys":["9729d5e","6261c9b7","5fd48c41"],"uniqueKey":"945df66b-ff3e-4774-a7bc-95dcdb8924ce"},{"examId":1233,"examName":"Sensörler ve Transdüserler","examFullDate":"2023-04-03T15:00:00","rooms":[15],"dayPartUniqueKeys":["9729d5e","6261c9b7","5fd48c41"],"uniqueKey":"854d8fd7-7971-45da-a56e-09ffb1e51a73"},{"examId":1234,"examName":"Sayısal Devre Tasarımı","examFullDate":"2023-04-03T16:00:00","rooms":[16],"dayPartUniqueKeys":["5fd48c41","3d2dc9e","7741ada1"],"uniqueKey":"d9ed9fbb-4a71-49f3-a05e-05c054fa15fd"},{"examId":1138,"examName":"Temel Enerji Kaynakları","examFullDate":"2023-04-04T13:00:00","rooms":[17],"dayPartUniqueKeys":["5721cb42","119f65b7","66397fc3"],"uniqueKey":"11d64cbc-2ddd-4435-a31a-4b893b68703f"},{"examId":1247,"examName":"Araştırma Yöntem ve Teknikleri","examFullDate":"2023-04-04T13:00:00","rooms":[18,19,1],"dayPartUniqueKeys":["5721cb42","119f65b7","66397fc3"],"uniqueKey":"a5e6fb3b-0fce-43e8-9047-a41b6be7bb05"},{"examId":1132,"examName":"Temel Enerji Kaynakları","examFullDate":"2023-04-04T13:00:00","rooms":[2,3],"dayPartUniqueKeys":["5721cb42","119f65b7","66397fc3"],"uniqueKey":"9aa13aba-42d1-41b2-9a7b-b1f64411e01d"},{"examId":1188,"examName":"Davranış Bilimleri","examFullDate":"2023-04-04T13:00:00","rooms":[4,7,8],"dayPartUniqueKeys":["5721cb42","119f65b7","66397fc3"],"uniqueKey":"d410f6e3-8865-4ba0-91b2-6858e28a0254"},{"examId":1143,"examName":"Güç Elektroniği ve Güç Kaynakları","examFullDate":"2023-04-04T13:00:00","rooms":[10,11],"dayPartUniqueKeys":["5721cb42","119f65b7","66397fc3"],"uniqueKey":"87309429-2f6e-40ec-a3d3-8070d2044f91"},{"examId":1287,"examName":"Finansal Ekonomi","examFullDate":"2023-04-04T13:00:00","rooms":[5],"dayPartUniqueKeys":["5721cb42","119f65b7","66397fc3"],"uniqueKey":"486b02b3-c3e7-4cd0-8249-b586ada1a35b"},{"examId":1197,"examName":"Biyomedikal Enstrumantasyon","examFullDate":"2023-04-04T13:00:00","rooms":[6,9],"dayPartUniqueKeys":["5721cb42","119f65b7","66397fc3"],"uniqueKey":"16db9536-2928-46ef-8c20-0d275eb3f9aa"},{"examId":1297,"examName":"Dönem Sonu Muhasebe İşlemleri","examFullDate":"2023-04-04T13:00:00","rooms":[15],"dayPartUniqueKeys":["5721cb42","119f65b7","66397fc3"],"uniqueKey":"61651c1b-160d-4eae-8152-c03bbc5b650d"},{"examId":1272,"examName":"Genel İşletme","examFullDate":"2023-04-04T13:00:00","rooms":[16],"dayPartUniqueKeys":["5721cb42","119f65b7","66397fc3"],"uniqueKey":"0f7a6667-c648-42c1-9f65-07fe50f30d72"},{"examId":1126,"examName":"Grafik Üretim Teknikleri","examFullDate":"2023-04-04T14:30:00","rooms":[17,18,19],"dayPartUniqueKeys":["744882ae","5c4c99b3","3464d1b2"],"uniqueKey":"c278772b-6032-4b15-a990-84e7c265c81f"},{"examId":1294,"examName":"Dış Ticaret İşlemleri","examFullDate":"2023-04-04T14:30:00","rooms":[1,2],"dayPartUniqueKeys":["744882ae","5c4c99b3","3464d1b2"],"uniqueKey":"ba106f24-0ee0-443d-9b24-85d38e1ad4f2"},{"examId":1275,"examName":"Muhasebe Meslek Mevzuatı","examFullDate":"2023-04-04T14:30:00","rooms":[3,4],"dayPartUniqueKeys":["744882ae","5c4c99b3","3464d1b2"],"uniqueKey":"5c650c34-1a21-437d-8ed1-b9a207008c7f"},{"examId":1212,"examName":"Anatomi ve Fizyoloji","examFullDate":"2023-04-04T14:30:00","rooms":[7],"dayPartUniqueKeys":["744882ae","5c4c99b3","3464d1b2"],"uniqueKey":"c6464fa9-12c3-4cff-b508-31a0e19a6bf5"},{"examId":1094,"examName":"Web Tasarımının Temelleri","examFullDate":"2023-04-04T14:30:00","rooms":[8,10,11],"dayPartUniqueKeys":["744882ae","5c4c99b3","3464d1b2"],"uniqueKey":"738bc477-f8a4-406f-94a5-862dffaca9f5"},{"examId":1192,"examName":"Temel Hukuk","examFullDate":"2023-04-04T14:30:00","rooms":[5,6],"dayPartUniqueKeys":["744882ae","5c4c99b3","3464d1b2"],"uniqueKey":"870733e0-20bd-4eab-a978-b9b346c8cf8c"},{"examId":1187,"examName":"İletişim","examFullDate":"2023-04-04T14:30:00","rooms":[9],"dayPartUniqueKeys":["744882ae","5c4c99b3","3464d1b2"],"uniqueKey":"f75046dd-61a9-488f-8baf-6a2c61349785"},{"examId":1278,"examName":"Genel Muhasebe I","examFullDate":"2023-04-04T14:30:00","rooms":[15],"dayPartUniqueKeys":["744882ae","5c4c99b3","3464d1b2"],"uniqueKey":"9557e073-4f2f-4fe2-9831-41d2729e3981"},{"examId":1190,"examName":"Genel İşletme","examFullDate":"2023-04-04T14:30:00","rooms":[16],"dayPartUniqueKeys":["744882ae","5c4c99b3","3464d1b2"],"uniqueKey":"c62833d6-a745-480e-bc4a-e6807ef4c661"},{"examId":1231,"examName":"Otomatik Kontrol","examFullDate":"2023-04-04T16:00:00","rooms":[17,18],"dayPartUniqueKeys":["2ef7fd43","3f257daa","b3a7ffd"],"uniqueKey":"25792379-4240-4c88-bff0-7c311b30fd63"},{"examId":1127,"examName":"Görsel Tasarım II","examFullDate":"2023-04-04T16:00:00","rooms":[19,1,2,3,4],"dayPartUniqueKeys":["2ef7fd43","3f257daa","b3a7ffd"],"uniqueKey":"4d13218f-bb9c-47dc-82c6-8daf96d7b361"},{"examId":1139,"examName":"Bilgi ve İletişim Teknolojisi","examFullDate":"2023-04-04T16:00:00","rooms":[7,8,10,11],"dayPartUniqueKeys":["2ef7fd43","3f257daa","b3a7ffd"],"uniqueKey":"080646a5-21aa-4000-900b-d371622dedb6"},{"examId":1223,"examName":"Ölçme Tekniği","examFullDate":"2023-04-04T16:00:00","rooms":[5,6],"dayPartUniqueKeys":["2ef7fd43","3f257daa","b3a7ffd"],"uniqueKey":"6bb832d3-2778-4287-9651-b8a09395bf8b"},{"examId":1169,"examName":"İllüstrasyon","examFullDate":"2023-04-04T16:00:00","rooms":[9,15],"dayPartUniqueKeys":["2ef7fd43","3f257daa","b3a7ffd"],"uniqueKey":"79659dcd-49fc-46f4-ab64-484e20aca814"},{"examId":1283,"examName":"Şirketler Muhasebesi","examFullDate":"2023-04-04T16:00:00","rooms":[16],"dayPartUniqueKeys":["2ef7fd43","3f257daa","b3a7ffd"],"uniqueKey":"f95a8491-5de0-4d74-a500-e886944ba47f"},{"examId":1159,"examName":"Çekim Teknikleri","examFullDate":"2023-04-05T10:00:00","rooms":[17,18,19,1],"dayPartUniqueKeys":["5d17430b","48c25cf1","31d663f3"],"uniqueKey":"7cc84aad-f30d-4927-aba1-67c5847a2bfa"},{"examId":1117,"examName":"Reklam Analizi","examFullDate":"2023-04-05T10:00:00","rooms":[2,3,4],"dayPartUniqueKeys":["5d17430b","48c25cf1","31d663f3"],"uniqueKey":"d00b02b6-366c-4b65-8011-3fe135414391"},{"examId":1215,"examName":"Doğru Akım Devre Analizi","examFullDate":"2023-04-05T10:00:00","rooms":[7,8,10],"dayPartUniqueKeys":["5d17430b","48c25cf1","31d663f3"],"uniqueKey":"8a936472-9fc4-49f1-87e6-86e3b1b04fac"},{"examId":1167,"examName":"İletişim","examFullDate":"2023-04-05T10:00:00","rooms":[11,5,6],"dayPartUniqueKeys":["5d17430b","48c25cf1","31d663f3"],"uniqueKey":"0098cb03-f2da-410b-abc7-e0b89275adfc"},{"examId":1104,"examName":"Sunucu İşletim Sistemleri","examFullDate":"2023-04-05T10:00:00","rooms":[9],"dayPartUniqueKeys":["5d17430b","48c25cf1","31d663f3"],"uniqueKey":"b714d14e-8b57-4ba5-bdf1-51f74cf60549"},{"examId":1107,"examName":"İnternet Programcılığı I","examFullDate":"2023-04-05T10:00:00","rooms":[15,16],"dayPartUniqueKeys":["5d17430b","48c25cf1","31d663f3"],"uniqueKey":"6d2ea1cd-1cd7-42d6-9331-4fbccd625838"},{"examId":1191,"examName":"İktisada Giriş","examFullDate":"2023-04-05T13:00:00","rooms":[17,18,19,1],"dayPartUniqueKeys":["156139df","445aa22","4bf87a3c"],"uniqueKey":"d92f0e6d-0505-42dd-af10-3720457ce635"},{"examId":1103,"examName":"Ağ Temelleri","examFullDate":"2023-04-05T13:00:00","rooms":[2,3],"dayPartUniqueKeys":["156139df","445aa22","4bf87a3c"],"uniqueKey":"1e8f3107-480d-432b-ab70-59b301f15080"},{"examId":1311,"examName":"Temel Hukuk","examFullDate":"2023-04-05T13:00:00","rooms":[4],"dayPartUniqueKeys":["156139df","445aa22","4bf87a3c"],"uniqueKey":"4ca1d81b-fb5a-4ccd-b4e1-581b6be14844"},{"examId":1295,"examName":"Finansal Yönetim","examFullDate":"2023-04-05T13:00:00","rooms":[7,8],"dayPartUniqueKeys":["156139df","445aa22","4bf87a3c"],"uniqueKey":"a81ee65d-39fc-4492-b1fa-cfdf3eb75394"},{"examId":1181,"examName":"Kurum İmajı ve İtibar Yönetimi","examFullDate":"2023-04-05T13:00:00","rooms":[10,11],"dayPartUniqueKeys":["156139df","445aa22","4bf87a3c"],"uniqueKey":"e97148f8-1c02-40ac-bd5c-7cb54d5d93a8"},{"examId":1291,"examName":"Vergi Hukuku","examFullDate":"2023-04-05T13:00:00","rooms":[5,6],"dayPartUniqueKeys":["156139df","445aa22","4bf87a3c"],"uniqueKey":"7c7831cf-c087-45ac-96e9-d31db38e3d74"},{"examId":1134,"examName":"Doğru Akım Devre Analizi","examFullDate":"2023-04-05T13:00:00","rooms":[9],"dayPartUniqueKeys":["156139df","445aa22","4bf87a3c"],"uniqueKey":"700cb3e7-a995-4c5a-a133-0eeda24e9f7f"},{"examId":1214,"examName":"Matematik","examFullDate":"2023-04-05T13:00:00","rooms":[15,16],"dayPartUniqueKeys":["156139df","445aa22","4bf87a3c"],"uniqueKey":"1a0f9ce5-3ff0-4483-a195-f8125bb97a45"},{"examId":1242,"examName":"Yönetici Asistanlığı","examFullDate":"2023-04-05T14:30:00","rooms":[17,18,19,1],"dayPartUniqueKeys":["72177c04","3430a93c","73829874"],"uniqueKey":"7a0a16f5-5428-43b1-8b2a-c58ff8b9b58c"},{"examId":1095,"examName":"Bilgisayar Donanımı","examFullDate":"2023-04-05T14:30:00","rooms":[2,3,4],"dayPartUniqueKeys":["72177c04","3430a93c","73829874"],"uniqueKey":"19911006-a8d2-4575-89ad-500280fef737"},{"examId":1129,"examName":"Baskıya Hazırlık","examFullDate":"2023-04-05T14:30:00","rooms":[7,8],"dayPartUniqueKeys":["72177c04","3430a93c","73829874"],"uniqueKey":"7e9cb313-e668-48f2-aa23-13cd12f3cee5"},{"examId":1227,"examName":"Sayısal Elektronik","examFullDate":"2023-04-05T14:30:00","rooms":[10,11],"dayPartUniqueKeys":["72177c04","3430a93c","73829874"],"uniqueKey":"a4bf38d2-7033-4e60-aea1-cf6b04d2234f"},{"examId":1153,"examName":"Özgün Baskı I","examFullDate":"2023-04-05T14:30:00","rooms":[5,6],"dayPartUniqueKeys":["72177c04","3430a93c","73829874"],"uniqueKey":"ec3b63fd-69f3-4237-9c1f-c0c93a73fa5a"},{"examId":1211,"examName":"Elektrik - Elektronik Ölçme","examFullDate":"2023-04-05T14:30:00","rooms":[9],"dayPartUniqueKeys":["72177c04","3430a93c","73829874"],"uniqueKey":"7bae3321-7fa9-41f4-a8ce-2576f15b8020"},{"examId":1147,"examName":"Güneş Enerjisi ile Elektrik Üretimi","examFullDate":"2023-04-05T14:30:00","rooms":[15],"dayPartUniqueKeys":["72177c04","3430a93c","73829874"],"uniqueKey":"6cde7eeb-2c1c-4539-8c2a-9a6d6ad55284"},{"examId":1108,"examName":"Robotik Kodlama","examFullDate":"2023-04-05T14:30:00","rooms":[16],"dayPartUniqueKeys":["72177c04","3430a93c","73829874"],"uniqueKey":"c2a12397-eb62-4535-a49b-cc8f2559b41b"},{"examId":1229,"examName":"Elektromekanik Kumanda Sistemleri","examFullDate":"2023-04-05T16:00:00","rooms":[17,18],"dayPartUniqueKeys":["3c2bc824","7d46c159","19c4dba7"],"uniqueKey":"e52d0a13-89dc-4659-9f68-ec651c4d4f6a"},{"examId":1096,"examName":"Ofis Yazılımları","examFullDate":"2023-04-05T16:00:00","rooms":[19,1,2],"dayPartUniqueKeys":["3c2bc824","7d46c159","19c4dba7"],"uniqueKey":"9142e696-c3e6-4f8d-ad4e-df947e36f2a2"},{"examId":1296,"examName":"Klavye Teknikleri","examFullDate":"2023-04-05T16:00:00","rooms":[3],"dayPartUniqueKeys":["3c2bc824","7d46c159","19c4dba7"],"uniqueKey":"a9076c8a-4fec-46a5-82c6-d48e121e7d7e"},{"examId":1194,"examName":"İletişim","examFullDate":"2023-04-05T16:00:00","rooms":[4,7,8],"dayPartUniqueKeys":["3c2bc824","7d46c159","19c4dba7"],"uniqueKey":"fbbb494e-359e-484b-a6ca-01ae056bbf9a"},{"examId":1112,"examName":"Genel İşletme","examFullDate":"2023-04-05T16:00:00","rooms":[10,11,5,6],"dayPartUniqueKeys":["3c2bc824","7d46c159","19c4dba7"],"uniqueKey":"dc572426-f1ab-4a95-8ac3-e12af479c7b0"},{"examId":1199,"examName":"Tıbbi Bilişim","examFullDate":"2023-04-05T16:00:00","rooms":[9],"dayPartUniqueKeys":["3c2bc824","7d46c159","19c4dba7"],"uniqueKey":"e82feb34-6bd4-4b00-8920-4fdb4f8d2df2"},{"examId":1202,"examName":"Mikrodenetleyiciler","examFullDate":"2023-04-05T16:00:00","rooms":[15],"dayPartUniqueKeys":["3c2bc824","7d46c159","19c4dba7"],"uniqueKey":"4c23371d-1ee5-4707-8695-6ff9137eb59c"},{"examId":1135,"examName":"Matematik","examFullDate":"2023-04-05T16:00:00","rooms":[16],"dayPartUniqueKeys":["3c2bc824","7d46c159","19c4dba7"],"uniqueKey":"fe4052b9-dc59-424e-876a-3df207b75863"},{"examId":1210,"examName":"Bilgi ve İletişim Teknolojisi","examFullDate":"2023-04-06T10:00:00","rooms":[17,18,19,1,2,3,4,7,8],"dayPartUniqueKeys":["67a250de","5a18a377","56319537"],"uniqueKey":"914251cc-11c9-41c2-899c-eb7935541be3"},{"examId":1152,"examName":"Grafik Üretim Teknikleri","examFullDate":"2023-04-06T10:00:00","rooms":[10,11,5],"dayPartUniqueKeys":["67a250de","5a18a377","56319537"],"uniqueKey":"ad43b92f-1e8a-4ab9-a000-09f6393e6e61"},{"examId":1263,"examName":"E - Ticaret","examFullDate":"2023-04-06T10:00:00","rooms":[6],"dayPartUniqueKeys":["67a250de","5a18a377","56319537"],"uniqueKey":"c8e99524-ff63-4963-b6fe-979618fa0ec2"},{"examId":1105,"examName":"Görsel Programlama II","examFullDate":"2023-04-06T10:00:00","rooms":[9,15],"dayPartUniqueKeys":["67a250de","5a18a377","56319537"],"uniqueKey":"a2f065fb-32eb-4859-9b7d-bed5917d5a03"},{"examId":1230,"examName":"İşlemsel Yükselteçler ( Elektronik–Iı )","examFullDate":"2023-04-06T10:00:00","rooms":[16],"dayPartUniqueKeys":["67a250de","5a18a377","56319537"],"uniqueKey":"d7fc85f5-69d7-43f6-8cba-0481ec928bb0"},{"examId":1299,"examName":"Genel Muhasebe I","examFullDate":"2023-04-06T13:00:00","rooms":[16],"dayPartUniqueKeys":["622db293","5b5c684b","299b0467"],"uniqueKey":"b92c9e92-404a-468a-9eec-79b3ac849e65"},{"examId":1259,"examName":"İletişim","examFullDate":"2023-04-06T14:00:00","rooms":[17,18,19,1],"dayPartUniqueKeys":["299b0467","22f658da","5c74a1f"],"uniqueKey":"f83a471b-3825-4c28-b643-2812ba18e675"},{"examId":1133,"examName":"Elektrik Elektronik Ölçme","examFullDate":"2023-04-06T14:00:00","rooms":[2],"dayPartUniqueKeys":["299b0467","22f658da","5c74a1f"],"uniqueKey":"3af37843-7db1-4f47-8e2e-7cab79976329"},{"examId":1144,"examName":"Elektrik Kumanda Sistemleri ve Programlanabilir Denetleyiciler","examFullDate":"2023-04-06T14:00:00","rooms":[3,4],"dayPartUniqueKeys":["299b0467","22f658da","5c74a1f"],"uniqueKey":"a1db4aa2-3baf-4788-8f78-61b06ddff00b"},{"examId":1179,"examName":"Meslek Etiği","examFullDate":"2023-04-06T14:00:00","rooms":[7,8],"dayPartUniqueKeys":["299b0467","22f658da","5c74a1f"],"uniqueKey":"23acacbc-7932-413c-bb4c-86dfd45e478b"},{"examId":1102,"examName":"Veri Tabanı I","examFullDate":"2023-04-06T14:00:00","rooms":[10,11,5],"dayPartUniqueKeys":["299b0467","22f658da","5c74a1f"],"uniqueKey":"183bdadd-0ff1-4885-b0ce-6a7ed778a612"},{"examId":1232,"examName":"Elektrik Motorları ve Sürücüleri","examFullDate":"2023-04-06T14:00:00","rooms":[6],"dayPartUniqueKeys":["299b0467","22f658da","5c74a1f"],"uniqueKey":"26e83046-07e6-40e6-ac3a-d108806cd34a"},{"examId":1195,"examName":"Halkla İlişkiler Kampanyaları","examFullDate":"2023-04-06T14:00:00","rooms":[9],"dayPartUniqueKeys":["299b0467","22f658da","5c74a1f"],"uniqueKey":"ab931aed-875d-4c9d-a015-5127fb439148"},{"examId":1116,"examName":"Temel Tasarım","examFullDate":"2023-04-06T15:30:00","rooms":[17,18,19,1,2,3],"dayPartUniqueKeys":["6ca23a19","62697059","4f493d36"],"uniqueKey":"c04b702b-a7cc-4d26-82dc-3f46951cb82c"},{"examId":1198,"examName":"Endüstriyel Elektronik","examFullDate":"2023-04-06T14:00:00","rooms":[15],"dayPartUniqueKeys":["299b0467","22f658da","5c74a1f"],"uniqueKey":"b37b9d51-161a-4ec9-aa33-14b5d85448fa"},{"examId":1216,"examName":"Elektrik - Elektronik Ölçme","examFullDate":"2023-04-06T14:30:00","rooms":[16],"dayPartUniqueKeys":["22f658da","5c74a1f","6ca23a19"],"uniqueKey":"9c73bc3c-59d2-4a6a-92f7-0507816df6b3"},{"examId":1185,"examName":"Temel Hukuk","examFullDate":"2023-04-06T15:30:00","rooms":[4],"dayPartUniqueKeys":["6ca23a19","62697059","4f493d36"],"uniqueKey":"dbcb2679-35da-48e0-9128-c6f5d8f1234d"},{"examId":1158,"examName":"Çevre Koruma","examFullDate":"2023-04-06T15:30:00","rooms":[7],"dayPartUniqueKeys":["6ca23a19","62697059","4f493d36"],"uniqueKey":"256bdaf7-b0ae-422b-89c9-c7c0db69e036"},{"examId":1292,"examName":"Maliyet Muhasebesi","examFullDate":"2023-04-06T15:30:00","rooms":[8,10],"dayPartUniqueKeys":["6ca23a19","62697059","4f493d36"],"uniqueKey":"055da6c5-452d-4735-8ada-fcd675388b6a"},{"examId":1149,"examName":"Hidroelektrik Santralleri","examFullDate":"2023-04-06T15:30:00","rooms":[11,5],"dayPartUniqueKeys":["6ca23a19","62697059","4f493d36"],"uniqueKey":"946a18ab-2f37-4fc3-bbd1-e8c83bd0a437"},{"examId":1177,"examName":"Yeni İletişim Teknolojileri","examFullDate":"2023-04-06T15:30:00","rooms":[6,9],"dayPartUniqueKeys":["6ca23a19","62697059","4f493d36"],"uniqueKey":"a6395354-c965-4625-bbe8-89595a957676"},{"examId":1204,"examName":"Anatomi ve Fizyoloji","examFullDate":"2023-04-06T15:30:00","rooms":[15],"dayPartUniqueKeys":["6ca23a19","62697059","4f493d36"],"uniqueKey":"ca1af105-1836-4d02-a653-0a96e717783a"},{"examId":1253,"examName":"Klavye Teknikleri I","examFullDate":"2023-04-06T16:00:00","rooms":[16],"dayPartUniqueKeys":["62697059","4f493d36","3f373cab"],"uniqueKey":"e1912870-624f-4b73-9b8b-aba6d12be80e"}],"maxDayPartPerDay":15};
+        log(placements);
+        //log(dayparts);
+
+
+        $(document).tooltip({
+            items: "span",
+            content: function (tooltipcallback) {
+                var con = "";
+                var e = $(this);
+                var id = Number(e.data("exam-id"));
+                $.ajax({
+                    type: "post",
+                    url: '/Arrange/GetExamData',
+                    dataType: "json",
+                    data: { idExam: id },
+                    success: function (res) {
+                        var str = "";
+                        for (var s in res) {
+                            str += "<p>" + res[s] + "</p>";
+                        }
+                        tooltipcallback(str);
+                    },
+                    error: function (err) {
+                        log(err);
+                    }
+                });
+            }
+        });
+        function tooltipcallback(data) {
+            return data;
+        }
+
+
+        $(document).ready(function () {
+            $(".btn-placement").on("click", function () {
+                var key = $(this).data("ep-key");
+                $.ajax({
+                    type: "post",
+                    url: "/Arrange/GetExamPlacementData",
+                    dataType: "json",
+                    data: { _uniqueKey: key },
+                    success: function (res) {
+                        $("#div-placement-detail").html(res);
+                    }
+
+                });
+
+
+
+            });
+
+        });
+
+    </script><div role="log" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"><div style="display: none;"><p>Muhasebe ve Vergi Uygulamaları ( İkinci Öğretim )- MUH113 - Meslek Etiği</p></div><div style="display: none;"><p>Alternatif Enerji Kaynakları Teknolojisi- AEK201 - Mesleki Yabancı Dil</p><p>Halkla İlişkiler ve Tanıtım- HİT207 - Mesleki Yabancı Dil</p><p>Biyomedikal Cihaz Teknolojisi- BMD207 - Mesleki Yabancı Dil</p><p>Büro Yönetimi ve Yönetici Asistanlığı- BYS201 - Mesleki Yabancı Dil</p></div><div style="display: none;"><p>Büro Yönetimi ve Yönetici Asistanlığı- BYS211 - Araştırma Yöntem ve Teknikleri</p></div><div style="display: none;"><p>Büro Yönetimi ve Yönetici Asistanlığı- BYS211 - Araştırma Yöntem ve Teknikleri</p></div><div style="display: none;"><p>Muhasebe ve Vergi Uygulamaları- MUH207 - Finansal Yönetim</p></div><div style="display: none;"><p>Halkla İlişkiler ve Tanıtım- HİT205 - Bütünleşik Pazarlama İletişimi</p></div><div style="display: none;"><p>Alternatif Enerji Kaynakları Teknolojisi- AEK111 - Temel Elektronik</p></div><div style="display: none;"><p>Bilgisayar Programcılığı- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p><p>Grafik Tasarımı ( İkinci Öğretim )- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p><p>Alternatif Enerji Kaynakları Teknolojisi- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p><p>Grafik Tasarımı- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p><p>Halkla İlişkiler ve Tanıtım- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p><p>Biyomedikal Cihaz Teknolojisi- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p><p>Kontrol ve Otomasyon Teknolojisi Programı- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p><p>Büro Yönetimi ve Yönetici Asistanlığı- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p><p>Muhasebe ve Vergi Uygulamaları- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p><p>Muhasebe ve Vergi Uygulamaları ( İkinci Öğretim )- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p></div><div style="display: none;"><p>Bilgisayar Programcılığı- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p><p>Grafik Tasarımı ( İkinci Öğretim )- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p><p>Alternatif Enerji Kaynakları Teknolojisi- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p><p>Grafik Tasarımı- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p><p>Halkla İlişkiler ve Tanıtım- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p><p>Biyomedikal Cihaz Teknolojisi- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p><p>Kontrol ve Otomasyon Teknolojisi Programı- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p><p>Büro Yönetimi ve Yönetici Asistanlığı- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p><p>Muhasebe ve Vergi Uygulamaları- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p><p>Muhasebe ve Vergi Uygulamaları ( İkinci Öğretim )- AİT101 - Atatürk İlkeleri ve İnkılap Tarihi I</p></div><div style="display: none;"><p>Alternatif Enerji Kaynakları Teknolojisi- AEK211 - Elektrik Enerjisi İletim ve Dağıtımı</p></div><div style="display: none;"><p>Halkla İlişkiler ve Tanıtım- HİT229 - Halkla İlişkiler Yazarlığı</p></div><div style="display: none;"><p>Alternatif Enerji Kaynakları Teknolojisi- AEK211 - Elektrik Enerjisi İletim ve Dağıtımı</p></div><div style="display: none;"><p>Alternatif Enerji Kaynakları Teknolojisi- AEK211 - Elektrik Enerjisi İletim ve Dağıtımı</p></div><div style="display: none;"><p>Alternatif Enerji Kaynakları Teknolojisi- AEK211 - Elektrik Enerjisi İletim ve Dağıtımı</p></div><div style="display: none;"><p>Alternatif Enerji Kaynakları Teknolojisi- AEK211 - Elektrik Enerjisi İletim ve Dağıtımı</p></div><div style="display: none;"><p>Halkla İlişkiler ve Tanıtım- HİT229 - Halkla İlişkiler Yazarlığı</p></div><div style="display: none;"><p>Alternatif Enerji Kaynakları Teknolojisi- AEK111 - Temel Elektronik</p></div><div style="display: none;"><p>Halkla İlişkiler ve Tanıtım- HİT229 - Halkla İlişkiler Yazarlığı</p></div><div style="display: none;"><p>Muhasebe ve Vergi Uygulamaları- MUH101 - Genel Muhasebe I</p></div><div style="display: none;"><p>Muhasebe ve Vergi Uygulamaları- MUH101 - Genel Muhasebe I</p></div><div style="display: none;"><p>Muhasebe ve Vergi Uygulamaları- MUH221 - Dönem Sonu Muhasebe İşlemleri</p></div><div style="display: none;"><p>Alternatif Enerji Kaynakları Teknolojisi- AEK-101 - Temel Enerji Kaynakları</p></div><div style="display: none;"><p>Alternatif Enerji Kaynakları Teknolojisi- AEK-213 - Güç Elektroniği ve Güç Kaynakları</p></div><div style="display: none;"><p>Biyomedikal Cihaz Teknolojisi- BMD213 - Biyomedikal Enstrumantasyon</p></div><div style="display: none;"><p>Biyomedikal Cihaz Teknolojisi- BMD213 - Biyomedikal Enstrumantasyon</p></div><div style="display: none;"><p>Muhasebe ve Vergi Uygulamaları- MUH223 - Finansal Ekonomi</p></div><div style="display: none;"><p>Biyomedikal Cihaz Teknolojisi- BMD213 - Biyomedikal Enstrumantasyon</p></div><div style="display: none;"><p>Muhasebe ve Vergi Uygulamaları ( İkinci Öğretim )- MUH221 - Dönem Sonu Muhasebe İşlemleri</p></div><div style="display: none;"><p>Muhasebe ve Vergi Uygulamaları ( İkinci Öğretim )- MUH221 - Dönem Sonu Muhasebe İşlemleri</p></div><div style="display: none;"><p>Muhasebe ve Vergi Uygulamaları ( İkinci Öğretim )- MUH221 - Dönem Sonu Muhasebe İşlemleri</p></div><div style="display: none;"><p>Biyomedikal Cihaz Teknolojisi- BMD213 - Biyomedikal Enstrumantasyon</p></div><div style="display: none;"><p>Alternatif Enerji Kaynakları Teknolojisi- AEK-213 - Güç Elektroniği ve Güç Kaynakları</p></div><div style="display: none;"><p>Halkla İlişkiler ve Tanıtım- HİT113 - Davranış Bilimleri</p></div><div style="display: none;"><p>Halkla İlişkiler ve Tanıtım- HİT113 - Davranış Bilimleri</p></div><div style="display: none;"><p>Alternatif Enerji Kaynakları Teknolojisi- AEK-213 - Güç Elektroniği ve Güç Kaynakları</p></div><div style="display: none;"><p>Alternatif Enerji Kaynakları Teknolojisi- AEK-213 - Güç Elektroniği ve Güç Kaynakları</p></div><div style="display: none;"><p>Biyomedikal Cihaz Teknolojisi- BMD213 - Biyomedikal Enstrumantasyon</p></div><div style="display: none;"><p>Biyomedikal Cihaz Teknolojisi- BMD213 - Biyomedikal Enstrumantasyon</p></div><div style="display: none;"><p>Muhasebe ve Vergi Uygulamaları ( İkinci Öğretim )- MUH221 - Dönem Sonu Muhasebe İşlemleri</p></div><div style="display: none;"><p>Muhasebe ve Vergi Uygulamaları ( İkinci Öğretim )- MUH201 - Paket Programları I</p></div><div><p>Büro Yönetimi ve Yönetici Asistanlığı- BYS211 - Araştırma Yöntem ve Teknikleri</p></div></div>
+
+
+
+<!-- Visual Studio Browser Link -->
+<script type="text/javascript" src="sample-1_dosyalar/browserLink" async="async" id="__browserLink_initializationData" data-requestid="231e9eb0c0df45b294b8f1ef5774d6e1" data-requestmappingfromserver="false" data-connecturl="http://localhost:62285/4450e20893ea428787ea51cffb9697ea/browserLink"></script>
+<!-- End Browser Link -->
+
+<script src="sample-1_dosyalar/aspnetcore-browser-refresh.js"></script>
+
+<live-preview-root></live-preview-root><div role="tooltip" id="ui-id-41" class="ui-tooltip ui-corner-all ui-widget-shadow ui-widget ui-widget-content" style="top: 667.5px; left: 1031.58px; opacity: 0.0198532;"><div class="ui-tooltip-content"><p>Büro Yönetimi ve Yönetici Asistanlığı- BYS211 - Araştırma Yöntem ve Teknikleri</p></div></div></body></html>

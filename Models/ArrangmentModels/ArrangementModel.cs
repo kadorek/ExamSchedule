@@ -25,7 +25,7 @@ namespace ExamSchedule.Models.ArrangmentModels
         public override string ToString()
         {
             var str = "";
-            str = UniqueKey + " " + (IsRestricted ? "R" : "N");
+            str = UniqueKey + "-" + PartDateTime.ToString() + " " + (IsRestricted ? "R" : "N");
             return str;
         }
 
@@ -45,26 +45,27 @@ namespace ExamSchedule.Models.ArrangmentModels
     public class MainArrangementModel
     {
 
-        private static MainArrangementModel _object;
+        //private static MainArrangementModel _object;
 
-        public static MainArrangementModel Object
-        {
-            get
-            {
-                if (_object == null)
-                {
-                    _object = new MainArrangementModel();
-                }
-                return _object;
+        //public static MainArrangementModel Object
+        //{
+        //    get
+        //    {
+        //        if (_object == null)
+        //        {
+        //            _object = new MainArrangementModel();
+        //        }
+        //        return _object;
 
-            }
-        }
+        //    }
+        //}
         public Schedule Schedule { get; set; }
+        public long ScheduleId { get; set; } = -1;
         public ArrangementSettings Settings { get; set; }
         public List<DayPart> Parts { get; set; }
         public List<ExamPlacement> ExamPlacements { get; set; } = new List<ExamPlacement>();
         public int MaxDayPartPerDay { get; set; } = 0;
-        private MainArrangementModel()
+        public MainArrangementModel()
         {
             Settings = new ArrangementSettings();
             Parts = new List<DayPart>();
@@ -97,10 +98,10 @@ namespace ExamSchedule.Models.ArrangmentModels
         public override string ToString()
         {
             var str = "";
-            str = ExamName;
+            str = ExamId + " - " + ExamName;
             if (isDebug && ExamFullDate.HasValue)
             {
-                str += " " + ExamFullDate.ToString();
+                str += "- " + ExamFullDate.ToString();
             }
             return str;
         }

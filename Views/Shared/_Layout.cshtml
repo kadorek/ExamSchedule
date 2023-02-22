@@ -1,88 +1,88 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] - ExamSchedule</title>
-	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-	<link href="~/css/bootstrap-icons-1.7.2/bootstrap-icons.css" rel="stylesheet" />
-	<link href="~/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-	<link href="~/css/jquery-ui.css" rel="stylesheet" />
-	<link href="~/css/jquery.multiselect.css" rel="stylesheet" />
-	<link href="~/css/jquery.multiselect.filter.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ExamSchedule</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link href="~/css/bootstrap-icons-1.7.2/bootstrap-icons.css" rel="stylesheet" />
+    <link href="~/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/css/jquery.multiselect.css" rel="stylesheet" />
+    <link href="~/css/jquery.multiselect.filter.css" rel="stylesheet" />
 
-	<link rel="stylesheet" href="~/css/site.css" />
-	<link rel="stylesheet" href="~/lib/DataTables/datatables.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/DataTables/datatables.css" />
 
-	@RenderSection("Styles", required: false)
+    @RenderSection("Styles", required: false)
 </head>
 <body>
-	<div class="container-fluid">
-		<div class=" row fixed-top " id="divMessageArea">
-			
-		</div>
-	</div>
-	<header>
-		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-			<div class="container">
-				<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ExamSchedule</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-						aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-					<ul class="navbar-nav flex-grow-1">
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Main Elements
-							</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a class="nav-link text-dark" asp-area="" asp-controller="Teacher" asp-action="Index">Teacher</a>
-								<a class="nav-link text-dark" asp-area="" asp-controller="Course" asp-action="Index">Course</a>
-								<a class="nav-link text-dark" asp-area="" asp-controller="Programme" asp-action="Index">Programme</a>
-								<a class="nav-link text-dark" asp-area="" asp-controller="Room" asp-action="Index">Room</a>
-								<a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="Index">Student</a>
-								<div class="dropdown-divider"></div>
-								<a class="nav-link text-dark" asp-area="" asp-controller="Schedule" asp-action="Index">Schedule</a>
-								<a class="nav-link text-dark" asp-area="" asp-controller="Exam" asp-action="Index">Exam</a>
-							</div>
+    <div class="container-fluid">
+        <div class=" row fixed-top " id="divMessageArea">
+        </div>
+    </div>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ExamSchedule</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Main Elements
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Teacher" asp-action="Index">Teacher</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Course" asp-action="Index">Course</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Programme" asp-action="Index">Programme</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Room" asp-action="Index">Room</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="Index">Student</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Arrange" asp-action="Index">Arrangement</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Schedule" asp-action="Index">Schedule</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Exam" asp-action="Index">Exam</a>
+                            </div>
 
-						</li>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="ImportedData" asp-action="Index">Import Data</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</header>
-	<div class="container-fluid">
-		<main role="main" class="pb-3">
-			@RenderBody()
-		</main>
-	</div>
+                        </li>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ImportedData" asp-action="Index">Import Data</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
 
-	<footer class="border-top footer text-muted">
-		<div class="container">
-			&copy; 2021 - ExamSchedule - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-		</div>
-	</footer>
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-	<script src="~/lib/moment/moment-with-locales.min.js"></script>
-	<script src="~/lib/bootstrap-datetimepicker.js"></script>
-	<script src="~/lib/DataTables/datatables.min.js"></script>
-	<script src="~/lib/jquery-ui.js"></script>
-	<script src="~/lib/jquery.multiselect.js"></script>
-	<script src="~/lib/jquery.multiselect.filter.js"></script>
-	<script src="~/js/site.js" asp-append-version="true"></script>
-	@RenderSection("Scripts", required: false)
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - ExamSchedule - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="~/lib/moment/moment-with-locales.min.js"></script>
+    <script src="~/lib/bootstrap-datetimepicker.js"></script>
+    <script src="~/lib/DataTables/datatables.min.js"></script>
+    <script src="~/lib/jquery-ui.js"></script>
+    <script src="~/lib/jquery.multiselect.js"></script>
+    <script src="~/lib/jquery.multiselect.filter.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

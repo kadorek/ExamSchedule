@@ -19,7 +19,8 @@ namespace ExamSchedule.Models
 		{
 		}
 
-		public virtual DbSet<Course> Courses { get; set; }
+        public virtual DbSet<Arrangement> Arrangements { get; set; }
+        public virtual DbSet<Course> Courses { get; set; }
 		public virtual DbSet<CourseStudent> CourseStudents { get; set; }
 		public virtual DbSet<Exam> Exams { get; set; }
 		public virtual DbSet<ExamRoom> ExamRooms { get; set; }
@@ -286,8 +287,17 @@ namespace ExamSchedule.Models
 				entity.Property(e => e.MIMEType).IsRequired();
 
 			});
+            modelBuilder.Entity<Arrangement>(entity =>
+            {
+                entity.ToTable("Arrangement");
 
-			OnModelCreatingPartial(modelBuilder);
+                entity.HasIndex(e => e.Id, "IX_Arrangement_Id")
+                    .IsUnique();
+
+                entity.Property(e => e.Data).IsRequired();
+            });
+
+            OnModelCreatingPartial(modelBuilder);
 		}
 
 		partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
@@ -295,5 +305,7 @@ namespace ExamSchedule.Models
 		public DbSet<ExamSchedule.Models.ViewModels.ImportDataViewModel> ImportDataViewModel { get; set; }
 
 		public DbSet<ExamSchedule.Models.ScheduleRestriction> ScheduleRestriction { get; set; }
+
+		public DbSet<ExamSchedule.Models.ViewModels.ArrangementViewModel> ArrangementViewModel { get; set; }
 	}
 }

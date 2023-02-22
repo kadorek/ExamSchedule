@@ -1,12 +1,15 @@
 ﻿using ExamSchedule.Extensions;
 using ExamSchedule.Models;
 using ExamSchedule.Models.ArrangmentModels;
+using ExamSchedule.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ExamSchedule.Controllers
 {
@@ -15,18 +18,75 @@ namespace ExamSchedule.Controllers
 
         private readonly examdataContext _context;
 
-        private bool debug = false;
+        private bool debug = true;
         private MainArrangementModel _mam;
         public ArrangeController(examdataContext context)
         {
             _context = context;
-            _mam = MainArrangementModel.Object;
+            _mam = new MainArrangementModel();
         }
 
-        public async Task<IActionResult> Index(long? id)
+        public IActionResult Index()
+        {
+            var list = from a in _context.Arrangements.ToList()
+                       let x = JsonConvert.DeserializeObject<MainArrangementModel>(a.Data)
+                       select new ArrangementViewModel
+                       {
+                           Id = a.Id,
+                           ScheduleName = x.Schedule.Title,
+                           TotalExamCount = x.Schedule.ExamCount,
+                           PlacedExamCount = x.ExamPlacements.Count
+                       };
+
+
+            return View(list);
+
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            MainArrangementModel _m = new MainArrangementModel();
+            ViewData["ScheduleId"] = new SelectList(_context.Schedules, "Id", "Title");
+            ViewData["ScheduleId"] = ((SelectList)ViewData["ScheduleId"]).Prepend(new SelectListItem { Value = "0", Text = "Lütfen Takvim seçiniz.", Selected = true });
+
+            return View(_m);
+
+        }
+
+        [HttpPost]
+        public IActionResult Create([Bind("ScheduleId,Settings.MaxExamCountPerDay,Settings.DefaultExamPartCount,Settings.DefaultDayPartDuration")] MainArrangementModel _mx)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var data = JsonConvert.SerializeObject(_mx);
+                    Arrangement a = new Arrangement();
+                    a.Data = data;
+                    a.ScheduleId = _mx.ScheduleId;
+                    _context.Arrangements.Add(a);
+                    _context.SaveChanges();
+
+                }
+                catch (Exception)
+                {
+                    return View(_mx);
+                }
+                return View("Index");
+            }
+            return View(_mx);
+
+        }
+
+
+
+
+        public async Task<IActionResult> Sample(long? id)
         {
 
             _mam.Schedule = _context.Schedules.FirstOrDefault(x => x.Id == id);
+            _mam.ScheduleId = id.Value;
             if (_mam.Schedule == null)
             {
                 throw new Exception("Schedule null");
@@ -157,86 +217,93 @@ namespace ExamSchedule.Controllers
             var ids = notPinnedExams.Select(x => x.Id).ToList();
             ids = ids.Shuffle().ToList();
             var iterator = 0;
-
             //while (_mam.ExamPlacements.Count < ids.Count)
             //{
-                foreach (var item in ids)
+            foreach (var item in ids)
+            {
+                if (assignedExamIds.Contains(item))
                 {
-                    if (assignedExamIds.Contains(item))
+                    continue;
+                }
+                iterator++;
+                var ep = new ExamPlacement(debug);
+                while (_mam.ExamPlacements.Where(x => x.UniqueKey == ep.UniqueKey).Count() > 0)
+                {
+                    ep = new ExamPlacement(debug);
+                }
+                ep.ExamId = item;
+                var exam = _context.Exams.FirstOrDefault(x => x.Id == item);
+                if (exam == null)
+                {
+                    //throd error
+                }
+                ep.ExamName = exam.Course.Name;
+                int countExamDayPart = (int)Math.Ceiling((decimal)exam.TotalTime.Value / _mam.Settings.DefaultDayPartDuration);
+                var IsPartAssigned = false;
+                foreach (var part in _mam.Parts)
+                {
+                    if (part.IndexPart > _mam.MaxDayPartPerDay - countExamDayPart)
                     {
                         continue;
                     }
-                    iterator++;
-                    var ep = new ExamPlacement(debug);
-                    while (_mam.ExamPlacements.Where(x => x.UniqueKey == ep.UniqueKey).Count() > 0)
+                    var selectedPartsKeys = _mam.Parts.Where(x => x.IndexDay == part.IndexDay && x.IndexPart >= part.IndexPart && x.IndexPart < part.IndexPart + countExamDayPart).Select(x => x.UniqueKey).ToList();
+
+                    if (_mam.Parts.Any(x => x.IsRestricted && selectedPartsKeys.Contains(x.UniqueKey)))
                     {
-                        ep = new ExamPlacement(debug);
-                    }
-                    ep.ExamId = item;
-                    var exam = _context.Exams.FirstOrDefault(x => x.Id == item);
-                    if (exam == null)
-                    {
-                        //throd error
-                    }
-                    ep.ExamName = exam.Course.Name;
-                    int countExamDayPart = (int)Math.Ceiling((decimal)exam.TotalTime.Value / _mam.Settings.DefaultDayPartDuration);
-                    var IsPartAssigned = false;
-                    foreach (var part in _mam.Parts)
-                    {
-                        if (part.IndexPart > _mam.MaxDayPartPerDay - countExamDayPart)
-                        {
-                            continue;
-                        }
-                        var selectedPartsKeys = _mam.Parts.Where(x => x.IndexDay == part.IndexDay && x.IndexPart >= part.IndexPart && x.IndexPart < part.IndexPart + countExamDayPart).Select(x => x.UniqueKey).ToList();
-
-                        List<long> inuseRooms = new List<long>();
-                        foreach (var sp in selectedPartsKeys)
-                        {
-                            var list = new List<long>();
-                            var sequence = _mam.ExamPlacements.Where(x => x.DayPartUniqueKeys.Contains(sp)).Select(x => x.Rooms).ToList();
-                            foreach (var si in sequence)
-                            {
-                                list.AddRange(si.Distinct().ToList());
-                            }
-                            inuseRooms.AddRange(list.Distinct().ToList());
-                        }
-                        inuseRooms = inuseRooms.Distinct().ToList();
-
-                        var notInuseRooms = _context.Rooms.Where(x => !inuseRooms.Contains(x.Id)).ToList();
-                        if (notInuseRooms.Sum(x => x.Capacity) < exam.TotalStudentCount)
-                        {
-                            continue;
-                        }
-
-                        var assignedRooms = GetProperRooms(exam.TotalStudentCount, inuseRooms);
-                        if (assignedRooms.Count > 0)
-                        {
-                            ep.Rooms = assignedRooms;
-                            ep.DayPartUniqueKeys = selectedPartsKeys;
-                            exam.Date = part.PartDateTime.ToString("dd/MM/yyyy");
-                            exam.StartHour = part.PartDateTime.Hour;
-                            exam.StartMinute = part.PartDateTime.Minute;
-                            assignedExamIds.Add(exam.Id);
-                            IsPartAssigned = true;
-                            ep.ExamFullDate = part.PartDateTime;
-
-                           // _context.SaveChanges();
-                            break;
-                        }
-                    }
-
-                    if (IsPartAssigned)
-                    {
-                        _mam.ExamPlacements.Add(ep);
                         continue;
+                    }
+
+
+                    List<long> inuseRooms = new List<long>();
+                    foreach (var sp in selectedPartsKeys)
+                    {
+                        var list = new List<long>();
+                        var sequence = _mam.ExamPlacements.Where(x => x.DayPartUniqueKeys.Contains(sp)).Select(x => x.Rooms).ToList();
+                        foreach (var si in sequence)
+                        {
+                            list.AddRange(si.Distinct().ToList());
+                        }
+                        inuseRooms.AddRange(list.Distinct().ToList());
+                    }
+                    inuseRooms = inuseRooms.Distinct().ToList();
+
+                    var notInuseRooms = _context.Rooms.Where(x => !inuseRooms.Contains(x.Id)).ToList();
+                    if (notInuseRooms.Sum(x => x.Capacity) < exam.TotalStudentCount)
+                    {
+                        continue;
+                    }
+
+                    var assignedRooms = GetProperRooms(exam.TotalStudentCount, inuseRooms);
+                    if (assignedRooms.Count > 0)
+                    {
+                        ep.Rooms = assignedRooms;
+                        ep.DayPartUniqueKeys = selectedPartsKeys;
+                        exam.Date = part.PartDateTime.ToString("dd/MM/yyyy");
+                        exam.StartHour = part.PartDateTime.Hour;
+                        exam.StartMinute = part.PartDateTime.Minute;
+                        assignedExamIds.Add(exam.Id);
+                        IsPartAssigned = true;
+                        ep.ExamFullDate = part.PartDateTime;
+
+                        // _context.SaveChanges();
+                        break;
                     }
                 }
+
+                if (IsPartAssigned)
+                {
+                    _mam.ExamPlacements.Add(ep);
+                    continue;
+                }
+            }
             //}
+            var mylist = _mam.ExamPlacements.Select(x => x.ToString());
 
             if (ids.Distinct().Count() == assignedExamIds.Distinct().Count())
             {
-                _context.SaveChanges();
+                // _context.SaveChanges();
             }
+
 
         }
 
