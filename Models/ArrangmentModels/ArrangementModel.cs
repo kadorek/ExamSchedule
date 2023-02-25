@@ -80,6 +80,7 @@ namespace ExamSchedule.Models.ArrangmentModels
         private bool isDebug = false;
         public long ExamId { get; set; }
         public string ExamName { get; set; }
+        public string ShortExamName { get; set; }
         public DateTime? ExamFullDate { get; set; }
         public List<long> Rooms { get; set; }
         public List<string> DayPartUniqueKeys { get; set; } = new List<string>();
@@ -98,7 +99,7 @@ namespace ExamSchedule.Models.ArrangmentModels
         public override string ToString()
         {
             var str = "";
-            str = ExamId + " - " + ExamName;
+            str = ExamId + " - " + ShortExamName;
             if (isDebug && ExamFullDate.HasValue)
             {
                 str += "- " + ExamFullDate.ToString();

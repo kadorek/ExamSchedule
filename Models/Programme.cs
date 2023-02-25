@@ -15,6 +15,7 @@ namespace ExamSchedule.Models
 
         public long Id { get; set; }
         public string Name { get; set; }
+        public string Short { get; set; }
 
         public virtual ICollection<ProgramCourse> ProgramCourses { get; set; }
         public virtual ICollection<TeacherCourse> TeacherCourses { get; set; }

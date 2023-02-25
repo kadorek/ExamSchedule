@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using NPOI.OpenXmlFormats.Shared;
 
 namespace ExamSchedule.Controllers
 {
@@ -30,11 +31,12 @@ namespace ExamSchedule.Controllers
         {
             var list = from a in _context.Arrangements.ToList()
                        let x = JsonConvert.DeserializeObject<MainArrangementModel>(a.Data)
+                       let s = _context.Schedules.FirstOrDefault(z => z.Id == a.ScheduleId)
                        select new ArrangementViewModel
                        {
                            Id = a.Id,
-                           ScheduleName = x.Schedule.Title,
-                           TotalExamCount = x.Schedule.ExamCount,
+                           ScheduleName = s.Title,
+                           TotalExamCount = s.ExamCount,
                            PlacedExamCount = x.ExamPlacements.Count
                        };
 
@@ -55,13 +57,23 @@ namespace ExamSchedule.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([Bind("ScheduleId,Settings.MaxExamCountPerDay,Settings.DefaultExamPartCount,Settings.DefaultDayPartDuration")] MainArrangementModel _mx)
+        public async Task<IActionResult> Create([FromForm] MainArrangementModel _mx)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var data = JsonConvert.SerializeObject(_mx);
+                    _mam.Settings = _mx.Settings;
+                    _mam.ScheduleId = _mx.ScheduleId;
+                    _mam.Schedule = _context.Schedules.FirstOrDefault(x => x.Id == _mx.ScheduleId);
+                    if (_mam.Schedule == null)
+                    {
+                        throw new ArgumentNullException("ScheduleId");
+                    }
+                    await AllArrangements();
+
+                    var data = JsonConvert.SerializeObject(_mam);
+
                     Arrangement a = new Arrangement();
                     a.Data = data;
                     a.ScheduleId = _mx.ScheduleId;
@@ -73,13 +85,21 @@ namespace ExamSchedule.Controllers
                 {
                     return View(_mx);
                 }
-                return View("Index");
+                RedirectToAction("Index");
             }
             return View(_mx);
 
         }
 
 
+        public IActionResult Details(long id)
+        {
+
+            var a = _context.Arrangements.FirstOrDefault(x => x.Id == id);
+            MainArrangementModel _mx = JsonConvert.DeserializeObject<MainArrangementModel>(a.Data);
+
+            return View(_mx);
+        }
 
 
         public async Task<IActionResult> Sample(long? id)
@@ -96,12 +116,16 @@ namespace ExamSchedule.Controllers
             return View(_mam);
         }
 
-        private void AllArrangements()
+        private async Task AllArrangements()
         {
-            DesingModelParts();
-            PlaceRestriction();
-            PlacePinnedExams();
-            PlaceOtherExams();
+            await Task.Run(() =>
+            {
+                DesingModelParts();
+                PlaceRestriction();
+                PlacePinnedExams();
+                PlaceOtherExams();
+            });
+
 
         }
 
@@ -173,6 +197,7 @@ namespace ExamSchedule.Controllers
                 }
                 ep.ExamId = item.Id;
                 ep.ExamName = item.Course.Name;
+                ep.ShortExamName = item.Course.Short;
 
                 var examDate = DateTime.Parse(exam.Date);
                 int indexDayPart = (DateTime.Parse(exam.Date) - DateTime.Parse(_mam.Schedule.StartDate)).Days;
@@ -238,6 +263,7 @@ namespace ExamSchedule.Controllers
                     //throd error
                 }
                 ep.ExamName = exam.Course.Name;
+                ep.ShortExamName = exam.Course.Short;
                 int countExamDayPart = (int)Math.Ceiling((decimal)exam.TotalTime.Value / _mam.Settings.DefaultDayPartDuration);
                 var IsPartAssigned = false;
                 foreach (var part in _mam.Parts)
@@ -322,7 +348,7 @@ namespace ExamSchedule.Controllers
                     continue;
                 }
                 var rx = allRooms.Where(x => result.Contains(x.Id)).ToList();
-                if (rx.Sum(x => x.Capacity) < countStudent + 10)
+                if (rx.Sum(x => x.Capacity) < countStudent)
                 {
                     result.Add(item.Id);
                 }

@@ -25,6 +25,15 @@ namespace ExamSchedule.Models
     [HideFromSelect("Id", "CourseStudents", "Exams", "ProgramCourses", "TeacherCourses", "CourseFullName", "CourseProgrammeId")]
     public partial class Course
     {
+
+        public string CourseShortFullName
+        {
+            get
+            {
+                return this.ProgramCourses.ElementAt(0).Program.Short + "-" + this.Short;
+            }
+        }
+
         public string CourseFullName
         {
             get
@@ -172,7 +181,7 @@ namespace ExamSchedule.Models
 
 
 
-        public int ExamCount { get { return this.Exams.Count; } }
+        public int ExamCount { get { return this.Exams.Where(x=>x.MergerExamId==x.Id || x.MergerExamId==null ).Count(); } }
         public int RestrictionCount { get { return this.ScheduleRestrictions.Count; } }
     }
 

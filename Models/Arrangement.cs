@@ -11,10 +11,10 @@ namespace ExamSchedule.Models
         public long ScheduleId { get; set; }
         public string Data { get; set; }
 
-        public virtual ICollection<Schedule> Schedules { get; set;}
+        public virtual Schedule Schedule { get; set; }
         public Arrangement()
         {
-            Schedules= new HashSet<Schedule>();
+
         }
     }
 }

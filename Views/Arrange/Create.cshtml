@@ -16,70 +16,80 @@
 <div class="col-4"></div>
 
 
- { get; set; } = 4;
-        public int  { get; set; } = 3;
-        public int
-
-
 *@
-
-
-<div class="row">
-    <h3>Settings</h3>
+<form asp-action="Create">
 
     <div class="row">
+        <h3>Settings</h3>
 
-        <div class="col-2">MaxExamCountPerDay</div>
-        <div class="col-1">:</div>
-        <div class="col-4">
+        <div class="row">
 
-            <input asp-for="Settings.MaxExamCountPerDay" />
+            <div class="col-2">MaxExamCountPerDay</div>
+            <div class="col-1">:</div>
+            <div class="col-4">
+
+                <input asp-for="Settings.MaxExamCountPerDay" />
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-2">DefaultExamPartCount</div>
+            <div class="col-1">:</div>
+            <div class="col-4">
+                <input asp-for="Settings.DefaultExamPartCount" />
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-2">DefaultDayPartDuration</div>
+            <div class="col-1">:</div>
+            <div class="col-4">
+                <input asp-for="Settings.DefaultDayPartDuration" />
+            </div>
 
         </div>
 
     </div>
-    <div class="row">
 
-        <div class="col-2">DefaultExamPartCount</div>
+    <hr />
+
+    <div class="row">
+        <div class="col-2">Schedule</div>
         <div class="col-1">:</div>
         <div class="col-4">
-            <input asp-for="Settings.DefaultExamPartCount" />
+            <select asp-for="ScheduleId" asp-items="ViewBag.ScheduleId"></select>
         </div>
-
-    </div>
-    <div class="row">
-
-        <div class="col-2">DefaultDayPartDuration</div>
-        <div class="col-1">:</div>
-        <div class="col-4">
-            <input asp-for="Settings.DefaultDayPartDuration" />
-        </div>
-
     </div>
 
-</div>
+    <br />
 
-<hr />
+    <input type="submit" value="Create" class="btn btn-primary" />
 
-<div class="row">
-    <div class="col-2">Schedule</div>
-    <div class="col-1">:</div>
-    <div class="col-4">
-        <select asp-for="ScheduleId" asp-items="ViewBag.ScheduleId"></select>
-    </div>
-</div>
+</form>
 
 <div class="row">
-</div>
 
-<div class="row">
+    @*<div class="col-3">
+        <button id="btnCreate" class="btn btn-primary">Create</button>
+    </div>*@
+
+
 </div>
 
 <div class="row">
 </div>
 
+<div class="row">
+</div>
+
 
 <div class="row">
 </div>
 
 
+<div class="col-3"></div>
+<div class="col-3"></div>
+<div class="col-3"></div>
