@@ -3,158 +3,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     //var maxDayPartCount = Model.DayParts.Max(x => x.Length);
 
-
 }
-
 @section Styles{
 
-    <style>
-
-        .ui-tooltip {
-            font-size: 10px;
-            min-width: 400px !important;
-        }
-
-            .ui-tooltip p {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-            }
-
-        .program td {
-            width: @(100 / Model.MaxDayPartPerDay)% !important;
-            height: 75px;
-            border: solid thin red;
-        }
-
-        div.detail {
-            max-height: 300px;
-            overflow: scroll;
-        }
-    </style>
 }
 
-<div>
+@for (var i = 0; i < Model.Schedule.DaysCount; i++)
+{
 
-    <table border="1" style="width:100%;" class="program">
-        @for (int i = 0; i < Model.Schedule.DaysCount; i++)
-        {
-            <tr>
-                @{
-                    var list = Model.Parts.Where(x => x.IndexDay == i).OrderBy(x => x.IndexPart).ToList();
-                    foreach (var item in list)
-                    {
-                        var key = item.UniqueKey;
-                        var exams = Model.ExamPlacements.Where(x => x.DayPartUniqueKeys.Contains(key));
-                        if (exams.Count() > 0)
-                        {
-                            <td>
-                                @foreach (var e_items in exams)
-                                {
-                                    <span class="get-tooltip" data-exam-id="@e_items.ExamId"> @e_items.ShortExamName </span>
-                                    @:<br>
-                                }
-                            </td>
-                        }
-                        else
-                        {
-                            <td>
-                                @item.ToString()
-                            </td>
-                        }
-                    }
-                }
+    var day = Model.Schedule.StartDateParsed.AddDays(i);
+    var placements = Model.ExamPlacements.Where(x => x.ExamFullDate.HasValue && x.ExamFullDate.Value.Year == day.Year && x.ExamFullDate.Value.Month == day.Month && x.ExamFullDate.Value.Day == day.Day).ToList();
 
-            </tr>
-        }
-
-    </table>
-
-</div>
-
-<div class="row detail">
-    <div class="col-5">
-        <ul>
-            @foreach (var item in Model.ExamPlacements)
-            {
-                <li>
-                    <button class="btn-placement" data-ep-key="@item.UniqueKey" data-exam-id="@item.ExamId" data-ep-rooms="@item.Rooms">@item.ExamName</button>
-                </li>
-
-            }
-
-        </ul>
-
-    </div>
-    <div class="col-5">
-        <div id="div-placement-detail">
+    foreach (var item in placements)
+    {
+        <div class="row">
+            <div class="col-3">@item.ExamName</div>
+            <div class="col-3"></div>
+            <div class="col-3"></div>
+            <div class="col-3"></div>
         </div>
-
-    </div>
-
-</div>
-@section Scripts{
-    <script>
-        var dayparts = @Html.Raw(Json.Serialize(Model.Parts) );
-        var placements = @Html.Raw(Json.Serialize(Model) );
-        log(placements);
-        //log(dayparts);
+    }
 
 
-        $(document).tooltip({
-            items: "span",
-            content: function (tooltipcallback) {
-                var con = "";
-                var e = $(this);
-                var id = Number(e.data("exam-id"));
-                $.ajax({
-                    type: "post",
-                    url: '@Url.Action("GetExamData")',
-                    dataType: "json",
-                    data: { idExam: id },
-                    success: function (res) {
-                        var str = "";
-                        for (var s in res) {
-                            str += "<p>" + res[s] + "</p>";
-                        }
-                        tooltipcallback(str);
-                    },
-                    error: function (err) {
-                        log(err);
-                    }
-                });
-            }
-        });
-        function tooltipcallback(data) {
-            return data;
-        }
-
-
-        $(document).ready(function () {
-            $(".btn-placement").on("click", function () {
-                var key = $(this).data("ep-key");
-                $.ajax({
-                    type: "post",
-                    url: "@Url.Action("GetExamPlacementData")",
-                    dataType: "json",
-                    data: { _uniqueKey: key },
-                    success: function (res) {
-                        $("#div-placement-detail").html(res);
-                    }
-
-                });
-
-
-
-            });
-
-        });
-
-    </script>
 
 }
-
-
-
-
-

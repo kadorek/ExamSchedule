@@ -411,7 +411,12 @@ namespace ExamSchedule.Controllers
             return PartialView(epw);
         }
 
+        public PartialViewResult GetExamCourseName(long examId)
+        {
+            var name = _context.Exams.FirstOrDefault(x => x.Id == examId).Course.Name;
+            return PartialView(name);
 
+        }
 
     }
 }

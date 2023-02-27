@@ -45,20 +45,7 @@ namespace ExamSchedule.Models.ArrangmentModels
     public class MainArrangementModel
     {
 
-        //private static MainArrangementModel _object;
-
-        //public static MainArrangementModel Object
-        //{
-        //    get
-        //    {
-        //        if (_object == null)
-        //        {
-        //            _object = new MainArrangementModel();
-        //        }
-        //        return _object;
-
-        //    }
-        //}
+       
         public Schedule Schedule { get; set; }
         public long ScheduleId { get; set; } = -1;
         public ArrangementSettings Settings { get; set; }
