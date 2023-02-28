@@ -2,7 +2,8 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     //var maxDayPartCount = Model.DayParts.Max(x => x.Length);
-
+    var allExams = ViewData["Exams"] as IList<Exam>;
+    var allRooms = ViewData["Rooms"] as IList<Room>;
 }
 @section Styles{
 
@@ -10,21 +11,58 @@
 
 @for (var i = 0; i < Model.Schedule.DaysCount; i++)
 {
-
+    var _c = 0;
     var day = Model.Schedule.StartDateParsed.AddDays(i);
-    var placements = Model.ExamPlacements.Where(x => x.ExamFullDate.HasValue && x.ExamFullDate.Value.Year == day.Year && x.ExamFullDate.Value.Month == day.Month && x.ExamFullDate.Value.Day == day.Day).ToList();
+
+    <h3>@day.ToLongDateString()</h3>
+    var placements = Model.ExamPlacements.Where(x => x.ExamFullDate.HasValue && x.ExamFullDate.Value.Year == day.Year && x.ExamFullDate.Value.Month == day.Month && x.ExamFullDate.Value.Day == day.Day).OrderBy(x=>x.ExamFullDate).ToList();
+
+    <div class="row ">
+        <div class="col-3 fw-bold ">Exam Name</div>
+        <div class="col-1 fw-bold ">Time</div>
+        <div class="col-1 fw-bold ">Total Duration</div>
+        <div class="col-1 fw-bold ">
+            Total Student Count
+        </div>
+        <div class="col-3 fw-bold ">Rooms</div>
+    </div>
+
+
 
     foreach (var item in placements)
     {
-        <div class="row">
-            <div class="col-3">@item.ExamName</div>
-            <div class="col-3">
+        _c++;
+        var exam = allExams.FirstOrDefault(x => x.Id == item.ExamId);
+
+        <div class="row @(_c%2==1?"bg-light":"bg-info ")">
+            <div class="col-3">@item.ExamName  </div>
+            <div class="col-1 ">@item.ExamFullDate.Value.ToLongTimeString()</div>
+            <div class="col-1  ">@exam.TotalTime</div>
+            <div class="col-1">
+                @exam.TotalStudentCount
             </div>
-            <div class="col-3"></div>
-            <div class="col-3"></div>
+            <div class="col-3">
+                @{
+                    long totalArrangedCapacity = 0;
+                }
+                @for (int j = 0; j < item.Rooms.Count; j++)
+                {
+                    if (j != 0)
+                    {
+                        @:,
+                    }
+                    var r = allRooms.FirstOrDefault(x => x.Id == item.Rooms[j]);
+                    totalArrangedCapacity += r.Capacity;
+                    var str = $"{r.Name} ({r.Capacity})";
+                    @(str)
+                }
+                <br />
+                Total Arranged Capacity : @totalArrangedCapacity
+            </div>
+            @*<div class="col-3"></div>*@
         </div>
     }
 
-
+    <hr />
 
 }

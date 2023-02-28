@@ -94,9 +94,10 @@ namespace ExamSchedule.Controllers
 
         public IActionResult Details(long id)
         {
-
             var a = _context.Arrangements.FirstOrDefault(x => x.Id == id);
             MainArrangementModel _mx = JsonConvert.DeserializeObject<MainArrangementModel>(a.Data);
+            ViewData["Exams"] = _context.Exams.Where(x => x.ScheduleId == _mx.ScheduleId).ToList();
+            ViewData["Rooms"] = _context.Rooms.ToList();
 
             return View(_mx);
         }
@@ -340,7 +341,7 @@ namespace ExamSchedule.Controllers
         private List<long> GetProperRooms(int countStudent, List<long> roomUnproper)
         {
             var result = new List<long>();
-            var allRooms = _context.Rooms.OrderBy(x => x.Capacity).ToList();
+            var allRooms = _context.Rooms.OrderBy(x => x.Priority).ThenByDescending(x => x.Capacity).ToList();
             foreach (var item in allRooms)
             {
                 if (roomUnproper.Contains(item.Id))
@@ -417,6 +418,13 @@ namespace ExamSchedule.Controllers
             return PartialView(name);
 
         }
+
+        public string Deneme()
+        {
+
+            return "Merhaba";
+        }
+
 
     }
 }
