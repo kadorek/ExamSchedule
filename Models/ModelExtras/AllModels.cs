@@ -181,7 +181,7 @@ namespace ExamSchedule.Models
 
 
 
-        public int ExamCount { get { return this.Exams.Where(x=>x.MergerExamId==x.Id || x.MergerExamId==null ).Count(); } }
+        public int ExamCount { get { return this.Exams.Where(x => x.MergerExamId == x.Id || x.MergerExamId == null).Count(); } }
         public int RestrictionCount { get { return this.ScheduleRestrictions.Count; } }
     }
 
@@ -233,7 +233,6 @@ namespace ExamSchedule.Models
 
 
     }
-
 
     public partial class Exam
     {
@@ -320,11 +319,21 @@ namespace ExamSchedule.Models
         }
     }
 
-
     [HideFromSelect("Id", "ExamRooms")]
     public partial class Room
     {
 
     }
+
+    public enum ComplexRestrictionTypeEnum : long
+    {
+        Teacher = 10,
+        Course = 20,
+        Student = 30,
+        Programme = 40,
+        Schedule = 50,
+        Exam = 60
+    }
+
 
 }

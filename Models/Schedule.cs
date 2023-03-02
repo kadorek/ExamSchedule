@@ -12,6 +12,7 @@ namespace ExamSchedule.Models
         {
             Exams = new HashSet<Exam>();
             ScheduleRestrictions = new HashSet<ScheduleRestriction>();
+            ComplexRestrictions= new HashSet<ComplexRestriction>();
         }
 
         public long Id { get; set; }
@@ -24,5 +25,7 @@ namespace ExamSchedule.Models
         public long DayEndMinute { get; set; }
         public virtual ICollection<Exam> Exams { get; set; }
         public virtual ICollection<ScheduleRestriction> ScheduleRestrictions { get; set; }
+
+        public virtual ICollection<ComplexRestriction> ComplexRestrictions { get; set; }
     }
 }

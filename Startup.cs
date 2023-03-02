@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
-
+using Microsoft.AspNetCore.Routing.Template;
 
 namespace ExamSchedule
 {
@@ -50,12 +50,18 @@ namespace ExamSchedule
             app.UseRouting();
 
             app.UseAuthorization();
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                //endpoints.MapControllerRoute(
+                //    name: "ComplexRestrictionRoute",
+                //    pattern: "{controller=ComplexRestriction}/{action=Index}/{idx:long?}",
+                //    defaults: new { controller = "ComplexRestriction" });
+
             });
         }
     }

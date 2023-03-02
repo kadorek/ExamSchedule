@@ -29,7 +29,6 @@ namespace ExamSchedule.Models.ArrangmentModels
             return str;
         }
 
-
     }
 
     [NotMapped]
@@ -38,14 +37,11 @@ namespace ExamSchedule.Models.ArrangmentModels
         public int MaxExamCountPerDay { get; set; } = 4;
         public int DefaultExamPartCount { get; set; } = 3;
         public int DefaultDayPartDuration { get; set; } = 30;
-
     }
 
     [NotMapped]
     public class MainArrangementModel
-    {
-
-       
+    {       
         public Schedule Schedule { get; set; }
         public long ScheduleId { get; set; } = -1;
         public ArrangementSettings Settings { get; set; }
@@ -57,7 +53,6 @@ namespace ExamSchedule.Models.ArrangmentModels
             Settings = new ArrangementSettings();
             Parts = new List<DayPart>();
         }
-
     }
 
     [NotMapped]
