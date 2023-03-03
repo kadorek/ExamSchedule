@@ -1,11 +1,20 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ExamSchedule.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SQLitePCL;
 
 namespace ExamSchedule.Controllers
 {
     public class ComplexRestrictionController : Controller
     {
+        private readonly examdataContext _context;
+
+        public ComplexRestrictionController(examdataContext contex)
+        {
+            _context = contex;
+        }
+
         // GET: ComplexRestrictionComtroller
         public ActionResult Index()
         {
@@ -23,7 +32,10 @@ namespace ExamSchedule.Controllers
         public ActionResult Create(long id)
         {
             ViewData["scheduleId"] = id;
-            return View();
+            ComplexRestriction cr = new ComplexRestriction();
+            cr.ScheduleId = id;
+
+            return View(cr);
         }
 
         // POST: ComplexRestrictionComtroller/Create

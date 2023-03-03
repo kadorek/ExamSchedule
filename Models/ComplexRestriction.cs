@@ -1,6 +1,6 @@
 ﻿namespace ExamSchedule.Models
 {
-    public class ComplexRestriction
+    public partial class ComplexRestriction
     {
         public virtual Schedule Schedule { get; set; }
         public long ScheduleId { get; set; }

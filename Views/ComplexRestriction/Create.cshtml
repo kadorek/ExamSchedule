@@ -12,15 +12,21 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
+            <input type="hidden" asp-for="ScheduleId" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Type" class="control-label"></label>
-                <input asp-for="Type" class="form-control" />
-                <span asp-validation-for="Type" class="text-danger"></span>
+                <label asp-for="TypeEnum" class="control-label"></label>
+                <select asp-for="TypeEnum" asp-items="Html.GetEnumSelectList<ComplexRestrictionTypeEnum>()">
+                    <option selected="selected" value="-1">Please select</option>
+                </select>
+                <span asp-validation-for="TypeEnum" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EntityId" class="control-label"></label>
-                <input asp-for="EntityId" class="form-control" />
+                <select asp-for="EntityId" class="form-control" disabled>
+                    <option value="-1" selected="selected">Please Select</option>
+                </select>
+                @*<input asp-for="EntityId" class="form-control" />*@
                 <span asp-validation-for="EntityId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -50,5 +56,73 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+
+
+
+
+        $(document).ready(function () {
+            var slcEntityId = $("#EntityId");
+            $("#TypeEnum").on("change", function () {
+                var t=$(this)
+                slcEntityId.children("option[value!=-1]").remove();
+                var val = t.val();
+                if (val == -1) {
+                    slcEntityId.prop("disabled", true);
+                    return;
+                }
+
+                $.ajax({
+                    url: "@Url.Action("GetEntityListForSchedule","Common")",
+                    dataType: "json",
+                    data: { type: t.val() ,scheduleId:@Model.ScheduleId},
+                    success: function (data, status, xhr) {
+                        console.log(data);
+                        //if (data.typeAsText == "Success" && data.data != null) {
+                        //    if (sId > 0) {
+                        //        $("#divNewExamDetails").removeClass("invisible");
+                        //    }
+                        //    var startDate = reverseDateString(data.data.start);
+                        //    var endDate = reverseDateString(data.data.end);
+                        //    $("#txtExamDate").data("DateTimePicker")
+                        //        .minDate(new Date(startDate))
+                        //        .maxDate(new Date(endDate))
+                        //        .locale(strLocale);
+                        //}
+                    }
+                });
+
+
+
+            });
+
+
+
+
+        });
+
+        @*$.ajax({
+        url: "@Url.Action("GetScheduleDates")",
+        dataType: "json",
+        data: { sId: $("#hdnScheduleId").val() },
+        success: function (data, status, xhr) {
+        console.log(data);
+        if (data.typeAsText == "Success" && data.data != null) {
+        if (sId > 0) {
+        $("#divNewExamDetails").removeClass("invisible");
+        }
+        var startDate = reverseDateString(data.data.start);
+        var endDate = reverseDateString(data.data.end);
+        $("#txtExamDate").data("DateTimePicker")
+        .minDate(new Date(startDate))
+        .maxDate(new Date(endDate))
+        .locale(strLocale);
+        }
+        }
+        });*@
+    </script>
 }

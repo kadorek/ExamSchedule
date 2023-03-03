@@ -325,6 +325,14 @@ namespace ExamSchedule.Models
 
     }
 
+    public partial class ComplexRestriction
+    {
+        [NotMapped]
+        public ComplexRestrictionTypeEnum TypeEnum { get; set; }
+
+    }
+
+
     public enum ComplexRestrictionTypeEnum : long
     {
         Teacher = 10,
