@@ -26,27 +26,29 @@
                 <select asp-for="EntityId" class="form-control" disabled>
                     <option value="-1" selected="selected">Please Select</option>
                 </select>
-                @*<input asp-for="EntityId" class="form-control" />*@
                 <span asp-validation-for="EntityId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" class="form-control" />
-                <span asp-validation-for="StartDate" class="text-danger"></span>
+            <div id="DivToToggle">
+                <div class="form-group">
+                    <label asp-for="StartDate" class="control-label"></label>
+                    <input asp-for="StartDate" class="form-control" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EndDate" class="control-label"></label>
+                    <input asp-for="EndDate" class="form-control" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="EndDate" class="control-label"></label>
-                <input asp-for="EndDate" class="form-control" />
-                <span asp-validation-for="EndDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+
         </form>
     </div>
 </div>
@@ -66,22 +68,40 @@
 
 
         $(document).ready(function () {
+            var divToggle = $("#DivToToggle");
             var slcEntityId = $("#EntityId");
+
+            divToggle.hide();
+
             $("#TypeEnum").on("change", function () {
-                var t=$(this)
+                var t = $(this)
                 slcEntityId.children("option[value!=-1]").remove();
                 var val = t.val();
                 if (val == -1) {
                     slcEntityId.prop("disabled", true);
+                    divToggle.hide();
                     return;
                 }
 
                 $.ajax({
+                    method: "POST",
                     url: "@Url.Action("GetEntityListForSchedule","Common")",
                     dataType: "json",
-                    data: { type: t.val() ,scheduleId:@Model.ScheduleId},
+                    data: { type: t.val(), scheduleId: @Model.ScheduleId},
                     success: function (data, status, xhr) {
                         console.log(data);
+
+                        var slcEntity = $("#EntityId");
+
+                        $.each(data, function (index, value) {
+
+                            var opt = $("<option></option>");
+                            opt.attr("val", value.val);
+                            opt.text(value.text);
+                            slcEntity.append(opt);
+                        })
+                        slcEntity.prop("disabled", false);
+
                         //if (data.typeAsText == "Success" && data.data != null) {
                         //    if (sId > 0) {
                         //        $("#divNewExamDetails").removeClass("invisible");
@@ -100,8 +120,15 @@
 
             });
 
+            slcEntityId.on("change", function () {
+                var t = $(this);
+                if (t.val() != -1) {
+                    divToggle.show();
+                } else {
+                    divToggle.hide();
+                }
 
-
+            });
 
         });
 
